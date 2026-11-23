@@ -1,0 +1,82 @@
+<!-- Copied from Google Doc "Functional Requirements Checklist" (Siliconics Drive folder) on 2026-11-23.
+     Source: https://docs.google.com/document/d/1Dd4jGCN8ogR6YWFQKCjdxZXt4s1BHG9HZPAwLj4dlyA/edit -->
+
+# Functional Requirements Checklist
+
+This is the requirements checklist after getting into further discussions with the client on the Siliconics platform.
+
+- Both Popular and local products must be available and featured.
+- The UI should have a smooth and premium user experience.
+- Make sure there is no noticeable latency in functioning.
+- If a customer wants to raise any issue it should be short and easy to do.
+- They must be able to track order status and issue status without any confusion.
+- The landing page must be with all features and recommended products. The sign in is not necessary for customers to view and add products in cart.
+- Customers need to sign before making any purchase
+- Show highlighted options like “For Content Creators”, “For Promoters” to read how to collaborate, review and rate the products. What are the benefits they get from it?
+- 1 reward point = 1rs
+- The Reward points are for both subscribed and un-subscribed users. For un-subscribed users the minimum purchase they must do is 2500rs to get 0.5% cashback in reward points meaning 13 points (rounded up).
+- For Subscribed users the cashback starts from minimum 800rs and they get 2% cashback on every purchase. For example if they purchase a new laptop for 1,20,000rs they will get 2,400 points after purchase.
+- There is no minimum limit on spending the reward points, you can add in your payment option straight away while making the purchase to get a discount or full purchase using reward points.
+- Promoters are investors in that startup, they can sign up and get verified on the platform to promote the products they are invested in. Promoter can be another established company.
+- Sellers can opt to give reward points / profit share to promoters if they wish to.
+- A proper legal compliance and rules document is to be generated to make them understand about the platform fully.
+- Content Creators are credible influencers on social media platforms like youtube. Instagram and telegram etc.
+- Content Creators need to sign up and read and agree to terms, compliances and conditions and they will get validated by the team as a final step of registration.
+- Content creators get rewards points based on customers that agree to their reviews and ratings.
+- For any product there should be a clear visibility for promoters of that product, reviews given by influencers and buyer reviews as well. It should be sorted and displayed without rushing too much info all at once.
+- There can be multiple promoters/content creators associated with a single product and the rewards for creators will be divided on the basis of who came first. Early reviews will get a better reward share.
+- Mode of payment can be through UPI, Credit Card or Net Banking.
+- Cash on delivery or COD option is only available for purchase below orders worth 8000. Only Subscribers can place COD options.
+- No EMI options are proposed.
+- Subscription fees for users is 650rs a year only. They can use reward points to buy/extend subscriptions as well.
+- When product is clicked For Buyer profile the info that is displayed is:
+  - product name
+  - Model name with main specifications
+  - company name (can get verified tag automatically if total sales of all products goes more than 4 lakh rupees in a year or earlier).
+  - Discounted rate with original price. For Subscribers, when a new product is launched on the platform with 80% discount the “Buy with 80% discount” Button will be shown instead. If it runs out of stock then show “All items on discount were purchased” with disabled buy and add to cart buttons. This button will again appear when stock arrives for sale at normal selling price.
+  - Number of items left in the stock.
+  - Buy button and Add to cart or wishlist Button. Also show reward points the buyer will get on this purchase.
+  - Promote Button (visible to promoters only)
+  - Add Reviews (Visible to creators only)
+  - Product description
+  - Warranty and Replacement Conditions
+  - Promoted by
+  - Creator reviews and ratings with thumbs up and down options for buyers to agree/disagree with them.
+  - Buyer reviews and ratings and photos.
+  - About the company (Small Description, website link, linkedin, youtube and other links)
+  - Other similar and related products buyers like to purchase.
+- For a Promoter click on the product will open have following info:
+  - product name
+  - Model name with main specifications
+  - company name (can get verified tag automatically if total sales of all products goes more than 4 lakh rupees in a year or earlier).
+  - Discounted rate with original price.
+  - Promote Button (visible to promoters only)
+  - Product description
+  - Warranty and Replacement Conditions
+  - Promoted by
+  - Creator reviews and ratings with thumbs up and down options for buyers to agree/disagree with them.
+  - Buyer reviews and ratings and photos.
+  - About the company (Small Description, website link, linkedin, youtube and other links)
+  - Other similar and related products buyers like to purchase.
+- For a Creators click on the product will open following info:
+  - product name
+  - Model name with main specifications
+  - company name (can get verified tag automatically if total sales of all products goes more than 4 lakh rupees in a year or earlier).
+  - Discounted rate with original price.
+  - Ask Product Demo for unboxing, review and rating.
+  - Add Reviews
+  - Product description
+  - Warranty and Replacement Conditions
+  - Promoted by
+  - Creator reviews and ratings with thumbs up and down options for buyers to agree/disagree with them.
+  - Buyer reviews and ratings and photos.
+  - About the company (Small Description, website link, linkedin, youtube and other links)
+  - Other similar and related products buyers like to purchase.
+- The seller will have to register themselves with a company or personal name with valid documents. And they will be able to list the products with all relevant required data for listing.
+- The official name for subscription is “Electra Member” and reward points are called “Electrons”
+- There are 5 types of users of this app:
+  - Buyer
+  - Seller
+  - Promoter
+  - Creator
+  - Admin
