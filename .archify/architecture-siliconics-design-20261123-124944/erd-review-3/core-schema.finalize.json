@@ -1,0 +1,1709 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "erd",
+  "quality": "standard",
+  "startedAt": "2026-11-23T07:28:23.419Z",
+  "specification": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/erd.candidate.json",
+    "sha256": "223ce45c77cecdf532e3c9e8c91b5c14d3ef9c922ab43fe681497458c91a20ae",
+    "bytes": 24925
+  },
+  "artifact": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/core-schema.html",
+    "sha256": "e66d737c98af96806864d59ce4033064eb29c32a3103bf99cfdc944b59a58469",
+    "bytes": 1077920
+  },
+  "stages": {
+    "validate": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": null,
+      "execution": "embedded-in-deliver",
+      "command": [
+        "/opt/homebrew/Cellar/node/25.1.0_1/bin/node",
+        "/Users/gegerot/.claude/skills/archify/bin/archify.mjs",
+        "deliver",
+        "erd",
+        "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/erd.candidate.json",
+        "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/core-schema.html",
+        "--quality",
+        "standard",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "validate",
+        "specification": {
+          "sha256": "223ce45c77cecdf532e3c9e8c91b5c14d3ef9c922ab43fe681497458c91a20ae",
+          "bytes": 24925
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "standard",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 7,
+          "compositionIssues": [
+            {
+              "severity": "warning",
+              "code": "composition/label-route-clearance",
+              "label": "holds",
+              "labelRelationship": {
+                "id": "claim-launch",
+                "from": "launch_claims",
+                "to": "launches",
+                "label": "holds",
+                "collectionIndex": 8,
+                "artifactIndex": 9
+              },
+              "otherRelationship": {
+                "id": "counter-launch",
+                "from": "launch_member_counters",
+                "to": "launches",
+                "label": "",
+                "collectionIndex": 7,
+                "artifactIndex": 8
+              },
+              "segmentIndex": 2,
+              "labelRect": {
+                "x": 861.1,
+                "y": 526,
+                "width": 37.9,
+                "height": 14
+              },
+              "clearance": 0,
+              "intersectionLength": 37.9,
+              "threshold": 2,
+              "from": [
+                748,
+                540
+              ],
+              "to": [
+                904,
+                540
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "product-category",
+                "from": "products",
+                "to": "categories",
+                "label": "",
+                "collectionIndex": 2,
+                "artifactIndex": 3
+              },
+              "otherRelationship": {
+                "id": "payment-order",
+                "from": "payments",
+                "to": "orders",
+                "label": "",
+                "collectionIndex": 15,
+                "artifactIndex": 16
+              },
+              "point": [
+                397,
+                1252
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "lot-launch",
+                "from": "inventory_lots",
+                "to": "launches",
+                "label": "",
+                "collectionIndex": 5,
+                "artifactIndex": 6
+              },
+              "otherRelationship": {
+                "id": "item-variant",
+                "from": "order_items",
+                "to": "variants",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "point": [
+                748,
+                886
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "counter-launch",
+                "from": "launch_member_counters",
+                "to": "launches",
+                "label": "",
+                "collectionIndex": 7,
+                "artifactIndex": 8
+              },
+              "otherRelationship": {
+                "id": "item-variant",
+                "from": "order_items",
+                "to": "variants",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "point": [
+                748,
+                886
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "payment-order",
+                "from": "payments",
+                "to": "orders",
+                "label": "",
+                "collectionIndex": 15,
+                "artifactIndex": 16
+              },
+              "otherRelationship": {
+                "id": "refund-item",
+                "from": "refunds",
+                "to": "order_items",
+                "label": "",
+                "collectionIndex": 17,
+                "artifactIndex": 18
+              },
+              "point": [
+                1047,
+                1252
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "line-payout",
+                "from": "payout_lines",
+                "to": "payouts",
+                "label": "",
+                "collectionIndex": 23,
+                "artifactIndex": 24
+              },
+              "otherRelationship": {
+                "id": "cashout-entry",
+                "from": "cashout_requests",
+                "to": "ledger_entries",
+                "label": "",
+                "collectionIndex": 25,
+                "artifactIndex": 26
+              },
+              "point": [
+                1630,
+                634
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/desktop-readability",
+              "nodeId": "accounts",
+              "owner": {
+                "kind": "node",
+                "id": "accounts"
+              },
+              "viewportWidth": 1440,
+              "viewportHeight": 900,
+              "availableDiagramWidth": 930,
+              "budgetBasis": "legacy-930",
+              "readerContract": "declared-wide-v1",
+              "requestedTargetPx": 7.5,
+              "requestedTargetMet": false,
+              "budgetLimit": "legacy",
+              "viewBoxWidth": 1918,
+              "scale": 0.4848800834202294,
+              "text": "PK",
+              "detail": "context",
+              "sourceFontPx": 9,
+              "projectedFontPx": 4.363920750782065,
+              "minimumProjectedFontPx": 6
+            }
+          ]
+        }
+      }
+    },
+    "deliver": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 457,
+      "command": [
+        "/opt/homebrew/Cellar/node/25.1.0_1/bin/node",
+        "/Users/gegerot/.claude/skills/archify/bin/archify.mjs",
+        "deliver",
+        "erd",
+        "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/erd.candidate.json",
+        "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/core-schema.html",
+        "--quality",
+        "standard",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "receiptId": "38ff148b-fa3c-412a-823d-e97458bbd646",
+        "ok": true,
+        "command": "deliver",
+        "type": "erd",
+        "input": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/erd.candidate.json",
+        "output": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/core-schema.html",
+        "specification": {
+          "sha256": "223ce45c77cecdf532e3c9e8c91b5c14d3ef9c922ab43fe681497458c91a20ae",
+          "bytes": 24925
+        },
+        "artifact": {
+          "sha256": "e66d737c98af96806864d59ce4033064eb29c32a3103bf99cfdc944b59a58469",
+          "bytes": 1077920
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "standard",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 7,
+          "compositionIssues": [
+            {
+              "severity": "warning",
+              "code": "composition/label-route-clearance",
+              "label": "holds",
+              "labelRelationship": {
+                "id": "claim-launch",
+                "from": "launch_claims",
+                "to": "launches",
+                "label": "holds",
+                "collectionIndex": 8,
+                "artifactIndex": 9
+              },
+              "otherRelationship": {
+                "id": "counter-launch",
+                "from": "launch_member_counters",
+                "to": "launches",
+                "label": "",
+                "collectionIndex": 7,
+                "artifactIndex": 8
+              },
+              "segmentIndex": 2,
+              "labelRect": {
+                "x": 861.1,
+                "y": 526,
+                "width": 37.9,
+                "height": 14
+              },
+              "clearance": 0,
+              "intersectionLength": 37.9,
+              "threshold": 2,
+              "from": [
+                748,
+                540
+              ],
+              "to": [
+                904,
+                540
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "product-category",
+                "from": "products",
+                "to": "categories",
+                "label": "",
+                "collectionIndex": 2,
+                "artifactIndex": 3
+              },
+              "otherRelationship": {
+                "id": "payment-order",
+                "from": "payments",
+                "to": "orders",
+                "label": "",
+                "collectionIndex": 15,
+                "artifactIndex": 16
+              },
+              "point": [
+                397,
+                1252
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "lot-launch",
+                "from": "inventory_lots",
+                "to": "launches",
+                "label": "",
+                "collectionIndex": 5,
+                "artifactIndex": 6
+              },
+              "otherRelationship": {
+                "id": "item-variant",
+                "from": "order_items",
+                "to": "variants",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "point": [
+                748,
+                886
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "counter-launch",
+                "from": "launch_member_counters",
+                "to": "launches",
+                "label": "",
+                "collectionIndex": 7,
+                "artifactIndex": 8
+              },
+              "otherRelationship": {
+                "id": "item-variant",
+                "from": "order_items",
+                "to": "variants",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "point": [
+                748,
+                886
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "payment-order",
+                "from": "payments",
+                "to": "orders",
+                "label": "",
+                "collectionIndex": 15,
+                "artifactIndex": 16
+              },
+              "otherRelationship": {
+                "id": "refund-item",
+                "from": "refunds",
+                "to": "order_items",
+                "label": "",
+                "collectionIndex": 17,
+                "artifactIndex": 18
+              },
+              "point": [
+                1047,
+                1252
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "line-payout",
+                "from": "payout_lines",
+                "to": "payouts",
+                "label": "",
+                "collectionIndex": 23,
+                "artifactIndex": 24
+              },
+              "otherRelationship": {
+                "id": "cashout-entry",
+                "from": "cashout_requests",
+                "to": "ledger_entries",
+                "label": "",
+                "collectionIndex": 25,
+                "artifactIndex": 26
+              },
+              "point": [
+                1630,
+                634
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/desktop-readability",
+              "nodeId": "accounts",
+              "owner": {
+                "kind": "node",
+                "id": "accounts"
+              },
+              "viewportWidth": 1440,
+              "viewportHeight": 900,
+              "availableDiagramWidth": 930,
+              "budgetBasis": "legacy-930",
+              "readerContract": "declared-wide-v1",
+              "requestedTargetPx": 7.5,
+              "requestedTargetMet": false,
+              "budgetLimit": "legacy",
+              "viewBoxWidth": 1918,
+              "scale": 0.4848800834202294,
+              "text": "PK",
+              "detail": "context",
+              "sourceFontPx": 9,
+              "projectedFontPx": 4.363920750782065,
+              "minimumProjectedFontPx": 6
+            }
+          ]
+        },
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      }
+    },
+    "check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 172,
+      "command": [
+        "/opt/homebrew/Cellar/node/25.1.0_1/bin/node",
+        "/Users/gegerot/.claude/skills/archify/bin/archify.mjs",
+        "check",
+        "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/core-schema.html",
+        "--require-provenance"
+      ],
+      "receipt": {
+        "ok": true,
+        "file": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/core-schema.html",
+        "artifact": {
+          "sha256": "e66d737c98af96806864d59ce4033064eb29c32a3103bf99cfdc944b59a58469",
+          "bytes": 1077920
+        },
+        "checks": [
+          {
+            "name": "single_svg",
+            "ok": true,
+            "details": [
+              "found 1 <svg> block(s)"
+            ]
+          },
+          {
+            "name": "finite_svg",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "orthogonal_arrows",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "label_route_clearance",
+            "ok": true,
+            "details": [
+              "[composition/label-route-clearance] standard label \"holds\" on relationship id \"claim-launch\" (\"launch_claims\" -> \"launches\") is 0px from relationship id \"counter-launch\" (\"launch_member_counters\" -> \"launches\") segment 2 [748, 540] -> [904, 540] with 37.9px hidden by the mask (minimum 2px) — use renderer-supported label controls (message y for sequence; otherwise labelAt, labelDx, labelDy, or labelSegment), or adjust the other relationship route/via/channel."
+            ]
+          },
+          {
+            "name": "relationship_crossings",
+            "ok": true,
+            "details": [
+              "[composition/proper-crossing] standard relationship id \"product-category\" (\"products\" -> \"categories\") crosses relationship id \"payment-order\" (\"payments\" -> \"orders\") at [397, 1252]",
+              "[composition/proper-crossing] standard relationship id \"lot-launch\" (\"inventory_lots\" -> \"launches\") crosses relationship id \"item-variant\" (\"order_items\" -> \"variants\") at [748, 886]",
+              "[composition/proper-crossing] standard relationship id \"counter-launch\" (\"launch_member_counters\" -> \"launches\") crosses relationship id \"item-variant\" (\"order_items\" -> \"variants\") at [748, 886]",
+              "[composition/proper-crossing] standard relationship id \"payment-order\" (\"payments\" -> \"orders\") crosses relationship id \"refund-item\" (\"refunds\" -> \"order_items\") at [1047, 1252]",
+              "[composition/proper-crossing] standard relationship id \"line-payout\" (\"payout_lines\" -> \"payouts\") crosses relationship id \"cashout-entry\" (\"cashout_requests\" -> \"ledger_entries\") at [1630, 634]"
+            ]
+          },
+          {
+            "name": "relationship_corridors",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "container_border_runs",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "route_rhythm",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "legend_clearance",
+            "ok": true,
+            "details": []
+          }
+        ],
+        "composition": {
+          "schemaVersion": 1,
+          "profile": "standard",
+          "status": "pass",
+          "summary": {
+            "errors": 0,
+            "warnings": 7
+          },
+          "metrics": {
+            "properCrossings": 5,
+            "resolvedCrossovers": 0,
+            "ambiguousCorridors": 0,
+            "arrowheadCollisions": 0,
+            "containerBorderRuns": 0,
+            "labelRouteClearanceIssues": 1,
+            "labelCanvasOverflowIssues": 0,
+            "minLabelRouteClearance": 0,
+            "desktopReadabilityIssues": 1,
+            "viewportHeightIssues": 0,
+            "minProjectedNodeTextPx": 4.363920750782065,
+            "maxBends": 4,
+            "routesOverSuggestedBends": 9,
+            "maxStretch": 1.433,
+            "routesOverSuggestedStretch": 2,
+            "minSegmentPx": 16,
+            "minInteriorSegmentPx": 91,
+            "shortSegmentCount": 0,
+            "shortEndpointSegmentCount": 0,
+            "shortInteriorSegmentCount": 0,
+            "microSegmentCount": 0
+          },
+          "suggestedLimits": {
+            "bendsPerRelationship": 2,
+            "stretch": 1.35,
+            "segmentPx": 16,
+            "microSegmentPx": 8
+          },
+          "routeReview": {
+            "crossings": [],
+            "detours": [
+              {
+                "relationship": {
+                  "id": "product-category",
+                  "from": "products",
+                  "to": "categories",
+                  "label": "",
+                  "collectionIndex": 2,
+                  "artifactIndex": 3
+                },
+                "bends": 3,
+                "stretch": 1.049,
+                "directCorridorBlockers": [
+                  {
+                    "id": "variants",
+                    "label": "variants",
+                    "box": [
+                      421,
+                      546,
+                      240,
+                      156
+                    ]
+                  },
+                  {
+                    "id": "inventory_lots",
+                    "label": "inventory_lots",
+                    "box": [
+                      421,
+                      932,
+                      240,
+                      216
+                    ]
+                  }
+                ]
+              },
+              {
+                "relationship": {
+                  "id": "counter-launch",
+                  "from": "launch_member_counters",
+                  "to": "launches",
+                  "label": "",
+                  "collectionIndex": 7,
+                  "artifactIndex": 8
+                },
+                "bends": 3,
+                "stretch": 1.081,
+                "directCorridorBlockers": [
+                  {
+                    "id": "launch_claims",
+                    "label": "launch_claims",
+                    "box": [
+                      772,
+                      546,
+                      240,
+                      196
+                    ]
+                  }
+                ]
+              },
+              {
+                "relationship": {
+                  "id": "order-buyer",
+                  "from": "orders",
+                  "to": "accounts",
+                  "label": "placed by",
+                  "collectionIndex": 10,
+                  "artifactIndex": 11
+                },
+                "bends": 4,
+                "stretch": 1.433
+              },
+              {
+                "relationship": {
+                  "id": "sub-order",
+                  "from": "sub_orders",
+                  "to": "orders",
+                  "label": "split into",
+                  "collectionIndex": 11,
+                  "artifactIndex": 12
+                },
+                "bends": 4,
+                "stretch": 1.405,
+                "directCorridorBlockers": [
+                  {
+                    "id": "order_items",
+                    "label": "order_items",
+                    "box": [
+                      1071,
+                      546,
+                      240,
+                      356
+                    ]
+                  }
+                ]
+              },
+              {
+                "relationship": {
+                  "id": "payment-order",
+                  "from": "payments",
+                  "to": "orders",
+                  "label": "",
+                  "collectionIndex": 15,
+                  "artifactIndex": 16
+                },
+                "bends": 3,
+                "stretch": 1.045
+              },
+              {
+                "relationship": {
+                  "id": "refund-item",
+                  "from": "refunds",
+                  "to": "order_items",
+                  "label": "",
+                  "collectionIndex": 17,
+                  "artifactIndex": 18
+                },
+                "bends": 4,
+                "stretch": 1.13
+              },
+              {
+                "relationship": {
+                  "id": "lot-account",
+                  "from": "electron_lots",
+                  "to": "accounts",
+                  "label": "earned by",
+                  "collectionIndex": 18,
+                  "artifactIndex": 19
+                },
+                "bends": 4,
+                "stretch": 1.26
+              },
+              {
+                "relationship": {
+                  "id": "alloc-lot",
+                  "from": "spend_allocations",
+                  "to": "electron_lots",
+                  "label": "",
+                  "collectionIndex": 21,
+                  "artifactIndex": 22
+                },
+                "bends": 4,
+                "stretch": 1.342,
+                "directCorridorBlockers": [
+                  {
+                    "id": "ledger_entries",
+                    "label": "ledger_entries",
+                    "box": [
+                      1370,
+                      546,
+                      240,
+                      236
+                    ]
+                  }
+                ]
+              },
+              {
+                "relationship": {
+                  "id": "payout-account",
+                  "from": "payouts",
+                  "to": "accounts",
+                  "label": "paid to",
+                  "collectionIndex": 22,
+                  "artifactIndex": 23
+                },
+                "bends": 4,
+                "stretch": 1.249
+              }
+            ]
+          },
+          "leadingSpace": {
+            "measured": false,
+            "reviewSuggested": false
+          },
+          "desktopReadability": {
+            "budgetBasis": "legacy-930",
+            "readerContract": "declared-wide-v1",
+            "availableDiagramWidth": 930,
+            "actualBudgetPx": 930,
+            "limit": "legacy",
+            "requestedTargetPx": 7.5,
+            "requestedTargetMet": false,
+            "hardFloorPx": 6,
+            "hardFloorMet": false,
+            "minimumOwner": {
+              "kind": "node",
+              "id": "accounts"
+            },
+            "minimumSourceTextPx": 9,
+            "minimumProjectedTextPx": 4.363920750782065,
+            "semanticTextCount": 534
+          },
+          "issues": [
+            {
+              "severity": "warning",
+              "code": "composition/label-route-clearance",
+              "label": "holds",
+              "labelRelationship": {
+                "id": "claim-launch",
+                "from": "launch_claims",
+                "to": "launches",
+                "label": "holds",
+                "collectionIndex": 8,
+                "artifactIndex": 9
+              },
+              "otherRelationship": {
+                "id": "counter-launch",
+                "from": "launch_member_counters",
+                "to": "launches",
+                "label": "",
+                "collectionIndex": 7,
+                "artifactIndex": 8
+              },
+              "segmentIndex": 2,
+              "labelRect": {
+                "x": 861.1,
+                "y": 526,
+                "width": 37.9,
+                "height": 14
+              },
+              "clearance": 0,
+              "intersectionLength": 37.9,
+              "threshold": 2,
+              "from": [
+                748,
+                540
+              ],
+              "to": [
+                904,
+                540
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "product-category",
+                "from": "products",
+                "to": "categories",
+                "label": "",
+                "collectionIndex": 2,
+                "artifactIndex": 3
+              },
+              "otherRelationship": {
+                "id": "payment-order",
+                "from": "payments",
+                "to": "orders",
+                "label": "",
+                "collectionIndex": 15,
+                "artifactIndex": 16
+              },
+              "point": [
+                397,
+                1252
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "lot-launch",
+                "from": "inventory_lots",
+                "to": "launches",
+                "label": "",
+                "collectionIndex": 5,
+                "artifactIndex": 6
+              },
+              "otherRelationship": {
+                "id": "item-variant",
+                "from": "order_items",
+                "to": "variants",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "point": [
+                748,
+                886
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "counter-launch",
+                "from": "launch_member_counters",
+                "to": "launches",
+                "label": "",
+                "collectionIndex": 7,
+                "artifactIndex": 8
+              },
+              "otherRelationship": {
+                "id": "item-variant",
+                "from": "order_items",
+                "to": "variants",
+                "label": "",
+                "collectionIndex": 13,
+                "artifactIndex": 14
+              },
+              "point": [
+                748,
+                886
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "payment-order",
+                "from": "payments",
+                "to": "orders",
+                "label": "",
+                "collectionIndex": 15,
+                "artifactIndex": 16
+              },
+              "otherRelationship": {
+                "id": "refund-item",
+                "from": "refunds",
+                "to": "order_items",
+                "label": "",
+                "collectionIndex": 17,
+                "artifactIndex": 18
+              },
+              "point": [
+                1047,
+                1252
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/proper-crossing",
+              "relationship": {
+                "id": "line-payout",
+                "from": "payout_lines",
+                "to": "payouts",
+                "label": "",
+                "collectionIndex": 23,
+                "artifactIndex": 24
+              },
+              "otherRelationship": {
+                "id": "cashout-entry",
+                "from": "cashout_requests",
+                "to": "ledger_entries",
+                "label": "",
+                "collectionIndex": 25,
+                "artifactIndex": 26
+              },
+              "point": [
+                1630,
+                634
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "composition/desktop-readability",
+              "nodeId": "accounts",
+              "owner": {
+                "kind": "node",
+                "id": "accounts"
+              },
+              "viewportWidth": 1440,
+              "viewportHeight": 900,
+              "availableDiagramWidth": 930,
+              "budgetBasis": "legacy-930",
+              "readerContract": "declared-wide-v1",
+              "requestedTargetPx": 7.5,
+              "requestedTargetMet": false,
+              "budgetLimit": "legacy",
+              "viewBoxWidth": 1918,
+              "scale": 0.4848800834202294,
+              "text": "PK",
+              "detail": "context",
+              "sourceFontPx": 9,
+              "projectedFontPx": 4.363920750782065,
+              "minimumProjectedFontPx": 6
+            }
+          ]
+        },
+        "provenance": "current",
+        "deliveryReceiptId": "38ff148b-fa3c-412a-823d-e97458bbd646"
+      }
+    },
+    "browser-check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 4743,
+      "command": [
+        "/opt/homebrew/Cellar/node/25.1.0_1/bin/node",
+        "/Users/gegerot/.claude/skills/archify/bin/archify.mjs",
+        "browser-check",
+        "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/core-schema.html",
+        "--json",
+        "--require-provenance",
+        "--out-dir",
+        "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/erd-review-3"
+      ],
+      "execution": "in-process",
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "browser-check",
+        "evidenceKind": "automated-browser",
+        "status": "pass",
+        "visualReview": "not-requested",
+        "provenance": "current",
+        "deliveryReceiptId": "38ff148b-fa3c-412a-823d-e97458bbd646",
+        "artifact": {
+          "path": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/core-schema.html",
+          "sha256": "e66d737c98af96806864d59ce4033064eb29c32a3103bf99cfdc944b59a58469",
+          "bytes": 1077920
+        },
+        "state": {
+          "detail": "read",
+          "motion": "still"
+        },
+        "chrome": {
+          "status": "available",
+          "executable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+        },
+        "diagnostics": [],
+        "containment": {
+          "status": "pass",
+          "policy": "fit-or-reader-declared-readable-vertical-scroll",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 1217,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1376,
+              "diagramWidth": 1346,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 52,
+                "diagramChromePx": 78,
+                "svgPx": 1075,
+                "cardsPx": 0,
+                "viewBoxHeight": 1532
+              },
+              "viewBoxWidth": 1918,
+              "minimumProjectedNodeTextPx": 6.315954118873827,
+              "minimumProjectedNonEdgeTextPx": 6.315954118873827,
+              "minimumProjectedEdgeTextPx": 6.315954118873827,
+              "minimumProjectedNodeText": "PK",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "accounts"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1411,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1536,
+              "diagramWidth": 1506,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 1203,
+                "cardsPx": 0,
+                "viewBoxHeight": 1532
+              },
+              "viewBoxWidth": 1918,
+              "minimumProjectedNodeTextPx": 7.066736183524505,
+              "minimumProjectedNonEdgeTextPx": 7.066736183524505,
+              "minimumProjectedEdgeTextPx": 7.066736183524505,
+              "minimumProjectedNodeText": "PK",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "accounts"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1485,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1629,
+              "diagramWidth": 1599,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 1277,
+                "cardsPx": 0,
+                "viewBoxHeight": 1532
+              },
+              "viewBoxWidth": 1918,
+              "minimumProjectedNodeTextPx": 7.503128258602711,
+              "minimumProjectedNonEdgeTextPx": 7.503128258602711,
+              "minimumProjectedEdgeTextPx": 7.503128258602711,
+              "minimumProjectedNodeText": "PK",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "accounts"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1503,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1649,
+              "diagramWidth": 1599,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 68,
+                "diagramChromePx": 94,
+                "svgPx": 1277,
+                "cardsPx": 0,
+                "viewBoxHeight": 1532
+              },
+              "viewBoxWidth": 1918,
+              "minimumProjectedNodeTextPx": 7.503128258602711,
+              "minimumProjectedNonEdgeTextPx": 7.503128258602711,
+              "minimumProjectedEdgeTextPx": 7.503128258602711,
+              "minimumProjectedNodeText": "PK",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "accounts"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "themeStates": {
+          "status": "pass",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1440,
+              "height": 900,
+              "requestedTheme": "dark",
+              "resolvedTheme": "dark",
+              "ok": true
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "requestedTheme": "dark",
+              "resolvedTheme": "dark",
+              "ok": true
+            }
+          ]
+        },
+        "readability": {
+          "status": "pass",
+          "minimumProjectedNodeTextPx": 6,
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 1217,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1376,
+              "diagramWidth": 1346,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 52,
+                "diagramChromePx": 78,
+                "svgPx": 1075,
+                "cardsPx": 0,
+                "viewBoxHeight": 1532
+              },
+              "viewBoxWidth": 1918,
+              "minimumProjectedNodeTextPx": 6.315954118873827,
+              "minimumProjectedNonEdgeTextPx": 6.315954118873827,
+              "minimumProjectedEdgeTextPx": 6.315954118873827,
+              "minimumProjectedNodeText": "PK",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "accounts"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1411,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1536,
+              "diagramWidth": 1506,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 1203,
+                "cardsPx": 0,
+                "viewBoxHeight": 1532
+              },
+              "viewBoxWidth": 1918,
+              "minimumProjectedNodeTextPx": 7.066736183524505,
+              "minimumProjectedNonEdgeTextPx": 7.066736183524505,
+              "minimumProjectedEdgeTextPx": 7.066736183524505,
+              "minimumProjectedNodeText": "PK",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "accounts"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1485,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1629,
+              "diagramWidth": 1599,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 1277,
+                "cardsPx": 0,
+                "viewBoxHeight": 1532
+              },
+              "viewBoxWidth": 1918,
+              "minimumProjectedNodeTextPx": 7.503128258602711,
+              "minimumProjectedNonEdgeTextPx": 7.503128258602711,
+              "minimumProjectedEdgeTextPx": 7.503128258602711,
+              "minimumProjectedNodeText": "PK",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "accounts"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1503,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1649,
+              "diagramWidth": 1599,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 68,
+                "diagramChromePx": 94,
+                "svgPx": 1277,
+                "cardsPx": 0,
+                "viewBoxHeight": 1532
+              },
+              "viewBoxWidth": 1918,
+              "minimumProjectedNodeTextPx": 7.503128258602711,
+              "minimumProjectedNonEdgeTextPx": 7.503128258602711,
+              "minimumProjectedEdgeTextPx": 7.503128258602711,
+              "minimumProjectedNodeText": "PK",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "accounts"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "viewerChrome": {
+          "status": "pass",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 1217,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1376,
+              "diagramWidth": 1346,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 52,
+                "diagramChromePx": 78,
+                "svgPx": 1075,
+                "cardsPx": 0,
+                "viewBoxHeight": 1532
+              },
+              "viewBoxWidth": 1918,
+              "minimumProjectedNodeTextPx": 6.315954118873827,
+              "minimumProjectedNonEdgeTextPx": 6.315954118873827,
+              "minimumProjectedEdgeTextPx": 6.315954118873827,
+              "minimumProjectedNodeText": "PK",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "accounts"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1411,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1536,
+              "diagramWidth": 1506,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 1203,
+                "cardsPx": 0,
+                "viewBoxHeight": 1532
+              },
+              "viewBoxWidth": 1918,
+              "minimumProjectedNodeTextPx": 7.066736183524505,
+              "minimumProjectedNonEdgeTextPx": 7.066736183524505,
+              "minimumProjectedEdgeTextPx": 7.066736183524505,
+              "minimumProjectedNodeText": "PK",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "accounts"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1485,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1629,
+              "diagramWidth": 1599,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 1277,
+                "cardsPx": 0,
+                "viewBoxHeight": 1532
+              },
+              "viewBoxWidth": 1918,
+              "minimumProjectedNodeTextPx": 7.503128258602711,
+              "minimumProjectedNonEdgeTextPx": 7.503128258602711,
+              "minimumProjectedEdgeTextPx": 7.503128258602711,
+              "minimumProjectedNodeText": "PK",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "accounts"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1503,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1649,
+              "diagramWidth": 1599,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 68,
+                "diagramChromePx": 94,
+                "svgPx": 1277,
+                "cardsPx": 0,
+                "viewBoxHeight": 1532
+              },
+              "viewBoxWidth": 1918,
+              "minimumProjectedNodeTextPx": 7.503128258602711,
+              "minimumProjectedNonEdgeTextPx": 7.503128258602711,
+              "minimumProjectedEdgeTextPx": 7.503128258602711,
+              "minimumProjectedNodeText": "PK",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "accounts"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "captures": {
+          "status": "not-requested",
+          "screenshots": [],
+          "contactSheet": null
+        },
+        "sidecars": {
+          "directory": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/erd-review-3",
+          "receipt": "core-schema.browser-check.json",
+          "files": []
+        }
+      }
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "diagnostics": [],
+  "evidence": {
+    "receipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/erd-review-3/core-schema.finalize.json",
+    "summaryReceipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/erd-review-3/core-schema.finalize-summary.json",
+    "browserCheckReceipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/erd-review-3/core-schema.browser-check.json"
+  },
+  "visualReview": "not-requested",
+  "finishedAt": "2026-11-23T07:28:28.954Z",
+  "durationMs": 5536,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.3.0",
+    "availableVersion": "3.3.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-23T07:20:15.536Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

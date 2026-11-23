@@ -1,0 +1,501 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Siliconics: High-Level Architecture (v1)",
+    "locale": "en",
+    "output": ".archify/architecture-siliconics-design-20261123-124944/siliconics-hld.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "users",
+      "type": "external",
+      "label": "Users",
+      "sublabel": "5 roles, one per account",
+      "icon": "person",
+      "explanation": "Every non-admin account has exactly one role (D-01). People sign up with mobile number + OTP (primary) or Google.",
+      "pos": [
+        40,
+        210
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "admins",
+      "type": "external",
+      "label": "Admins",
+      "sublabel": "max 3, TOTP, role switch",
+      "icon": "person",
+      "explanation": "At most 3 admin accounts, enforced by a database trigger. Admins sign in with OTP plus TOTP and can switch into any role's view; every action is audit-logged.",
+      "pos": [
+        40,
+        60
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "edge",
+      "type": "security",
+      "label": "CloudFront + AWS WAF",
+      "sublabel": "CDN, firewall, rate rules",
+      "explanation": "Caches pages and images, applies managed WAF rules, IP rate limits and bot control, and fronts the launch waiting room.",
+      "pos": [
+        340,
+        210
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "web",
+      "type": "frontend",
+      "label": "Web app",
+      "sublabel": "React + Next.js, SSR/ISR",
+      "explanation": "Responsive website for all five roles. Product and home pages use ISR with a live client-side block for price, stock and launch state.",
+      "pos": [
+        340,
+        370
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "alb",
+      "type": "cloud",
+      "label": "Load balancer",
+      "sublabel": "ALB across AZs",
+      "pos": [
+        640,
+        210
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "API service",
+      "sublabel": "Go modular monolith, /api/v1",
+      "explanation": "Auth, catalogue, checkout, orders, launch deals, Electrons ledger, membership, reviews, creators, promoters, sellers and admin modules. Writes domain events to the outbox in the same transaction.",
+      "drilldowns": [
+        {
+          "href": "checkout-payment.html",
+          "label": "Checkout and payment flow",
+          "diagram_type": "sequence"
+        },
+        {
+          "href": "launch-reserve.html",
+          "label": "Launch deal reservation flow",
+          "diagram_type": "sequence"
+        },
+        {
+          "href": "order-lifecycle.html",
+          "label": "Sub-order lifecycle",
+          "diagram_type": "lifecycle"
+        },
+        {
+          "href": "electrons-lifecycle.html",
+          "label": "Electrons lot lifecycle",
+          "diagram_type": "lifecycle"
+        }
+      ],
+      "pos": [
+        940,
+        210
+      ],
+      "size": [
+        190,
+        170
+      ]
+    },
+    {
+      "id": "worker",
+      "type": "backend",
+      "label": "Background worker",
+      "sublabel": "Go, asynq jobs, outbox relay",
+      "explanation": "Relays outbox events, sends notifications and runs scheduled jobs: reservation sweeper, Electrons maturation and expiry, renewals, payouts, pool settlement, verified tags, health checks.",
+      "drilldowns": [
+        {
+          "href": "electrons-lifecycle.html",
+          "label": "Electrons lot lifecycle",
+          "diagram_type": "lifecycle"
+        }
+      ],
+      "pos": [
+        940,
+        600
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "pg",
+      "type": "database",
+      "label": "PostgreSQL 16",
+      "sublabel": "RDS Multi-AZ, system of record",
+      "drilldowns": [
+        {
+          "href": "core-schema.html",
+          "label": "Core data model"
+        }
+      ],
+      "pos": [
+        830,
+        440
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "redis",
+      "type": "database",
+      "label": "Redis 7",
+      "sublabel": "cache, limits, queues, gates",
+      "pos": [
+        1050,
+        440
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "s3",
+      "type": "cloud",
+      "label": "S3 object storage",
+      "sublabel": "images, KYC docs (KMS), invoices",
+      "pos": [
+        940,
+        60
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "simpay",
+      "type": "external",
+      "label": "sim-pay",
+      "sublabel": "simulated payment gateway",
+      "tag": "v1 simulator",
+      "pos": [
+        1340,
+        300
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "simship",
+      "type": "external",
+      "label": "sim-ship",
+      "sublabel": "simulated shipping aggregator",
+      "tag": "v1 simulator",
+      "pos": [
+        1340,
+        190
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "simpayout",
+      "type": "external",
+      "label": "sim-payout + sim-kyc",
+      "sublabel": "bank payouts, PAN, penny-drop",
+      "tag": "v1 simulator",
+      "pos": [
+        1340,
+        410
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "messaging",
+      "type": "external",
+      "label": "SMS, WhatsApp, Email",
+      "sublabel": "DLT templates, SES",
+      "pos": [
+        1340,
+        600
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "google",
+      "type": "security",
+      "label": "Google sign-in",
+      "sublabel": "OIDC + PKCE",
+      "pos": [
+        1340,
+        60
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "obs",
+      "type": "cloud",
+      "label": "Observability",
+      "sublabel": "OpenTelemetry, CloudWatch, Sentry",
+      "pos": [
+        600,
+        600
+      ],
+      "size": [
+        190,
+        64
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "AWS ap-south-1 (Mumbai)",
+      "wraps": [
+        "edge",
+        "web",
+        "alb",
+        "api",
+        "worker",
+        "pg",
+        "redis",
+        "s3",
+        "obs"
+      ]
+    },
+    {
+      "kind": "security-group",
+      "label": "private subnets",
+      "wraps": [
+        "api",
+        "worker",
+        "pg",
+        "redis"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "users-edge",
+      "from": "users",
+      "to": "edge",
+      "label": "HTTPS",
+      "variant": "emphasis"
+    },
+    {
+      "id": "admins-edge",
+      "from": "admins",
+      "to": "edge",
+      "label": "HTTPS + TOTP",
+      "variant": "security"
+    },
+    {
+      "id": "edge-web",
+      "from": "edge",
+      "to": "web",
+      "label": "pages",
+      "variant": "emphasis"
+    },
+    {
+      "id": "edge-alb",
+      "from": "edge",
+      "to": "alb",
+      "label": "API + SSE",
+      "variant": "emphasis"
+    },
+    {
+      "id": "web-alb",
+      "from": "web",
+      "to": "alb",
+      "label": "SSR fetch"
+    },
+    {
+      "id": "alb-api",
+      "from": "alb",
+      "to": "api",
+      "variant": "emphasis"
+    },
+    {
+      "id": "api-pg",
+      "from": "api",
+      "to": "pg",
+      "label": "SQL + outbox (one tx)"
+    },
+    {
+      "id": "api-redis",
+      "from": "api",
+      "to": "redis",
+      "label": "cache, Lua gates"
+    },
+    {
+      "id": "api-s3",
+      "from": "api",
+      "to": "s3",
+      "label": "presigned URLs"
+    },
+    {
+      "id": "api-google",
+      "from": "api",
+      "to": "google",
+      "label": "verify ID token",
+      "variant": "security"
+    },
+    {
+      "id": "api-simpay",
+      "from": "api",
+      "to": "simpay",
+      "label": "orders, refunds"
+    },
+    {
+      "id": "simpay-api",
+      "from": "simpay",
+      "to": "api",
+      "label": "signed webhooks",
+      "variant": "dashed"
+    },
+    {
+      "id": "api-simship",
+      "from": "api",
+      "to": "simship",
+      "label": "book shipment"
+    },
+    {
+      "id": "simship-api",
+      "from": "simship",
+      "to": "api",
+      "label": "tracking webhooks",
+      "variant": "dashed"
+    },
+    {
+      "id": "api-simpayout",
+      "from": "api",
+      "to": "simpayout",
+      "label": "KYC checks",
+      "variant": "security"
+    },
+    {
+      "id": "api-messaging",
+      "from": "api",
+      "to": "messaging",
+      "label": "OTP SMS"
+    },
+    {
+      "id": "worker-pg",
+      "from": "worker",
+      "to": "pg",
+      "label": "outbox relay, jobs"
+    },
+    {
+      "id": "worker-redis",
+      "from": "worker",
+      "to": "redis",
+      "label": "asynq queues"
+    },
+    {
+      "id": "worker-messaging",
+      "from": "worker",
+      "to": "messaging",
+      "label": "notifications",
+      "variant": "dashed"
+    },
+    {
+      "id": "worker-simpayout",
+      "from": "worker",
+      "to": "simpayout",
+      "label": "weekly payouts"
+    },
+    {
+      "id": "worker-simpay",
+      "from": "worker",
+      "to": "simpay",
+      "label": "mandate renewals"
+    },
+    {
+      "id": "worker-obs",
+      "from": "worker",
+      "to": "obs",
+      "label": "OTLP, health runs",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Traffic",
+      "items": [
+        "Normal load 5-10 rps; launches up to 1,000 rps (tested at 1,500)",
+        "~70% of launch traffic is served from CloudFront",
+        "Waiting room admits members at a set rate"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Consistency",
+      "items": [
+        "Money, stock and Electrons change in one PostgreSQL transaction",
+        "Launch deal units: Redis gate, then a conditional SQL update (never oversell)",
+        "Events leave through the outbox, consumers are idempotent"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Simulated in v1",
+      "items": [
+        "Payments, shipping, payouts and KYC use realistic simulators",
+        "Same interfaces as real providers, swapped by config later",
+        "SMS, WhatsApp, email and Google sign-in are real",
+        "Simulators stand in for external providers outside AWS"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Security",
+      "items": [
+        "WAF + rate limits at the edge and in the API",
+        "HttpOnly cookies, rotating refresh tokens, admin TOTP",
+        "KYC data encrypted with KMS; data stays in India"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Observability",
+      "items": [
+        "Web, API and worker all export OTLP traces and metrics",
+        "Worker runs synthetic health checks every 5 minutes",
+        "Two failed checks alert all admins on every channel"
+      ]
+    }
+  ]
+}

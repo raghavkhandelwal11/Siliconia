@@ -1,0 +1,220 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "erd",
+  "quality": "standard",
+  "specification": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/erd.candidate.json",
+    "sha256": "223ce45c77cecdf532e3c9e8c91b5c14d3ef9c922ab43fe681497458c91a20ae",
+    "bytes": 24925
+  },
+  "artifact": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/core-schema.html",
+    "sha256": "e66d737c98af96806864d59ce4033064eb29c32a3103bf99cfdc944b59a58469",
+    "bytes": 1077920
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/erd-review-3/core-schema.finalize.json",
+    "summaryReceipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/erd-review-3/core-schema.finalize-summary.json",
+    "browserCheckReceipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/erd-review-3/core-schema.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.3.0",
+    "availableVersion": "3.3.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-23T07:20:15.536Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 5536,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "routesOverSuggestedBends": 9,
+      "routesOverSuggestedStretch": 2
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [],
+      "detours": [
+        {
+          "relationship": {
+            "id": "product-category",
+            "from": "products",
+            "to": "categories",
+            "label": "",
+            "collectionIndex": 2,
+            "artifactIndex": 3
+          },
+          "bends": 3,
+          "stretch": 1.049,
+          "directCorridorBlockers": [
+            {
+              "id": "variants",
+              "label": "variants",
+              "box": [
+                421,
+                546,
+                240,
+                156
+              ]
+            },
+            {
+              "id": "inventory_lots",
+              "label": "inventory_lots",
+              "box": [
+                421,
+                932,
+                240,
+                216
+              ]
+            }
+          ]
+        },
+        {
+          "relationship": {
+            "id": "counter-launch",
+            "from": "launch_member_counters",
+            "to": "launches",
+            "label": "",
+            "collectionIndex": 7,
+            "artifactIndex": 8
+          },
+          "bends": 3,
+          "stretch": 1.081,
+          "directCorridorBlockers": [
+            {
+              "id": "launch_claims",
+              "label": "launch_claims",
+              "box": [
+                772,
+                546,
+                240,
+                196
+              ]
+            }
+          ]
+        },
+        {
+          "relationship": {
+            "id": "order-buyer",
+            "from": "orders",
+            "to": "accounts",
+            "label": "placed by",
+            "collectionIndex": 10,
+            "artifactIndex": 11
+          },
+          "bends": 4,
+          "stretch": 1.433
+        },
+        {
+          "relationship": {
+            "id": "sub-order",
+            "from": "sub_orders",
+            "to": "orders",
+            "label": "split into",
+            "collectionIndex": 11,
+            "artifactIndex": 12
+          },
+          "bends": 4,
+          "stretch": 1.405,
+          "directCorridorBlockers": [
+            {
+              "id": "order_items",
+              "label": "order_items",
+              "box": [
+                1071,
+                546,
+                240,
+                356
+              ]
+            }
+          ]
+        },
+        {
+          "relationship": {
+            "id": "payment-order",
+            "from": "payments",
+            "to": "orders",
+            "label": "",
+            "collectionIndex": 15,
+            "artifactIndex": 16
+          },
+          "bends": 3,
+          "stretch": 1.045
+        },
+        {
+          "relationship": {
+            "id": "refund-item",
+            "from": "refunds",
+            "to": "order_items",
+            "label": "",
+            "collectionIndex": 17,
+            "artifactIndex": 18
+          },
+          "bends": 4,
+          "stretch": 1.13
+        },
+        {
+          "relationship": {
+            "id": "lot-account",
+            "from": "electron_lots",
+            "to": "accounts",
+            "label": "earned by",
+            "collectionIndex": 18,
+            "artifactIndex": 19
+          },
+          "bends": 4,
+          "stretch": 1.26
+        },
+        {
+          "relationship": {
+            "id": "alloc-lot",
+            "from": "spend_allocations",
+            "to": "electron_lots",
+            "label": "",
+            "collectionIndex": 21,
+            "artifactIndex": 22
+          },
+          "bends": 4,
+          "stretch": 1.342,
+          "directCorridorBlockers": [
+            {
+              "id": "ledger_entries",
+              "label": "ledger_entries",
+              "box": [
+                1370,
+                546,
+                240,
+                236
+              ]
+            }
+          ]
+        }
+      ],
+      "truncated": true
+    },
+    "repair": "Advisory only: this mode places or routes these relationships itself. Report them; do not remove relationships or meaning to reduce crossings."
+  }
+}

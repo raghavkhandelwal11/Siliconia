@@ -1,0 +1,1459 @@
+{
+ "schema_version": 1,
+ "diagram_type": "erd",
+ "meta": {
+  "title": "LLD: Core Data Model (PostgreSQL)",
+  "locale": "en",
+  "output": ".archify/architecture-siliconics-design-20261123-124944/core-schema.html",
+  "quality_profile": "standard",
+  "views": [
+   {
+    "id": "launch",
+    "label": "Launch deals",
+    "focus": [
+     "launches",
+     "launch_member_counters",
+     "launch_claims",
+     "inventory_lots",
+     "order_items"
+    ],
+    "note": "deal_remaining has a CHECK constraint, so units can never go below zero."
+   },
+   {
+    "id": "checkout",
+    "label": "Checkout core",
+    "focus": [
+     "orders",
+     "sub_orders",
+     "order_items",
+     "payments",
+     "refunds"
+    ],
+    "note": "One order splits into a sub-order per seller; payments and refunds hang off it."
+   },
+   {
+    "id": "electrons",
+    "label": "Electrons ledger",
+    "focus": [
+     "electron_lots",
+     "ledger_entries",
+     "spend_allocations",
+     "cashout_requests"
+    ],
+    "note": "Lots carry expiry; the ledger is append-only; allocations record which lots a spend used."
+   }
+  ]
+ },
+ "layout": {
+  "mode": "grid",
+  "gapX": 44,
+  "gapY": 30
+ },
+ "entities": [
+  {
+   "id": "accounts",
+   "label": "accounts",
+   "tag": "identity",
+   "row": 0,
+   "col": 0,
+   "attributes": [
+    {
+     "name": "id",
+     "type": "uuid",
+     "key": "pk"
+    },
+    {
+     "name": "role",
+     "type": "account_role"
+    },
+    {
+     "name": "phone_e164",
+     "type": "text",
+     "key": "uk"
+    },
+    {
+     "name": "phone_verified_at",
+     "type": "timestamptz"
+    },
+    {
+     "name": "google_sub",
+     "type": "text",
+     "key": "uk"
+    },
+    {
+     "name": "email",
+     "type": "citext"
+    },
+    {
+     "name": "name",
+     "type": "text"
+    },
+    {
+     "name": "status",
+     "type": "text"
+    },
+    {
+     "name": "approval",
+     "type": "approval_status"
+    },
+    {
+     "name": "approval_reason",
+     "type": "text"
+    },
+    {
+     "name": "totp_secret_enc",
+     "type": "bytea"
+    },
+    {
+     "name": "is_synthetic",
+     "type": "boolean"
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz"
+    },
+    {
+     "name": "version",
+     "type": "int"
+    }
+   ],
+   "sublabel": "unique per (phone, role) and (google_sub, role); max 3 active admins"
+  },
+  {
+   "id": "seller_profiles",
+   "label": "seller_profiles",
+   "tag": "identity",
+   "row": 1,
+   "col": 0,
+   "attributes": [
+    {
+     "name": "account_id",
+     "type": "uuid",
+     "key": [
+      "pk",
+      "fk"
+     ],
+     "references": "accounts.id"
+    },
+    {
+     "name": "business_type",
+     "type": "text"
+    },
+    {
+     "name": "legal_name",
+     "type": "text"
+    },
+    {
+     "name": "code",
+     "type": "text",
+     "key": "uk"
+    },
+    {
+     "name": "pan_enc",
+     "type": "bytea"
+    },
+    {
+     "name": "gstin",
+     "type": "text"
+    },
+    {
+     "name": "bank_enc",
+     "type": "bytea"
+    },
+    {
+     "name": "ifsc",
+     "type": "text"
+    },
+    {
+     "name": "pickup_address",
+     "type": "jsonb"
+    },
+    {
+     "name": "is_platform",
+     "type": "boolean"
+    },
+    {
+     "name": "verified_tag",
+     "type": "boolean"
+    },
+    {
+     "name": "rolling_12m_sales_paise",
+     "type": "bigint"
+    },
+    {
+     "name": "about",
+     "type": "jsonb"
+    }
+   ]
+  },
+  {
+   "id": "categories",
+   "label": "categories",
+   "tag": "catalogue",
+   "row": 3,
+   "col": 1,
+   "attributes": [
+    {
+     "name": "id",
+     "type": "uuid",
+     "key": "pk"
+    },
+    {
+     "name": "parent_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "categories.id"
+    },
+    {
+     "name": "slug",
+     "type": "text",
+     "key": "uk"
+    },
+    {
+     "name": "name",
+     "type": "text"
+    },
+    {
+     "name": "spec_schema",
+     "type": "jsonb"
+    },
+    {
+     "name": "commission_bps",
+     "type": "int"
+    },
+    {
+     "name": "gst_rate_bps",
+     "type": "int"
+    },
+    {
+     "name": "hsn",
+     "type": "text"
+    }
+   ]
+  },
+  {
+   "id": "products",
+   "label": "products",
+   "tag": "catalogue",
+   "row": 0,
+   "col": 1,
+   "attributes": [
+    {
+     "name": "id",
+     "type": "uuid",
+     "key": "pk"
+    },
+    {
+     "name": "seller_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "seller_profiles.account_id"
+    },
+    {
+     "name": "category_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "categories.id"
+    },
+    {
+     "name": "slug",
+     "type": "text",
+     "key": "uk"
+    },
+    {
+     "name": "name",
+     "type": "text"
+    },
+    {
+     "name": "model",
+     "type": "text"
+    },
+    {
+     "name": "brand",
+     "type": "text"
+    },
+    {
+     "name": "specs",
+     "type": "jsonb"
+    },
+    {
+     "name": "description",
+     "type": "text"
+    },
+    {
+     "name": "warranty",
+     "type": "text"
+    },
+    {
+     "name": "origin_country",
+     "type": "char(2)"
+    },
+    {
+     "name": "is_local",
+     "type": "boolean"
+    },
+    {
+     "name": "is_launch_exclusive",
+     "type": "boolean"
+    },
+    {
+     "name": "status",
+     "type": "text"
+    },
+    {
+     "name": "search",
+     "type": "tsvector"
+    },
+    {
+     "name": "rating_avg",
+     "type": "numeric(3,2)"
+    },
+    {
+     "name": "rating_count",
+     "type": "int"
+    },
+    {
+     "name": "is_synthetic",
+     "type": "boolean"
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz"
+    },
+    {
+     "name": "version",
+     "type": "int"
+    }
+   ]
+  },
+  {
+   "id": "variants",
+   "label": "variants",
+   "tag": "catalogue",
+   "row": 1,
+   "col": 1,
+   "attributes": [
+    {
+     "name": "id",
+     "type": "uuid",
+     "key": "pk"
+    },
+    {
+     "name": "product_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "products.id"
+    },
+    {
+     "name": "sku",
+     "type": "text",
+     "key": "uk"
+    },
+    {
+     "name": "attrs",
+     "type": "jsonb"
+    },
+    {
+     "name": "mrp_paise",
+     "type": "bigint"
+    },
+    {
+     "name": "price_paise",
+     "type": "bigint"
+    }
+   ]
+  },
+  {
+   "id": "inventory_lots",
+   "label": "inventory_lots",
+   "tag": "catalogue",
+   "row": 2,
+   "col": 1,
+   "attributes": [
+    {
+     "name": "id",
+     "type": "uuid",
+     "key": "pk"
+    },
+    {
+     "name": "variant_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "variants.id"
+    },
+    {
+     "name": "owner_seller_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "seller_profiles.account_id"
+    },
+    {
+     "name": "kind",
+     "type": "lot_kind"
+    },
+    {
+     "name": "launch_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "launches.id"
+    },
+    {
+     "name": "quantity",
+     "type": "int"
+    },
+    {
+     "name": "reserved",
+     "type": "int"
+    },
+    {
+     "name": "sold",
+     "type": "int"
+    },
+    {
+     "name": "unit_cost_paise",
+     "type": "bigint"
+    }
+   ],
+   "sublabel": "reserved + sold <= quantity"
+  },
+  {
+   "id": "launches",
+   "label": "launches",
+   "tag": "launch deals",
+   "row": 0,
+   "col": 2,
+   "attributes": [
+    {
+     "name": "id",
+     "type": "uuid",
+     "key": "pk"
+    },
+    {
+     "name": "product_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "products.id"
+    },
+    {
+     "name": "variant_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "variants.id"
+    },
+    {
+     "name": "seller_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "seller_profiles.account_id"
+    },
+    {
+     "name": "units_bought",
+     "type": "int"
+    },
+    {
+     "name": "unit_cost_paise",
+     "type": "bigint"
+    },
+    {
+     "name": "normal_price_paise",
+     "type": "bigint"
+    },
+    {
+     "name": "deal_discount_bps",
+     "type": "int"
+    },
+    {
+     "name": "deal_price_paise",
+     "type": "bigint"
+    },
+    {
+     "name": "min_profit_bps",
+     "type": "int"
+    },
+    {
+     "name": "deal_units",
+     "type": "int"
+    },
+    {
+     "name": "deal_remaining",
+     "type": "int"
+    },
+    {
+     "name": "per_member_limit",
+     "type": "int"
+    },
+    {
+     "name": "starts_at",
+     "type": "timestamptz"
+    },
+    {
+     "name": "normal_sale_mode",
+     "type": "text"
+    },
+    {
+     "name": "normal_sale_at",
+     "type": "timestamptz"
+    },
+    {
+     "name": "waiting_room_rps",
+     "type": "int"
+    },
+    {
+     "name": "status",
+     "type": "launch_status"
+    },
+    {
+     "name": "seller_invoice_doc",
+     "type": "uuid"
+    },
+    {
+     "name": "created_by",
+     "type": "uuid",
+     "key": "fk",
+     "references": "accounts.id"
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz"
+    },
+    {
+     "name": "version",
+     "type": "int"
+    }
+   ],
+   "sublabel": "CHECK 0 <= deal_remaining <= deal_units"
+  },
+  {
+   "id": "launch_member_counters",
+   "label": "launch_member_counters",
+   "tag": "launch deals",
+   "row": 2,
+   "col": 2,
+   "attributes": [
+    {
+     "name": "launch_id",
+     "type": "uuid",
+     "key": [
+      "pk",
+      "fk"
+     ],
+     "references": "launches.id"
+    },
+    {
+     "name": "account_id",
+     "type": "uuid",
+     "key": [
+      "pk",
+      "fk"
+     ],
+     "references": "accounts.id"
+    },
+    {
+     "name": "claimed",
+     "type": "int"
+    }
+   ],
+   "sublabel": "claimed <= per_member_limit"
+  },
+  {
+   "id": "launch_claims",
+   "label": "launch_claims",
+   "tag": "launch deals",
+   "row": 1,
+   "col": 2,
+   "attributes": [
+    {
+     "name": "id",
+     "type": "uuid",
+     "key": "pk"
+    },
+    {
+     "name": "launch_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "launches.id"
+    },
+    {
+     "name": "account_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "accounts.id"
+    },
+    {
+     "name": "qty",
+     "type": "int"
+    },
+    {
+     "name": "status",
+     "type": "text"
+    },
+    {
+     "name": "order_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "orders.id"
+    },
+    {
+     "name": "held_until",
+     "type": "timestamptz"
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz"
+    }
+   ]
+  },
+  {
+   "id": "orders",
+   "label": "orders",
+   "tag": "orders",
+   "row": 0,
+   "col": 3,
+   "attributes": [
+    {
+     "name": "id",
+     "type": "uuid",
+     "key": "pk"
+    },
+    {
+     "name": "number",
+     "type": "text",
+     "key": "uk"
+    },
+    {
+     "name": "buyer_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "accounts.id"
+    },
+    {
+     "name": "address",
+     "type": "jsonb"
+    },
+    {
+     "name": "status",
+     "type": "text"
+    },
+    {
+     "name": "item_total_paise",
+     "type": "bigint"
+    },
+    {
+     "name": "shipping_paise",
+     "type": "bigint"
+    },
+    {
+     "name": "electrons_used",
+     "type": "int"
+    },
+    {
+     "name": "payable_paise",
+     "type": "bigint"
+    },
+    {
+     "name": "pay_method",
+     "type": "pay_method"
+    },
+    {
+     "name": "is_member_at_order",
+     "type": "boolean"
+    },
+    {
+     "name": "contains_launch_deal",
+     "type": "boolean"
+    },
+    {
+     "name": "rules_snapshot",
+     "type": "jsonb"
+    },
+    {
+     "name": "expires_at",
+     "type": "timestamptz"
+    },
+    {
+     "name": "placed_at",
+     "type": "timestamptz"
+    },
+    {
+     "name": "is_synthetic",
+     "type": "boolean"
+    }
+   ]
+  },
+  {
+   "id": "sub_orders",
+   "label": "sub_orders",
+   "tag": "orders",
+   "row": 2,
+   "col": 3,
+   "attributes": [
+    {
+     "name": "id",
+     "type": "uuid",
+     "key": "pk"
+    },
+    {
+     "name": "order_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "orders.id"
+    },
+    {
+     "name": "seller_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "seller_profiles.account_id"
+    },
+    {
+     "name": "status",
+     "type": "sub_status"
+    },
+    {
+     "name": "invoice_no",
+     "type": "text",
+     "key": "uk"
+    },
+    {
+     "name": "delivered_at",
+     "type": "timestamptz"
+    },
+    {
+     "name": "return_window_ends_at",
+     "type": "timestamptz"
+    },
+    {
+     "name": "settled_at",
+     "type": "timestamptz"
+    },
+    {
+     "name": "version",
+     "type": "int"
+    }
+   ]
+  },
+  {
+   "id": "order_items",
+   "label": "order_items",
+   "tag": "orders",
+   "row": 1,
+   "col": 3,
+   "attributes": [
+    {
+     "name": "id",
+     "type": "uuid",
+     "key": "pk"
+    },
+    {
+     "name": "sub_order_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "sub_orders.id"
+    },
+    {
+     "name": "variant_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "variants.id"
+    },
+    {
+     "name": "price_type",
+     "type": "text"
+    },
+    {
+     "name": "launch_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "launches.id"
+    },
+    {
+     "name": "lot_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "inventory_lots.id"
+    },
+    {
+     "name": "launch_claim_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "launch_claims.id"
+    },
+    {
+     "name": "qty",
+     "type": "int"
+    },
+    {
+     "name": "unit_mrp_paise",
+     "type": "bigint"
+    },
+    {
+     "name": "unit_price_paise",
+     "type": "bigint"
+    },
+    {
+     "name": "line_total_paise",
+     "type": "bigint"
+    },
+    {
+     "name": "gst_rate_bps",
+     "type": "int"
+    },
+    {
+     "name": "commission_bps",
+     "type": "int"
+    },
+    {
+     "name": "electrons_spent",
+     "type": "int"
+    },
+    {
+     "name": "electrons_earned",
+     "type": "int"
+    },
+    {
+     "name": "status",
+     "type": "text"
+    }
+   ]
+  },
+  {
+   "id": "payments",
+   "label": "payments",
+   "tag": "payments",
+   "row": 2,
+   "col": 0,
+   "attributes": [
+    {
+     "name": "id",
+     "type": "uuid",
+     "key": "pk"
+    },
+    {
+     "name": "purpose",
+     "type": "text"
+    },
+    {
+     "name": "order_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "orders.id"
+    },
+    {
+     "name": "membership_id",
+     "type": "uuid"
+    },
+    {
+     "name": "provider",
+     "type": "text"
+    },
+    {
+     "name": "provider_order_id",
+     "type": "text",
+     "key": "uk"
+    },
+    {
+     "name": "provider_payment_id",
+     "type": "text",
+     "key": "uk"
+    },
+    {
+     "name": "method",
+     "type": "pay_method"
+    },
+    {
+     "name": "amount_paise",
+     "type": "bigint"
+    },
+    {
+     "name": "status",
+     "type": "text"
+    },
+    {
+     "name": "failure_code",
+     "type": "text"
+    },
+    {
+     "name": "captured_at",
+     "type": "timestamptz"
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz"
+    }
+   ]
+  },
+  {
+   "id": "refunds",
+   "label": "refunds",
+   "tag": "payments",
+   "row": 3,
+   "col": 0,
+   "attributes": [
+    {
+     "name": "id",
+     "type": "uuid",
+     "key": "pk"
+    },
+    {
+     "name": "payment_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "payments.id"
+    },
+    {
+     "name": "order_item_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "order_items.id"
+    },
+    {
+     "name": "amount_paise",
+     "type": "bigint"
+    },
+    {
+     "name": "electrons",
+     "type": "int"
+    },
+    {
+     "name": "status",
+     "type": "text"
+    },
+    {
+     "name": "provider_refund_id",
+     "type": "text",
+     "key": "uk"
+    },
+    {
+     "name": "reason",
+     "type": "text"
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz"
+    }
+   ]
+  },
+  {
+   "id": "electron_lots",
+   "label": "electron_lots",
+   "tag": "electrons",
+   "row": 0,
+   "col": 4,
+   "attributes": [
+    {
+     "name": "id",
+     "type": "uuid",
+     "key": "pk"
+    },
+    {
+     "name": "account_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "accounts.id"
+    },
+    {
+     "name": "source",
+     "type": "text"
+    },
+    {
+     "name": "source_ref",
+     "type": "uuid"
+    },
+    {
+     "name": "amount",
+     "type": "int"
+    },
+    {
+     "name": "remaining",
+     "type": "int"
+    },
+    {
+     "name": "status",
+     "type": "lot_status"
+    },
+    {
+     "name": "available_at",
+     "type": "timestamptz"
+    },
+    {
+     "name": "expires_at",
+     "type": "timestamptz"
+    },
+    {
+     "name": "is_synthetic",
+     "type": "boolean"
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz"
+    }
+   ]
+  },
+  {
+   "id": "ledger_entries",
+   "label": "ledger_entries",
+   "tag": "electrons",
+   "row": 1,
+   "col": 4,
+   "attributes": [
+    {
+     "name": "id",
+     "type": "uuid",
+     "key": "pk"
+    },
+    {
+     "name": "account_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "accounts.id"
+    },
+    {
+     "name": "type",
+     "type": "text"
+    },
+    {
+     "name": "amount",
+     "type": "int"
+    },
+    {
+     "name": "lot_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "electron_lots.id"
+    },
+    {
+     "name": "ref_type",
+     "type": "text"
+    },
+    {
+     "name": "ref_id",
+     "type": "uuid"
+    },
+    {
+     "name": "actor_id",
+     "type": "uuid"
+    },
+    {
+     "name": "note",
+     "type": "text"
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz"
+    }
+   ],
+   "sublabel": "append-only"
+  },
+  {
+   "id": "spend_allocations",
+   "label": "spend_allocations",
+   "tag": "electrons",
+   "row": 2,
+   "col": 4,
+   "attributes": [
+    {
+     "name": "ledger_entry_id",
+     "type": "uuid",
+     "key": [
+      "pk",
+      "fk"
+     ],
+     "references": "ledger_entries.id"
+    },
+    {
+     "name": "lot_id",
+     "type": "uuid",
+     "key": [
+      "pk",
+      "fk"
+     ],
+     "references": "electron_lots.id"
+    },
+    {
+     "name": "amount",
+     "type": "int"
+    }
+   ]
+  },
+  {
+   "id": "payouts",
+   "label": "payouts",
+   "tag": "payouts",
+   "row": 0,
+   "col": 5,
+   "attributes": [
+    {
+     "name": "id",
+     "type": "uuid",
+     "key": "pk"
+    },
+    {
+     "name": "batch_id",
+     "type": "uuid"
+    },
+    {
+     "name": "beneficiary_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "accounts.id"
+    },
+    {
+     "name": "kind",
+     "type": "text"
+    },
+    {
+     "name": "gross_paise",
+     "type": "bigint"
+    },
+    {
+     "name": "commission_paise",
+     "type": "bigint"
+    },
+    {
+     "name": "tds_paise",
+     "type": "bigint"
+    },
+    {
+     "name": "adjustments_paise",
+     "type": "bigint"
+    },
+    {
+     "name": "net_paise",
+     "type": "bigint"
+    },
+    {
+     "name": "status",
+     "type": "text"
+    },
+    {
+     "name": "provider_ref",
+     "type": "text"
+    },
+    {
+     "name": "bank_ref",
+     "type": "text"
+    },
+    {
+     "name": "failure_reason",
+     "type": "text"
+    },
+    {
+     "name": "approved_by",
+     "type": "uuid",
+     "key": "fk",
+     "references": "accounts.id"
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz"
+    }
+   ]
+  },
+  {
+   "id": "payout_lines",
+   "label": "payout_lines",
+   "tag": "payouts",
+   "row": 2,
+   "col": 5,
+   "attributes": [
+    {
+     "name": "payout_id",
+     "type": "uuid",
+     "key": [
+      "pk",
+      "fk"
+     ],
+     "references": "payouts.id"
+    },
+    {
+     "name": "ref_type",
+     "type": "text",
+     "key": "pk"
+    },
+    {
+     "name": "ref_id",
+     "type": "uuid",
+     "key": "pk"
+    },
+    {
+     "name": "amount_paise",
+     "type": "bigint"
+    }
+   ]
+  },
+  {
+   "id": "cashout_requests",
+   "label": "cashout_requests",
+   "tag": "payouts",
+   "row": 1,
+   "col": 5,
+   "attributes": [
+    {
+     "name": "id",
+     "type": "uuid",
+     "key": "pk"
+    },
+    {
+     "name": "creator_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "accounts.id"
+    },
+    {
+     "name": "electrons",
+     "type": "int"
+    },
+    {
+     "name": "status",
+     "type": "text"
+    },
+    {
+     "name": "payout_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "payouts.id"
+    },
+    {
+     "name": "ledger_hold_id",
+     "type": "uuid",
+     "key": "fk",
+     "references": "ledger_entries.id"
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz"
+    }
+   ],
+   "sublabel": "electrons >= 250"
+  }
+ ],
+ "relationships": [
+  {
+   "id": "seller-account",
+   "from": "seller_profiles",
+   "to": "accounts",
+   "fromCardinality": "one",
+   "toCardinality": "one",
+   "label": "is a",
+   "identifying": true
+  },
+  {
+   "id": "product-seller",
+   "from": "products",
+   "to": "seller_profiles",
+   "fromCardinality": "many",
+   "toCardinality": "one",
+   "label": "listed by"
+  },
+  {
+   "id": "product-category",
+   "from": "products",
+   "to": "categories",
+   "fromCardinality": "many",
+   "toCardinality": "one"
+  },
+  {
+   "id": "variant-product",
+   "from": "variants",
+   "to": "products",
+   "fromCardinality": "many",
+   "toCardinality": "one"
+  },
+  {
+   "id": "lot-variant",
+   "from": "inventory_lots",
+   "to": "variants",
+   "fromCardinality": "many",
+   "toCardinality": "one"
+  },
+  {
+   "id": "lot-launch",
+   "from": "inventory_lots",
+   "to": "launches",
+   "fromCardinality": "many",
+   "toCardinality": "one",
+   "fromOptional": true,
+   "toOptional": true
+  },
+  {
+   "id": "launch-product",
+   "from": "launches",
+   "to": "products",
+   "fromCardinality": "many",
+   "toCardinality": "one",
+   "label": "launches"
+  },
+  {
+   "id": "counter-launch",
+   "from": "launch_member_counters",
+   "to": "launches",
+   "fromCardinality": "many",
+   "toCardinality": "one"
+  },
+  {
+   "id": "claim-launch",
+   "from": "launch_claims",
+   "to": "launches",
+   "fromCardinality": "many",
+   "toCardinality": "one",
+   "label": "holds"
+  },
+  {
+   "id": "claim-order",
+   "from": "launch_claims",
+   "to": "orders",
+   "fromCardinality": "many",
+   "toCardinality": "one",
+   "fromOptional": true,
+   "toOptional": true
+  },
+  {
+   "id": "order-buyer",
+   "from": "orders",
+   "to": "accounts",
+   "fromCardinality": "many",
+   "toCardinality": "one",
+   "label": "placed by"
+  },
+  {
+   "id": "sub-order",
+   "from": "sub_orders",
+   "to": "orders",
+   "fromCardinality": "many",
+   "toCardinality": "one",
+   "label": "split into"
+  },
+  {
+   "id": "item-sub",
+   "from": "order_items",
+   "to": "sub_orders",
+   "fromCardinality": "many",
+   "toCardinality": "one"
+  },
+  {
+   "id": "item-variant",
+   "from": "order_items",
+   "to": "variants",
+   "fromCardinality": "many",
+   "toCardinality": "one"
+  },
+  {
+   "id": "item-claim",
+   "from": "order_items",
+   "to": "launch_claims",
+   "fromCardinality": "many",
+   "toCardinality": "one",
+   "fromOptional": true,
+   "toOptional": true
+  },
+  {
+   "id": "payment-order",
+   "from": "payments",
+   "to": "orders",
+   "fromCardinality": "many",
+   "toCardinality": "one",
+   "fromOptional": true,
+   "toOptional": true
+  },
+  {
+   "id": "refund-payment",
+   "from": "refunds",
+   "to": "payments",
+   "fromCardinality": "many",
+   "toCardinality": "one"
+  },
+  {
+   "id": "refund-item",
+   "from": "refunds",
+   "to": "order_items",
+   "fromCardinality": "many",
+   "toCardinality": "one",
+   "toOptional": true
+  },
+  {
+   "id": "lot-account",
+   "from": "electron_lots",
+   "to": "accounts",
+   "fromCardinality": "many",
+   "toCardinality": "one",
+   "label": "earned by"
+  },
+  {
+   "id": "entry-lot",
+   "from": "ledger_entries",
+   "to": "electron_lots",
+   "fromCardinality": "many",
+   "toCardinality": "one",
+   "toOptional": true
+  },
+  {
+   "id": "alloc-entry",
+   "from": "spend_allocations",
+   "to": "ledger_entries",
+   "fromCardinality": "many",
+   "toCardinality": "one"
+  },
+  {
+   "id": "alloc-lot",
+   "from": "spend_allocations",
+   "to": "electron_lots",
+   "fromCardinality": "many",
+   "toCardinality": "one"
+  },
+  {
+   "id": "payout-account",
+   "from": "payouts",
+   "to": "accounts",
+   "fromCardinality": "many",
+   "toCardinality": "one",
+   "label": "paid to"
+  },
+  {
+   "id": "line-payout",
+   "from": "payout_lines",
+   "to": "payouts",
+   "fromCardinality": "many",
+   "toCardinality": "one"
+  },
+  {
+   "id": "cashout-payout",
+   "from": "cashout_requests",
+   "to": "payouts",
+   "fromCardinality": "many",
+   "toCardinality": "one",
+   "toOptional": true
+  },
+  {
+   "id": "cashout-entry",
+   "from": "cashout_requests",
+   "to": "ledger_entries",
+   "fromCardinality": "many",
+   "toCardinality": "one"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "cyan",
+   "title": "Conventions",
+   "items": [
+    "UUIDv7 keys; money in paise (bigint); Electrons as int; rates in basis points",
+    "Money rules are snapshotted onto orders and launches at creation"
+   ]
+  },
+  {
+   "dot": "emerald",
+   "title": "Not shown here",
+   "items": [
+    "sessions, otp_challenges, memberships, mandates, shipments, returns, issues, reviews, creator and promoter tables, notifications, config, audit_log, outbox (see docs/lld.md 5.3)",
+    "payments.membership_id points to memberships (not drawn)"
+   ]
+  },
+  {
+   "dot": "rose",
+   "title": "Integrity",
+   "items": [
+    "ledger_entries and audit_log are insert-only for the app role",
+    "Status changes use version checks (optimistic locking)"
+   ]
+  }
+ ]
+}

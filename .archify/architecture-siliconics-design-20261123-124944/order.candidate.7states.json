@@ -1,0 +1,226 @@
+{
+  "schema_version": 3,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "LLD: Sub-order Lifecycle (per seller shipment)",
+    "locale": "en",
+    "output": ".archify/architecture-siliconics-design-20261123-124944/order-lifecycle.html",
+    "quality_profile": "showcase",
+    "parentHref": "siliconics-hld.html"
+  },
+  "mainPath": [
+    "pending",
+    "confirmed",
+    "packed",
+    "shipped",
+    "ofd",
+    "delivered",
+    "settled"
+  ],
+  "states": [
+    {
+      "id": "pending",
+      "type": "start",
+      "label": "Pending",
+      "sublabel": "awaiting payment",
+      "step": "01"
+    },
+    {
+      "id": "confirmed",
+      "type": "active",
+      "label": "Confirmed",
+      "sublabel": "paid, COD or Electrons",
+      "step": "02"
+    },
+    {
+      "id": "packed",
+      "type": "active",
+      "label": "Packed",
+      "sublabel": "seller packed items",
+      "step": "03"
+    },
+    {
+      "id": "shipped",
+      "type": "external",
+      "label": "Shipped",
+      "sublabel": "AWB from sim-ship",
+      "step": "04"
+    },
+    {
+      "id": "ofd",
+      "type": "external",
+      "label": "Out for delivery",
+      "sublabel": "with courier",
+      "step": "05"
+    },
+    {
+      "id": "delivered",
+      "type": "waiting",
+      "label": "Delivered",
+      "sublabel": "7-day return window",
+      "tag": "invoice issued",
+      "step": "06"
+    },
+    {
+      "id": "settled",
+      "type": "success",
+      "label": "Settled",
+      "sublabel": "in weekly seller payout",
+      "step": "07"
+    },
+    {
+      "id": "expired",
+      "type": "failure",
+      "label": "Expired",
+      "sublabel": "unpaid; stock released",
+      "tag": "terminal"
+    },
+    {
+      "id": "cancelled",
+      "type": "neutral",
+      "label": "Cancelled",
+      "sublabel": "refund + Electrons back",
+      "tag": "terminal"
+    },
+    {
+      "id": "rto",
+      "type": "failure",
+      "label": "RTO",
+      "sublabel": "returned to origin, refund",
+      "tag": "terminal"
+    },
+    {
+      "id": "return_req",
+      "type": "decision",
+      "label": "Return requested",
+      "sublabel": "return or replace"
+    },
+    {
+      "id": "refunded",
+      "type": "neutral",
+      "label": "Returned + refunded",
+      "sublabel": "Electrons reversed",
+      "tag": "terminal"
+    }
+  ],
+  "transitions": [
+    {
+      "id": "t-confirm",
+      "from": "pending",
+      "to": "confirmed",
+      "label": "paid",
+      "variant": "emphasis"
+    },
+    {
+      "id": "t-pack",
+      "from": "confirmed",
+      "to": "packed",
+      "label": "pack"
+    },
+    {
+      "id": "t-ship",
+      "from": "packed",
+      "to": "shipped",
+      "label": "book"
+    },
+    {
+      "id": "t-ofd",
+      "from": "shipped",
+      "to": "ofd",
+      "label": "in transit"
+    },
+    {
+      "id": "t-deliver",
+      "from": "ofd",
+      "to": "delivered",
+      "label": "delivered",
+      "variant": "emphasis"
+    },
+    {
+      "id": "t-settle",
+      "from": "delivered",
+      "to": "settled",
+      "label": "7 days pass"
+    },
+    {
+      "id": "t-expire",
+      "from": "pending",
+      "to": "expired",
+      "label": "sweeper",
+      "variant": "dashed"
+    },
+    {
+      "id": "t-cancel-c",
+      "from": "confirmed",
+      "to": "cancelled",
+      "label": "cancel"
+    },
+    {
+      "id": "t-cancel-p",
+      "from": "packed",
+      "to": "cancelled",
+      "label": "cancel"
+    },
+    {
+      "id": "t-rto-s",
+      "from": "shipped",
+      "to": "rto",
+      "label": "undeliverable",
+      "variant": "dashed"
+    },
+    {
+      "id": "t-rto-o",
+      "from": "ofd",
+      "to": "rto",
+      "label": "failed delivery",
+      "variant": "dashed"
+    },
+    {
+      "id": "t-return",
+      "from": "delivered",
+      "to": "return_req",
+      "label": "within 7 days"
+    },
+    {
+      "id": "t-refund",
+      "from": "return_req",
+      "to": "refunded",
+      "label": "return received",
+      "variant": "security"
+    },
+    {
+      "id": "t-reject",
+      "from": "return_req",
+      "to": "delivered",
+      "label": "replaced or rejected"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Split by seller",
+      "items": [
+        "One checkout creates one order with a sub-order per seller",
+        "Siliconics launch stock ships as its own sub-order"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Shipping (simulated)",
+      "items": [
+        "sim-ship sends signed webhooks for each step",
+        "Statuses change only through allowed transitions with a version check",
+        "A replacement ships as a zero-value sub-order; the original stays Delivered"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Money effects",
+      "items": [
+        "Refunds go to the original method; Electrons return as Electrons",
+        "Seller is paid weekly after the window, minus commission",
+        "Electrons become usable when the return window closes"
+      ]
+    }
+  ]
+}

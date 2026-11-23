@@ -1,0 +1,316 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/hld.candidate.json",
+    "sha256": "69b51dac28962abcff0246c73ed1284306f073665dbf1c6bf1a6f3431490cdd7",
+    "bytes": 9268
+  },
+  "artifact": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-hld.html",
+    "sha256": "7f6b48feb5c9366fa8de070b000fa2e7e0d1c8afa830dd56cc0c58442c900abd",
+    "bytes": 970808
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-hld.finalize.json",
+    "summaryReceipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-hld.finalize-summary.json",
+    "browserCheckReceipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-hld.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.3.0",
+    "availableVersion": "3.3.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-23T07:20:15.536Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 10414,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "resolvedCrossovers": 20,
+      "routesOverSuggestedBends": 5
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [
+        {
+          "left": {
+            "id": "alb-api",
+            "from": "alb",
+            "to": "api",
+            "label": "",
+            "collectionIndex": 5,
+            "artifactIndex": 6
+          },
+          "right": {
+            "id": "api-obs",
+            "from": "api",
+            "to": "obs",
+            "label": "OTLP",
+            "collectionIndex": 21,
+            "artifactIndex": 22
+          },
+          "point": [
+            933,
+            604
+          ],
+          "sharedNode": "api"
+        },
+        {
+          "left": {
+            "id": "api-pg",
+            "from": "api",
+            "to": "pg",
+            "label": "SQL + outbox (one tx)",
+            "collectionIndex": 6,
+            "artifactIndex": 7
+          },
+          "right": {
+            "id": "worker-redis",
+            "from": "worker",
+            "to": "redis",
+            "label": "asynq queues",
+            "collectionIndex": 17,
+            "artifactIndex": 18
+          },
+          "point": [
+            932,
+            737
+          ]
+        },
+        {
+          "left": {
+            "id": "api-redis",
+            "from": "api",
+            "to": "redis",
+            "label": "cache, Lua gates",
+            "collectionIndex": 7,
+            "artifactIndex": 8
+          },
+          "right": {
+            "id": "worker-redis",
+            "from": "worker",
+            "to": "redis",
+            "label": "asynq queues",
+            "collectionIndex": 17,
+            "artifactIndex": 18
+          },
+          "point": [
+            932,
+            676
+          ],
+          "sharedNode": "redis"
+        },
+        {
+          "left": {
+            "id": "api-google",
+            "from": "api",
+            "to": "google",
+            "label": "verify ID token",
+            "collectionIndex": 9,
+            "artifactIndex": 10
+          },
+          "right": {
+            "id": "api-simpayout",
+            "from": "api",
+            "to": "simpayout",
+            "label": "KYC checks",
+            "collectionIndex": 14,
+            "artifactIndex": 15
+          },
+          "point": [
+            794.4431457505076,
+            770
+          ],
+          "sharedNode": "api"
+        },
+        {
+          "left": {
+            "id": "api-google",
+            "from": "api",
+            "to": "google",
+            "label": "verify ID token",
+            "collectionIndex": 9,
+            "artifactIndex": 10
+          },
+          "right": {
+            "id": "worker-pg",
+            "from": "worker",
+            "to": "pg",
+            "label": "outbox relay, jobs",
+            "collectionIndex": 16,
+            "artifactIndex": 17
+          },
+          "point": [
+            934,
+            847
+          ]
+        },
+        {
+          "left": {
+            "id": "api-google",
+            "from": "api",
+            "to": "google",
+            "label": "verify ID token",
+            "collectionIndex": 9,
+            "artifactIndex": 10
+          },
+          "right": {
+            "id": "worker-redis",
+            "from": "worker",
+            "to": "redis",
+            "label": "asynq queues",
+            "collectionIndex": 17,
+            "artifactIndex": 18
+          },
+          "point": [
+            932,
+            772
+          ]
+        },
+        {
+          "left": {
+            "id": "api-google",
+            "from": "api",
+            "to": "google",
+            "label": "verify ID token",
+            "collectionIndex": 9,
+            "artifactIndex": 10
+          },
+          "right": {
+            "id": "worker-simpayout",
+            "from": "worker",
+            "to": "simpayout",
+            "label": "weekly payouts",
+            "collectionIndex": 19,
+            "artifactIndex": 20
+          },
+          "point": [
+            934,
+            919.143593539449
+          ]
+        },
+        {
+          "left": {
+            "id": "api-google",
+            "from": "api",
+            "to": "google",
+            "label": "verify ID token",
+            "collectionIndex": 9,
+            "artifactIndex": 10
+          },
+          "right": {
+            "id": "worker-obs",
+            "from": "worker",
+            "to": "obs",
+            "label": "OTLP, health runs",
+            "collectionIndex": 22,
+            "artifactIndex": 23
+          },
+          "point": [
+            934,
+            884
+          ]
+        }
+      ],
+      "detours": [
+        {
+          "relationship": {
+            "id": "api-google",
+            "from": "api",
+            "to": "google",
+            "label": "verify ID token",
+            "collectionIndex": 9,
+            "artifactIndex": 10
+          },
+          "bends": 6,
+          "stretch": 1.338
+        },
+        {
+          "relationship": {
+            "id": "api-simship",
+            "from": "api",
+            "to": "simship",
+            "label": "book shipment",
+            "collectionIndex": 12,
+            "artifactIndex": 13
+          },
+          "bends": 4,
+          "stretch": 1.093
+        },
+        {
+          "relationship": {
+            "id": "simship-api",
+            "from": "simship",
+            "to": "api",
+            "label": "tracking webhooks",
+            "collectionIndex": 13,
+            "artifactIndex": 14
+          },
+          "bends": 4,
+          "stretch": 1.274
+        },
+        {
+          "relationship": {
+            "id": "api-messaging",
+            "from": "api",
+            "to": "messaging",
+            "label": "OTP SMS",
+            "collectionIndex": 15,
+            "artifactIndex": 16
+          },
+          "bends": 6,
+          "stretch": 1.329
+        },
+        {
+          "relationship": {
+            "id": "worker-pg",
+            "from": "worker",
+            "to": "pg",
+            "label": "outbox relay, jobs",
+            "collectionIndex": 16,
+            "artifactIndex": 17
+          },
+          "bends": 4,
+          "stretch": 1.199
+        }
+      ],
+      "truncated": true
+    },
+    "hints": [
+      "alb → api and api → obs cross next to api: move node alb or obs so the two reach api from different sides (for example one level with it, one directly above or below it).",
+      "api → pg crosses worker → redis: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "api → redis and worker → redis cross next to redis: move node api or worker so the two reach redis from different sides (for example one level with it, one directly above or below it).",
+      "api → google and api → simpayout cross next to api: move node google or simpayout so the two reach api from different sides (for example one level with it, one directly above or below it).",
+      "api → google crosses worker → pg: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "api → google crosses worker → redis: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "api → google crosses worker → simpayout: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "api → google crosses worker → obs: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  }
+}

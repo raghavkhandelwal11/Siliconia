@@ -1,0 +1,253 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "LLD: Checkout and Payment",
+    "locale": "en",
+    "output": ".archify/architecture-siliconics-design-20261123-124944/checkout-payment.html",
+    "quality_profile": "showcase",
+    "parentHref": "siliconics-hld.html"
+  },
+  "participants": [
+    {
+      "id": "buyer",
+      "type": "external",
+      "label": "Buyer",
+      "sublabel": "signed in, phone verified",
+      "icon": "person"
+    },
+    {
+      "id": "web",
+      "type": "frontend",
+      "label": "Web app",
+      "sublabel": "Next.js"
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "API",
+      "sublabel": "checkout + payment"
+    },
+    {
+      "id": "pg",
+      "type": "database",
+      "label": "PostgreSQL",
+      "sublabel": "one transaction"
+    },
+    {
+      "id": "pay",
+      "type": "external",
+      "label": "sim-pay",
+      "sublabel": "hosted checkout"
+    },
+    {
+      "id": "worker",
+      "type": "backend",
+      "label": "Worker",
+      "sublabel": "outbox consumers"
+    }
+  ],
+  "segments": [
+    {
+      "from": 150,
+      "to": 337,
+      "label": "Place order"
+    },
+    {
+      "from": 342,
+      "to": 597,
+      "label": "Pay"
+    },
+    {
+      "from": 602,
+      "to": 752,
+      "label": "Confirm"
+    }
+  ],
+  "messages": [
+    {
+      "id": "place",
+      "from": "buyer",
+      "to": "web",
+      "y": 160,
+      "label": "Place order"
+    },
+    {
+      "id": "post-order",
+      "from": "web",
+      "to": "api",
+      "y": 190,
+      "label": "POST /orders + Idempotency-Key",
+      "variant": "emphasis"
+    },
+    {
+      "id": "reserve",
+      "from": "api",
+      "to": "pg",
+      "y": 220,
+      "label": "re-price, reserve stock, spend Electrons",
+      "variant": "emphasis",
+      "note": "conditional UPDATE on inventory_lots; Electrons spent oldest-expiry first"
+    },
+    {
+      "id": "commit",
+      "from": "api",
+      "to": "pg",
+      "y": 292,
+      "label": "insert order + outbox, COMMIT",
+      "note": "order PENDING_PAYMENT; stock held 10 min"
+    },
+    {
+      "id": "create",
+      "from": "api",
+      "to": "pay",
+      "y": 352,
+      "label": "createOrder(amount, ref)"
+    },
+    {
+      "id": "url",
+      "from": "pay",
+      "to": "api",
+      "y": 382,
+      "label": "checkoutUrl",
+      "variant": "return"
+    },
+    {
+      "id": "pending",
+      "from": "api",
+      "to": "web",
+      "y": 412,
+      "label": "201 PENDING_PAYMENT + redirectUrl",
+      "variant": "return"
+    },
+    {
+      "id": "pay-ui",
+      "from": "web",
+      "to": "pay",
+      "y": 442,
+      "label": "pay by UPI, card or net banking",
+      "variant": "emphasis"
+    },
+    {
+      "id": "webhook",
+      "from": "pay",
+      "to": "api",
+      "y": 472,
+      "label": "signed webhook: CAPTURED",
+      "variant": "security",
+      "note": "HMAC + timestamp verified; deduped in webhook_events"
+    },
+    {
+      "id": "confirm",
+      "from": "api",
+      "to": "pg",
+      "y": 532,
+      "label": "payment CAPTURED, order CONFIRMED, outbox",
+      "note": "launch claims on the order become PAID"
+    },
+    {
+      "id": "back",
+      "from": "pay",
+      "to": "web",
+      "y": 587,
+      "label": "redirect /checkout/result",
+      "variant": "return"
+    },
+    {
+      "id": "poll",
+      "from": "web",
+      "to": "api",
+      "y": 617,
+      "label": "GET /orders/ID (poll 2s)"
+    },
+    {
+      "id": "status",
+      "from": "api",
+      "to": "web",
+      "y": 647,
+      "label": "CONFIRMED",
+      "variant": "return"
+    },
+    {
+      "id": "done",
+      "from": "web",
+      "to": "buyer",
+      "y": 677,
+      "label": "order confirmed",
+      "variant": "return"
+    },
+    {
+      "id": "relay",
+      "from": "pg",
+      "to": "worker",
+      "y": 707,
+      "label": "order.confirmed (outbox relay)",
+      "variant": "dashed",
+      "note": "creates PENDING Electrons lots; notifies buyer and sellers"
+    }
+  ],
+  "activations": [
+    {
+      "participant": "web",
+      "from": 185,
+      "to": 682,
+      "type": "frontend"
+    },
+    {
+      "participant": "api",
+      "from": 190,
+      "to": 652,
+      "type": "backend"
+    },
+    {
+      "participant": "pg",
+      "from": 215,
+      "to": 302,
+      "type": "database"
+    },
+    {
+      "participant": "pg",
+      "from": 527,
+      "to": 542,
+      "type": "database"
+    },
+    {
+      "participant": "pay",
+      "from": 347,
+      "to": 592,
+      "type": "external"
+    },
+    {
+      "participant": "worker",
+      "from": 702,
+      "to": 732,
+      "type": "backend"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Short paths",
+      "items": [
+        "Payable 0 (all Electrons) or COD: order confirms right after COMMIT",
+        "COD only for members, orders under \u20b98,000, no launch-deal units"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Safety",
+      "items": [
+        "Order is confirmed only from a verified webhook or server status check",
+        "Same Idempotency-Key never creates a second order or charge"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Expiry",
+      "items": [
+        "Sweeper (30s) expires unpaid orders, releases stock and launch claims, restores Electrons",
+        "A late CAPTURED webhook on an expired order is refunded automatically"
+      ]
+    }
+  ]
+}

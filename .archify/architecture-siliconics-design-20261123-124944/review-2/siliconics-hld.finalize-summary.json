@@ -1,0 +1,297 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/hld.candidate.json",
+    "sha256": "c5591aec0a4bc056633c0665ce87bea94ee704bb180bed97d92d2e732909ac32",
+    "bytes": 10935
+  },
+  "artifact": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-hld.html",
+    "sha256": "ab3ca9aaa28b05e2da6896f800f9435714a03f1a110ee3a376bded15fde3be9c",
+    "bytes": 967529
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/review-2/siliconics-hld.finalize.json",
+    "summaryReceipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/review-2/siliconics-hld.finalize-summary.json",
+    "browserCheckReceipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/review-2/siliconics-hld.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.3.0",
+    "availableVersion": "3.3.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-23T07:20:15.536Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 4317,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "resolvedCrossovers": 13,
+      "routesOverSuggestedBends": 3
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [
+        {
+          "left": {
+            "id": "api-redis",
+            "from": "api",
+            "to": "redis",
+            "label": "cache, Lua gates",
+            "collectionIndex": 7,
+            "artifactIndex": 8
+          },
+          "right": {
+            "id": "api-simpay",
+            "from": "api",
+            "to": "simpay",
+            "label": "orders, refunds",
+            "collectionIndex": 10,
+            "artifactIndex": 11
+          },
+          "point": [
+            1042,
+            338
+          ],
+          "sharedNode": "api"
+        },
+        {
+          "left": {
+            "id": "api-google",
+            "from": "api",
+            "to": "google",
+            "label": "verify ID token",
+            "collectionIndex": 9,
+            "artifactIndex": 10
+          },
+          "right": {
+            "id": "api-simship",
+            "from": "api",
+            "to": "simship",
+            "label": "book shipment",
+            "collectionIndex": 12,
+            "artifactIndex": 13
+          },
+          "point": [
+            1235,
+            186
+          ],
+          "sharedNode": "api"
+        },
+        {
+          "left": {
+            "id": "api-simpay",
+            "from": "api",
+            "to": "simpay",
+            "label": "orders, refunds",
+            "collectionIndex": 10,
+            "artifactIndex": 11
+          },
+          "right": {
+            "id": "api-simpayout",
+            "from": "api",
+            "to": "simpayout",
+            "label": "KYC checks",
+            "collectionIndex": 14,
+            "artifactIndex": 15
+          },
+          "point": [
+            1308,
+            338
+          ],
+          "sharedNode": "api"
+        },
+        {
+          "left": {
+            "id": "api-simpay",
+            "from": "api",
+            "to": "simpay",
+            "label": "orders, refunds",
+            "collectionIndex": 10,
+            "artifactIndex": 11
+          },
+          "right": {
+            "id": "api-messaging",
+            "from": "api",
+            "to": "messaging",
+            "label": "OTP SMS",
+            "collectionIndex": 15,
+            "artifactIndex": 16
+          },
+          "point": [
+            1300,
+            338
+          ],
+          "sharedNode": "api"
+        },
+        {
+          "left": {
+            "id": "simpay-api",
+            "from": "simpay",
+            "to": "api",
+            "label": "signed webhooks",
+            "collectionIndex": 11,
+            "artifactIndex": 12
+          },
+          "right": {
+            "id": "simship-api",
+            "from": "simship",
+            "to": "api",
+            "label": "tracking webhooks",
+            "collectionIndex": 13,
+            "artifactIndex": 14
+          },
+          "point": [
+            1312.6568542494924,
+            297
+          ],
+          "sharedNode": "api"
+        },
+        {
+          "left": {
+            "id": "simpay-api",
+            "from": "simpay",
+            "to": "api",
+            "label": "signed webhooks",
+            "collectionIndex": 11,
+            "artifactIndex": 12
+          },
+          "right": {
+            "id": "api-simpayout",
+            "from": "api",
+            "to": "simpayout",
+            "label": "KYC checks",
+            "collectionIndex": 14,
+            "artifactIndex": 15
+          },
+          "point": [
+            1308,
+            297
+          ],
+          "sharedNode": "api"
+        },
+        {
+          "left": {
+            "id": "simpay-api",
+            "from": "simpay",
+            "to": "api",
+            "label": "signed webhooks",
+            "collectionIndex": 11,
+            "artifactIndex": 12
+          },
+          "right": {
+            "id": "api-messaging",
+            "from": "api",
+            "to": "messaging",
+            "label": "OTP SMS",
+            "collectionIndex": 15,
+            "artifactIndex": 16
+          },
+          "point": [
+            1300,
+            297
+          ],
+          "sharedNode": "api"
+        },
+        {
+          "left": {
+            "id": "simship-api",
+            "from": "simship",
+            "to": "api",
+            "label": "tracking webhooks",
+            "collectionIndex": 13,
+            "artifactIndex": 14
+          },
+          "right": {
+            "id": "api-simpayout",
+            "from": "api",
+            "to": "simpayout",
+            "label": "KYC checks",
+            "collectionIndex": 14,
+            "artifactIndex": 15
+          },
+          "point": [
+            1308,
+            298
+          ],
+          "sharedNode": "api"
+        }
+      ],
+      "detours": [
+        {
+          "relationship": {
+            "id": "api-simship",
+            "from": "api",
+            "to": "simship",
+            "label": "book shipment",
+            "collectionIndex": 12,
+            "artifactIndex": 13
+          },
+          "bends": 3,
+          "stretch": 1.152
+        },
+        {
+          "relationship": {
+            "id": "simship-api",
+            "from": "simship",
+            "to": "api",
+            "label": "tracking webhooks",
+            "collectionIndex": 13,
+            "artifactIndex": 14
+          },
+          "bends": 3,
+          "stretch": 1.155
+        },
+        {
+          "relationship": {
+            "id": "worker-simpay",
+            "from": "worker",
+            "to": "simpay",
+            "label": "mandate renewals",
+            "collectionIndex": 20,
+            "artifactIndex": 21
+          },
+          "bends": 3,
+          "stretch": 1
+        }
+      ],
+      "truncated": true
+    },
+    "hints": [
+      "api has 7 relationships facing its right side, which fits 3 ports: make that side at least 116px, or move some of those neighbours so they face another side of api.",
+      "api → redis and api → simpay cross next to api: move node redis or simpay so the two reach api from different sides (for example one level with it, one directly above or below it).",
+      "api → google and api → simship cross next to api: move node google or simship so the two reach api from different sides (for example one level with it, one directly above or below it).",
+      "api → simpay and api → simpayout cross next to api: move node simpay or simpayout so the two reach api from different sides (for example one level with it, one directly above or below it).",
+      "api → simpay and api → messaging cross next to api: move node simpay or messaging so the two reach api from different sides (for example one level with it, one directly above or below it).",
+      "simpay → api and simship → api cross next to api: move node simpay or simship so the two reach api from different sides (for example one level with it, one directly above or below it).",
+      "simpay → api and api → simpayout cross next to api: move node simpay or simpayout so the two reach api from different sides (for example one level with it, one directly above or below it).",
+      "simpay → api and api → messaging cross next to api: move node simpay or messaging so the two reach api from different sides (for example one level with it, one directly above or below it)."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  }
+}

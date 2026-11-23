@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "LLD: Launch Deal Reservation (never oversell)",
+    "locale": "en",
+    "output": ".archify/architecture-siliconics-design-20261123-124944/launch-reserve.html",
+    "quality_profile": "showcase",
+    "parentHref": "siliconics-hld.html"
+  },
+  "participants": [
+    {
+      "id": "member",
+      "type": "external",
+      "label": "Electra Member",
+      "sublabel": "launch page",
+      "icon": "person"
+    },
+    {
+      "id": "web",
+      "type": "frontend",
+      "label": "Web app",
+      "sublabel": "SSE countdown"
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "API",
+      "sublabel": "launch module"
+    },
+    {
+      "id": "redis",
+      "type": "database",
+      "label": "Redis",
+      "sublabel": "fast gate"
+    },
+    {
+      "id": "pg",
+      "type": "database",
+      "label": "PostgreSQL",
+      "sublabel": "source of truth"
+    },
+    {
+      "id": "worker",
+      "type": "backend",
+      "label": "Worker",
+      "sublabel": "sweeper, every 30s"
+    }
+  ],
+  "segments": [
+    {
+      "from": 150,
+      "to": 342,
+      "label": "Fast gate"
+    },
+    {
+      "from": 347,
+      "to": 551,
+      "label": "Commit hold"
+    },
+    {
+      "from": 556,
+      "to": 686,
+      "label": "Unpaid hold expires"
+    }
+  ],
+  "messages": [
+    {
+      "id": "click",
+      "from": "member",
+      "to": "web",
+      "y": 160,
+      "label": "Buy with 80% discount"
+    },
+    {
+      "id": "reserve",
+      "from": "web",
+      "to": "api",
+      "y": 190,
+      "label": "POST /launches/ID/reserve (qty)",
+      "variant": "emphasis",
+      "note": "member check, 5 per min limit, admission token if waiting room is on"
+    },
+    {
+      "id": "lua",
+      "from": "api",
+      "to": "redis",
+      "y": 250,
+      "label": "EVAL reserve.lua",
+      "note": "checks remaining units and per-member limit atomically"
+    },
+    {
+      "id": "gate",
+      "from": "redis",
+      "to": "api",
+      "y": 322,
+      "label": "OK (SOLD_OUT or LIMIT returns 409)",
+      "variant": "return"
+    },
+    {
+      "id": "tx",
+      "from": "api",
+      "to": "pg",
+      "y": 357,
+      "label": "decrement, member counter, claim HELD",
+      "variant": "emphasis",
+      "note": "UPDATE only WHERE deal_remaining >= qty; CHECK constraint blocks negatives"
+    },
+    {
+      "id": "commit",
+      "from": "pg",
+      "to": "api",
+      "y": 441,
+      "label": "COMMIT (0 rows: rollback + undo Redis)",
+      "variant": "return"
+    },
+    {
+      "id": "publish",
+      "from": "api",
+      "to": "redis",
+      "y": 471,
+      "label": "PUBLISH remaining units",
+      "variant": "dashed"
+    },
+    {
+      "id": "held",
+      "from": "api",
+      "to": "web",
+      "y": 501,
+      "label": "201 claimId, heldUntil +10 min",
+      "variant": "return"
+    },
+    {
+      "id": "timer",
+      "from": "web",
+      "to": "member",
+      "y": 531,
+      "label": "hold timer, go to checkout",
+      "variant": "return"
+    },
+    {
+      "id": "sweep",
+      "from": "worker",
+      "to": "pg",
+      "y": 571,
+      "label": "release claims past heldUntil",
+      "variant": "dashed",
+      "note": "restores deal_remaining and the member counter"
+    },
+    {
+      "id": "restore",
+      "from": "worker",
+      "to": "redis",
+      "y": 631,
+      "label": "restore counters + PUBLISH",
+      "variant": "dashed"
+    }
+  ],
+  "activations": [
+    {
+      "participant": "web",
+      "from": 185,
+      "to": 536,
+      "type": "frontend"
+    },
+    {
+      "participant": "api",
+      "from": 190,
+      "to": 506,
+      "type": "backend"
+    },
+    {
+      "participant": "redis",
+      "from": 245,
+      "to": 327,
+      "type": "database"
+    },
+    {
+      "participant": "pg",
+      "from": 352,
+      "to": 446,
+      "type": "database"
+    },
+    {
+      "participant": "worker",
+      "from": 566,
+      "to": 636,
+      "type": "backend"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Deal units",
+      "items": [
+        "k = largest number at 80% off keeping profit at 4% or more of cost",
+        "Example: 20 phones at \u20b914,000, price \u20b920,000: 6 deal units, 14 at full price"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Never oversell",
+      "items": [
+        "PostgreSQL decides; Redis only sheds load",
+        "Per-member limit is set by the seller for each launch",
+        "Claims become PAID with the order or are released"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "What members see",
+      "items": [
+        "0 left, none held: 'All items on discount were purchased'",
+        "0 left, some held: units may free up in a few minutes"
+      ]
+    }
+  ]
+}
