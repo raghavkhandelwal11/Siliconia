@@ -57,6 +57,8 @@ GitHub milestones use the names below (`M0 Foundation`, …).
 | T1.7 | Search and listing: full-text + filters + sort; category and search pages | `feat` `mod:catalogue` `P0` `M` |
 | T1.8 | Product page (ISR + live block, role-based actions), home page v1 | `feat` `area:web` `mod:catalogue` `P0` `L` |
 
+**Status (24 Nov 2026):** T1.1–T1.3 built and tested (integration tests, plus the full flow through Caddy with codes read from the test inbox); in review as [Siliconia_Backend#2](https://github.com/raghavkhandelwal11/Siliconia_Backend/pull/2) and [Siliconia-Frontend#2](https://github.com/raghavkhandelwal11/Siliconia-Frontend/pull/2), stacked on the M0 PRs. Google sign-in is built but stays hidden until a free Google OAuth client is configured. Next: T1.4.
+
 ## M2 Cart, checkout and orders
 **Done when:** a buyer pays through sim-pay (or COD/Electrons stubs), the seller ships through sim-ship, the buyer tracks, returns or raises an issue, and emails and test-inbox messages are sent.
 
