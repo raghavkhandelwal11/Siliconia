@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "22621fbf-389a-4700-a067-12263c5a9020",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/frontend-architecture.candidate.json",
+  "output": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/frontend-architecture.html",
+  "specification": {
+    "sha256": "de7ab9b0137c0e1bea5b2f55c1ad70f0b226a47f470c81ec98c410eeccc46f2a",
+    "bytes": 8489
+  },
+  "artifact": {
+    "sha256": "1ac4ec6c94e008b11e9b6fefd1c8b2ba5032d794308456dc06cb99481e98a8bb",
+    "bytes": 950428
+  }
+}

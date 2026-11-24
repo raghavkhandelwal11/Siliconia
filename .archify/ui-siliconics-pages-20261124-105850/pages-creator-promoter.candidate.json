@@ -1,0 +1,195 @@
+{
+ "schema_version": 1,
+ "diagram_type": "tree",
+ "meta": {
+  "title": "Page structure: creator and promoter portals",
+  "locale": "en",
+  "output": ".archify/ui-siliconics-pages-20261124-105850/pages-creator-promoter.html",
+  "quality_profile": "showcase"
+ },
+ "layout": {
+  "direction": "right"
+ },
+ "nodes": [
+  {
+   "id": "root",
+   "label": "Creator + promoter",
+   "sublabel": "approved accounts"
+  },
+  {
+   "id": "c_onboarding",
+   "label": "Creator onboarding",
+   "parent": "root",
+   "sublabel": "/creator/onboarding"
+  },
+  {
+   "id": "c_onboarding_0",
+   "label": "Social profiles",
+   "parent": "c_onboarding"
+  },
+  {
+   "id": "c_onboarding_1",
+   "label": "Followers and evidence",
+   "parent": "c_onboarding"
+  },
+  {
+   "id": "c_onboarding_2",
+   "label": "Niche and samples",
+   "parent": "c_onboarding"
+  },
+  {
+   "id": "c_onboarding_3",
+   "label": "Terms and status",
+   "parent": "c_onboarding"
+  },
+  {
+   "id": "c_dashboard",
+   "label": "Creator dashboard",
+   "parent": "root",
+   "sublabel": "/creator"
+  },
+  {
+   "id": "c_dashboard_0",
+   "label": "Reviews and votes",
+   "parent": "c_dashboard"
+  },
+  {
+   "id": "c_dashboard_1",
+   "label": "Balance",
+   "parent": "c_dashboard"
+  },
+  {
+   "id": "c_demos",
+   "label": "Demos",
+   "parent": "root",
+   "sublabel": "/creator/demos"
+  },
+  {
+   "id": "c_demos_0",
+   "label": "Requests and tracking",
+   "parent": "c_demos"
+  },
+  {
+   "id": "c_demos_1",
+   "label": "Review due date",
+   "parent": "c_demos"
+  },
+  {
+   "id": "c_reviews",
+   "label": "Reviews",
+   "parent": "root",
+   "sublabel": "/creator/reviews"
+  },
+  {
+   "id": "c_reviews_0",
+   "label": "Rating and text",
+   "parent": "c_reviews"
+  },
+  {
+   "id": "c_reviews_1",
+   "label": "Video or post link",
+   "parent": "c_reviews"
+  },
+  {
+   "id": "c_earnings",
+   "label": "Earnings",
+   "parent": "root",
+   "sublabel": "/creator/earnings"
+  },
+  {
+   "id": "c_earnings_0",
+   "label": "By product and month",
+   "parent": "c_earnings"
+  },
+  {
+   "id": "c_kyc",
+   "label": "Payout KYC",
+   "parent": "root",
+   "sublabel": "/creator/kyc"
+  },
+  {
+   "id": "c_kyc_0",
+   "label": "PAN and bank (sim)",
+   "parent": "c_kyc"
+  },
+  {
+   "id": "c_cashout",
+   "label": "Cash-out",
+   "parent": "root",
+   "sublabel": "/creator/cash-out"
+  },
+  {
+   "id": "c_cashout_0",
+   "label": "Min 250 Electrons",
+   "parent": "c_cashout"
+  },
+  {
+   "id": "c_cashout_1",
+   "label": "Weekly payout status",
+   "parent": "c_cashout"
+  },
+  {
+   "id": "p_onboarding",
+   "label": "Promoter onboarding",
+   "parent": "root",
+   "sublabel": "/promoter/onboarding"
+  },
+  {
+   "id": "p_onboarding_0",
+   "label": "Person or company",
+   "parent": "p_onboarding"
+  },
+  {
+   "id": "p_onboarding_1",
+   "label": "Investments and proof",
+   "parent": "p_onboarding"
+  },
+  {
+   "id": "p_onboarding_2",
+   "label": "Terms and status",
+   "parent": "p_onboarding"
+  },
+  {
+   "id": "p_products",
+   "label": "Promote products",
+   "parent": "root",
+   "sublabel": "/promoter/products"
+  },
+  {
+   "id": "p_products_0",
+   "label": "Verified startups only",
+   "parent": "p_products"
+  },
+  {
+   "id": "p_products_1",
+   "label": "Promote or stop",
+   "parent": "p_products"
+  },
+  {
+   "id": "p_rewards",
+   "label": "Promoter rewards",
+   "parent": "root",
+   "sublabel": "/promoter/rewards"
+  },
+  {
+   "id": "p_rewards_0",
+   "label": "Promoted products",
+   "parent": "p_rewards"
+  },
+  {
+   "id": "p_rewards_1",
+   "label": "Sales and rewards",
+   "parent": "p_rewards"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "violet",
+   "title": "Approvals",
+   "items": [
+    "Creators: 5,000+ followers, admin decides",
+    "Promoters: admin checks proof and the startup's seller confirms"
+   ]
+  }
+ ]
+}

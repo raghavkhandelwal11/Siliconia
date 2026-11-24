@@ -1,0 +1,249 @@
+{
+ "schema_version": 2,
+ "diagram_type": "workflow",
+ "meta": {
+  "title": "Page flow: seller",
+  "locale": "en",
+  "output": ".archify/ui-siliconics-pages-20261124-105850/flow-seller.html",
+  "quality_profile": "showcase",
+  "parentHref": "frontend-architecture.html",
+  "legend": {
+   "entries": {
+    "frontend": {
+     "label": "Page"
+    },
+    "external": {
+     "label": "Test simulator or outside step"
+    },
+    "security": {
+     "label": "Check or decision"
+    },
+    "backend": {
+     "label": "System step"
+    }
+   }
+  }
+ },
+ "lanes": [
+  {
+   "id": "setup",
+   "label": "Sign-up"
+  },
+  {
+   "id": "review",
+   "label": "Admin review",
+   "variant": "exception"
+  },
+  {
+   "id": "cat",
+   "label": "Catalogue"
+  },
+  {
+   "id": "ful",
+   "label": "Orders"
+  },
+  {
+   "id": "money",
+   "label": "Money"
+  }
+ ],
+ "mainPath": [
+  "signin",
+  "wizard",
+  "submitted",
+  "approve",
+  "dashboard",
+  "product",
+  "orders",
+  "ship",
+  "payout"
+ ],
+ "nodes": [
+  {
+   "id": "signin",
+   "lane": "setup",
+   "col": 0,
+   "type": "frontend",
+   "label": "Sign in as seller",
+   "sublabel": "phone + OTP"
+  },
+  {
+   "id": "wizard",
+   "lane": "setup",
+   "col": 1,
+   "type": "frontend",
+   "label": "Onboarding wizard",
+   "sublabel": "PAN, GSTIN, bank, documents"
+  },
+  {
+   "id": "submitted",
+   "lane": "setup",
+   "col": 2,
+   "type": "frontend",
+   "label": "Status tracker",
+   "sublabel": "submitted, under review"
+  },
+  {
+   "id": "approve",
+   "lane": "review",
+   "col": 2,
+   "type": "security",
+   "label": "Admin review",
+   "sublabel": "documents checked"
+  },
+  {
+   "id": "rejected",
+   "lane": "review",
+   "col": 1,
+   "type": "security",
+   "label": "Rejected",
+   "sublabel": "reason shown"
+  },
+  {
+   "id": "dashboard",
+   "lane": "cat",
+   "col": 3,
+   "type": "frontend",
+   "label": "Dashboard",
+   "sublabel": "sales, orders, payouts"
+  },
+  {
+   "id": "product",
+   "lane": "cat",
+   "col": 4,
+   "type": "frontend",
+   "label": "Add products",
+   "sublabel": "specs, variants, images"
+  },
+  {
+   "id": "orders",
+   "lane": "ful",
+   "col": 4,
+   "type": "frontend",
+   "label": "New orders",
+   "sublabel": "queue by status"
+  },
+  {
+   "id": "ship",
+   "lane": "ful",
+   "col": 5,
+   "type": "frontend",
+   "label": "Pack and ship",
+   "sublabel": "sim-ship label"
+  },
+  {
+   "id": "returns",
+   "lane": "ful",
+   "col": 3,
+   "type": "frontend",
+   "label": "Returns",
+   "sublabel": "approve or reject"
+  },
+  {
+   "id": "payout",
+   "lane": "money",
+   "col": 5,
+   "type": "frontend",
+   "label": "Weekly payout",
+   "sublabel": "after window, minus commission"
+  }
+ ],
+ "edges": [
+  {
+   "id": "signin-wizard",
+   "from": "signin",
+   "to": "wizard",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "wizard-submitted",
+   "from": "wizard",
+   "to": "submitted",
+   "label": "submit",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "submitted-approve",
+   "from": "submitted",
+   "to": "approve",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "approve-dashboard",
+   "from": "approve",
+   "to": "dashboard",
+   "label": "approved",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "approve-rejected",
+   "from": "approve",
+   "to": "rejected",
+   "label": "rejected",
+   "role": "error",
+   "variant": "security"
+  },
+  {
+   "id": "rejected-wizard",
+   "from": "rejected",
+   "to": "wizard",
+   "label": "fix and resubmit",
+   "role": "return",
+   "variant": "dashed"
+  },
+  {
+   "id": "dashboard-product",
+   "from": "dashboard",
+   "to": "product",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "product-orders",
+   "from": "product",
+   "to": "orders",
+   "label": "buyers order",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "orders-ship",
+   "from": "orders",
+   "to": "ship",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "ship-payout",
+   "from": "ship",
+   "to": "payout",
+   "label": "delivered + 7 days",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "ship-returns",
+   "from": "ship",
+   "to": "returns",
+   "label": "return requested",
+   "role": "branch",
+   "variant": "default"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "cyan",
+   "title": "Also in the portal",
+   "items": [
+    "Creator demo requests",
+    "Promoter confirmations and rewards",
+    "Buyer feedback inbox",
+    "Company profile and verified tag"
+   ]
+  }
+ ]
+}

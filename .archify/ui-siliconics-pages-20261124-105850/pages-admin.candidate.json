@@ -1,0 +1,245 @@
+{
+ "schema_version": 1,
+ "diagram_type": "tree",
+ "meta": {
+  "title": "Page structure: admin console",
+  "locale": "en",
+  "output": ".archify/ui-siliconics-pages-20261124-105850/pages-admin.html",
+  "quality_profile": "showcase"
+ },
+ "layout": {
+  "direction": "right"
+ },
+ "nodes": [
+  {
+   "id": "root",
+   "label": "Admin console",
+   "sublabel": "/admin, max 3 admins, TOTP"
+  },
+  {
+   "id": "home",
+   "label": "Overview",
+   "parent": "root",
+   "sublabel": "/admin"
+  },
+  {
+   "id": "home_0",
+   "label": "Health status",
+   "parent": "home"
+  },
+  {
+   "id": "home_1",
+   "label": "Approvals waiting",
+   "parent": "home"
+  },
+  {
+   "id": "home_2",
+   "label": "Overdue issues",
+   "parent": "home"
+  },
+  {
+   "id": "approvals",
+   "label": "Approvals",
+   "parent": "root",
+   "sublabel": "/admin/approvals/[type]"
+  },
+  {
+   "id": "approvals_0",
+   "label": "Sellers",
+   "parent": "approvals"
+  },
+  {
+   "id": "approvals_1",
+   "label": "Creators",
+   "parent": "approvals"
+  },
+  {
+   "id": "approvals_2",
+   "label": "Promoters",
+   "parent": "approvals"
+  },
+  {
+   "id": "launches",
+   "label": "Launches",
+   "parent": "root",
+   "sublabel": "/admin/launches"
+  },
+  {
+   "id": "launches_0",
+   "label": "List",
+   "parent": "launches"
+  },
+  {
+   "id": "launches_1",
+   "label": "New launch",
+   "sublabel": "deal-unit calculator",
+   "parent": "launches"
+  },
+  {
+   "id": "launches_2",
+   "label": "Live monitor",
+   "parent": "launches"
+  },
+  {
+   "id": "users",
+   "label": "Users",
+   "parent": "root",
+   "sublabel": "/admin/users"
+  },
+  {
+   "id": "users_0",
+   "label": "Search and suspend",
+   "parent": "users"
+  },
+  {
+   "id": "users_1",
+   "label": "Create admin (max 3)",
+   "parent": "users"
+  },
+  {
+   "id": "users_2",
+   "label": "Ledger adjustment (2 admins)",
+   "parent": "users"
+  },
+  {
+   "id": "ops",
+   "label": "Orders, issues, returns",
+   "parent": "root",
+   "sublabel": "/admin/orders, issues, returns"
+  },
+  {
+   "id": "ops_0",
+   "label": "Assign and notes",
+   "parent": "ops"
+  },
+  {
+   "id": "ops_1",
+   "label": "Decisions",
+   "parent": "ops"
+  },
+  {
+   "id": "payouts",
+   "label": "Payouts",
+   "parent": "root",
+   "sublabel": "/admin/payouts"
+  },
+  {
+   "id": "payouts_0",
+   "label": "Batches: approve, release",
+   "parent": "payouts"
+  },
+  {
+   "id": "reviews",
+   "label": "Reviews",
+   "parent": "root",
+   "sublabel": "/admin/reviews"
+  },
+  {
+   "id": "reviews_0",
+   "label": "Moderation queue",
+   "parent": "reviews"
+  },
+  {
+   "id": "categories",
+   "label": "Categories",
+   "parent": "root",
+   "sublabel": "/admin/categories"
+  },
+  {
+   "id": "categories_0",
+   "label": "Spec fields",
+   "parent": "categories"
+  },
+  {
+   "id": "categories_1",
+   "label": "Commission and GST",
+   "parent": "categories"
+  },
+  {
+   "id": "config",
+   "label": "Config",
+   "parent": "root",
+   "sublabel": "/admin/config"
+  },
+  {
+   "id": "config_0",
+   "label": "Electrons, membership, COD, pools",
+   "parent": "config"
+  },
+  {
+   "id": "config_1",
+   "label": "Change history",
+   "parent": "config"
+  },
+  {
+   "id": "legal",
+   "label": "Legal",
+   "parent": "root",
+   "sublabel": "/admin/legal"
+  },
+  {
+   "id": "legal_0",
+   "label": "Document versions",
+   "parent": "legal"
+  },
+  {
+   "id": "reports",
+   "label": "Reports",
+   "parent": "root",
+   "sublabel": "/admin/reports"
+  },
+  {
+   "id": "reports_0",
+   "label": "CSV export",
+   "parent": "reports"
+  },
+  {
+   "id": "health",
+   "label": "Health",
+   "parent": "root",
+   "sublabel": "/admin/health"
+  },
+  {
+   "id": "health_0",
+   "label": "Checks and uptime",
+   "parent": "health"
+  },
+  {
+   "id": "health_1",
+   "label": "Latency, errors, queues",
+   "parent": "health"
+  },
+  {
+   "id": "audit",
+   "label": "Audit log",
+   "parent": "root",
+   "sublabel": "/admin/audit"
+  },
+  {
+   "id": "audit_0",
+   "label": "All admin actions",
+   "parent": "audit"
+  },
+  {
+   "id": "switch",
+   "label": "Role switch",
+   "parent": "root",
+   "sublabel": "from the header"
+  },
+  {
+   "id": "switch_0",
+   "label": "View as buyer, seller, creator or promoter",
+   "parent": "switch"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "rose",
+   "title": "Safety",
+   "items": [
+    "Every admin action and role switch is audit-logged",
+    "Switched admins cannot move money or approve on a user's behalf"
+   ]
+  }
+ ]
+}

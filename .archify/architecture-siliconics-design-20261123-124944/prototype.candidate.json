@@ -1,0 +1,501 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Siliconics: Prototype Architecture (free tier)",
+    "locale": "en",
+    "output": ".archify/architecture-siliconics-design-20261123-124944/siliconics-prototype.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "users",
+      "type": "external",
+      "label": "Users, testers, admins",
+      "sublabel": "5 roles; admins add TOTP",
+      "icon": "person",
+      "pos": [
+        20,
+        226
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "caddy",
+      "type": "security",
+      "label": "Caddy",
+      "sublabel": "HTTPS, path routing, headers",
+      "explanation": "Single HTTPS address on a free subdomain with Let's Encrypt certificates. Routes /api/* to the API (SSE unbuffered), /sim/pay/* to the payment simulator, /test-inbox to sim-notify behind a password, and everything else to the web app. One origin keeps sign-in cookies first-party.",
+      "pos": [
+        250,
+        210
+      ],
+      "size": [
+        180,
+        110
+      ]
+    },
+    {
+      "id": "web",
+      "type": "frontend",
+      "label": "Web app x2",
+      "sublabel": "React + Next.js",
+      "pos": [
+        470,
+        130
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "API x2",
+      "sublabel": "Go modular monolith, /api/v1",
+      "explanation": "Same code and image as production. Provider adapters are set to the simulators by PROVIDER_* settings; email uses Brevo.",
+      "drilldowns": [
+        {
+          "href": "checkout-payment.html",
+          "label": "Checkout and payment flow",
+          "diagram_type": "sequence"
+        },
+        {
+          "href": "launch-reserve.html",
+          "label": "Launch deal reservation flow",
+          "diagram_type": "sequence"
+        },
+        {
+          "href": "order-lifecycle.html",
+          "label": "Sub-order lifecycle",
+          "diagram_type": "lifecycle"
+        },
+        {
+          "href": "electrons-lifecycle.html",
+          "label": "Electrons lot lifecycle",
+          "diagram_type": "lifecycle"
+        }
+      ],
+      "pos": [
+        700,
+        230
+      ],
+      "size": [
+        260,
+        200
+      ]
+    },
+    {
+      "id": "worker",
+      "type": "backend",
+      "label": "Worker",
+      "sublabel": "jobs, outbox relay, health checks",
+      "drilldowns": [
+        {
+          "href": "electrons-lifecycle.html",
+          "label": "Electrons lot lifecycle",
+          "diagram_type": "lifecycle"
+        }
+      ],
+      "pos": [
+        760,
+        620
+      ],
+      "size": [
+        200,
+        84
+      ]
+    },
+    {
+      "id": "pg",
+      "type": "database",
+      "label": "PostgreSQL 16",
+      "sublabel": "container, nightly backup",
+      "drilldowns": [
+        {
+          "href": "core-schema.html",
+          "label": "Core data model"
+        }
+      ],
+      "pos": [
+        750,
+        500
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "redis",
+      "type": "database",
+      "label": "Redis 7",
+      "sublabel": "container, cache, queues",
+      "pos": [
+        940,
+        500
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "simpay",
+      "type": "external",
+      "label": "sim-pay",
+      "sublabel": "checkout page, webhooks",
+      "tag": "simulator",
+      "pos": [
+        250,
+        370
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "simship",
+      "type": "external",
+      "label": "sim-ship",
+      "sublabel": "labels, tracking",
+      "tag": "simulator",
+      "pos": [
+        1120,
+        230
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "simpayout",
+      "type": "external",
+      "label": "sim-payout + sim-kyc",
+      "sublabel": "payouts, PAN, penny-drop",
+      "tag": "simulator",
+      "pos": [
+        1120,
+        360
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "notify",
+      "type": "external",
+      "label": "sim-notify",
+      "sublabel": "test inbox for SMS, WhatsApp",
+      "tag": "simulator",
+      "pos": [
+        250,
+        620
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "compose",
+      "type": "backend",
+      "label": "Docker Compose",
+      "sublabel": "pull, migrate, rolling restart",
+      "pos": [
+        470,
+        730
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "google",
+      "type": "security",
+      "label": "Google sign-in",
+      "sublabel": "OIDC, free",
+      "pos": [
+        720,
+        10
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "storage",
+      "type": "cloud",
+      "label": "Cloudflare R2",
+      "sublabel": "or MinIO on the VM, S3 API",
+      "pos": [
+        910,
+        10
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "brevo",
+      "type": "external",
+      "label": "Brevo",
+      "sublabel": "email, free tier",
+      "pos": [
+        1380,
+        560
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "obs",
+      "type": "cloud",
+      "label": "Monitoring",
+      "sublabel": "Grafana Cloud, Sentry, UptimeRobot",
+      "pos": [
+        1380,
+        680
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "github",
+      "type": "external",
+      "label": "GitHub Actions + GHCR",
+      "sublabel": "parallel CI, images, deploy",
+      "pos": [
+        20,
+        730
+      ],
+      "size": [
+        170,
+        64
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Oracle Cloud Always Free VM (Mumbai or Hyderabad)",
+      "wraps": [
+        "caddy",
+        "web",
+        "api",
+        "worker",
+        "pg",
+        "redis",
+        "simpay",
+        "simship",
+        "simpayout",
+        "notify",
+        "compose"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "users-caddy",
+      "from": "users",
+      "to": "caddy",
+      "label": "HTTPS",
+      "variant": "emphasis"
+    },
+    {
+      "id": "caddy-web",
+      "from": "caddy",
+      "to": "web",
+      "label": "pages",
+      "variant": "emphasis"
+    },
+    {
+      "id": "caddy-api",
+      "from": "caddy",
+      "to": "api",
+      "label": "/api + SSE",
+      "variant": "emphasis"
+    },
+    {
+      "id": "caddy-simpay",
+      "from": "caddy",
+      "to": "simpay",
+      "label": "/sim/pay"
+    },
+    {
+      "id": "caddy-notify",
+      "from": "caddy",
+      "to": "notify",
+      "label": "/test-inbox",
+      "variant": "security"
+    },
+    {
+      "id": "web-api",
+      "from": "web",
+      "to": "api",
+      "label": "SSR fetch"
+    },
+    {
+      "id": "api-pg",
+      "from": "api",
+      "to": "pg",
+      "label": "SQL + outbox"
+    },
+    {
+      "id": "api-redis",
+      "from": "api",
+      "to": "redis",
+      "label": "cache, Lua gates"
+    },
+    {
+      "id": "api-simpay",
+      "from": "api",
+      "to": "simpay",
+      "label": "orders, refunds"
+    },
+    {
+      "id": "simpay-api",
+      "from": "simpay",
+      "to": "api",
+      "label": "signed webhooks",
+      "variant": "dashed"
+    },
+    {
+      "id": "api-simship",
+      "from": "api",
+      "to": "simship",
+      "label": "book shipment"
+    },
+    {
+      "id": "simship-api",
+      "from": "simship",
+      "to": "api",
+      "label": "tracking webhooks",
+      "variant": "dashed"
+    },
+    {
+      "id": "api-simpayout",
+      "from": "api",
+      "to": "simpayout",
+      "label": "KYC checks",
+      "variant": "security"
+    },
+    {
+      "id": "api-notify",
+      "from": "api",
+      "to": "notify",
+      "label": "OTP"
+    },
+    {
+      "id": "api-google",
+      "from": "api",
+      "to": "google",
+      "label": "verify ID token",
+      "variant": "security"
+    },
+    {
+      "id": "api-storage",
+      "from": "api",
+      "to": "storage",
+      "label": "presigned URLs"
+    },
+    {
+      "id": "worker-pg",
+      "from": "worker",
+      "to": "pg",
+      "label": "jobs, outbox"
+    },
+    {
+      "id": "worker-redis",
+      "from": "worker",
+      "to": "redis",
+      "label": "queues"
+    },
+    {
+      "id": "worker-notify",
+      "from": "worker",
+      "to": "notify",
+      "label": "SMS, WhatsApp",
+      "variant": "dashed"
+    },
+    {
+      "id": "worker-brevo",
+      "from": "worker",
+      "to": "brevo",
+      "label": "email",
+      "variant": "dashed"
+    },
+    {
+      "id": "worker-simpayout",
+      "from": "worker",
+      "to": "simpayout",
+      "label": "weekly payouts"
+    },
+    {
+      "id": "worker-obs",
+      "from": "worker",
+      "to": "obs",
+      "label": "telemetry",
+      "variant": "dashed"
+    },
+    {
+      "id": "github-compose",
+      "from": "github",
+      "to": "compose",
+      "label": "deploy over SSH",
+      "variant": "emphasis"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Free only (D-20)",
+      "items": [
+        "No paid plans, AI APIs or real money",
+        "Oracle asks for a card to verify identity, not charged (Q-09)",
+        "Fallback without a card: Vercel + Render + Neon + Upstash free"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Production-like",
+      "items": [
+        "Same images, code, data model and flows",
+        "Free services list: docs/free-services.md",
+        "Two web and API copies give zero-downtime deploys"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Simulated for now",
+      "items": [
+        "Payments, shipping, payouts, KYC, SMS and WhatsApp",
+        "Testers read sign-in codes in the password-protected test inbox",
+        "Paid replacements are planned only in paid-later/ (not part of this build)"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Operations",
+      "items": [
+        "Only Caddy (80/443) and SSH are open; everything else stays on the internal Docker network",
+        "All containers send telemetry through Grafana Alloy",
+        "Nightly encrypted database backup to R2, kept 14 days; the worker charges membership renewals through sim-pay"
+      ]
+    }
+  ]
+}

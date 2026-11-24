@@ -1,0 +1,265 @@
+{
+ "schema_version": 1,
+ "diagram_type": "tree",
+ "meta": {
+  "title": "Page structure: buyer and member",
+  "locale": "en",
+  "output": ".archify/ui-siliconics-pages-20261124-105850/pages-buyer.html",
+  "quality_profile": "showcase"
+ },
+ "layout": {
+  "direction": "right"
+ },
+ "nodes": [
+  {
+   "id": "root",
+   "label": "Buyer + member",
+   "sublabel": "signed-in buyers"
+  },
+  {
+   "id": "cart",
+   "label": "Cart",
+   "parent": "root",
+   "sublabel": "/cart"
+  },
+  {
+   "id": "cart_0",
+   "label": "Items grouped by seller",
+   "parent": "cart"
+  },
+  {
+   "id": "cart_1",
+   "label": "Price and stock warnings",
+   "parent": "cart"
+  },
+  {
+   "id": "cart_2",
+   "label": "Electrons earn preview",
+   "parent": "cart"
+  },
+  {
+   "id": "checkout",
+   "label": "Checkout",
+   "parent": "root",
+   "sublabel": "/checkout"
+  },
+  {
+   "id": "checkout_0",
+   "label": "Address",
+   "parent": "checkout"
+  },
+  {
+   "id": "checkout_1",
+   "label": "Electrons slider",
+   "parent": "checkout"
+  },
+  {
+   "id": "checkout_2",
+   "label": "Payment methods",
+   "sublabel": "COD only if eligible",
+   "parent": "checkout"
+  },
+  {
+   "id": "checkout_3",
+   "label": "Place order",
+   "parent": "checkout"
+  },
+  {
+   "id": "result",
+   "label": "Checkout result",
+   "parent": "root",
+   "sublabel": "/checkout/result/[id]"
+  },
+  {
+   "id": "result_0",
+   "label": "Waits for payment confirmation",
+   "parent": "result"
+  },
+  {
+   "id": "result_1",
+   "label": "Success or retry",
+   "parent": "result"
+  },
+  {
+   "id": "orders",
+   "label": "Orders",
+   "parent": "root",
+   "sublabel": "/account/orders"
+  },
+  {
+   "id": "orders_0",
+   "label": "Status chips",
+   "parent": "orders"
+  },
+  {
+   "id": "orders_1",
+   "label": "Filters",
+   "parent": "orders"
+  },
+  {
+   "id": "order",
+   "label": "Order detail",
+   "parent": "root",
+   "sublabel": "/account/orders/[id]"
+  },
+  {
+   "id": "order_0",
+   "label": "Timeline per shipment",
+   "parent": "order"
+  },
+  {
+   "id": "order_1",
+   "label": "Tracking and invoice",
+   "parent": "order"
+  },
+  {
+   "id": "order_2",
+   "label": "Cancel before shipping",
+   "parent": "order"
+  },
+  {
+   "id": "order_3",
+   "label": "Return, review, issue actions",
+   "parent": "order"
+  },
+  {
+   "id": "returns",
+   "label": "Returns",
+   "parent": "root",
+   "sublabel": "/account/returns"
+  },
+  {
+   "id": "returns_0",
+   "label": "Reason and photos",
+   "parent": "returns"
+  },
+  {
+   "id": "returns_1",
+   "label": "Pickup status",
+   "parent": "returns"
+  },
+  {
+   "id": "issues",
+   "label": "Issues",
+   "parent": "root",
+   "sublabel": "/account/issues"
+  },
+  {
+   "id": "issues_0",
+   "label": "3-step new issue",
+   "parent": "issues"
+  },
+  {
+   "id": "issues_1",
+   "label": "Chat and status",
+   "parent": "issues"
+  },
+  {
+   "id": "electrons",
+   "label": "Electrons",
+   "parent": "root",
+   "sublabel": "/account/electrons"
+  },
+  {
+   "id": "electrons_0",
+   "label": "Available and pending",
+   "parent": "electrons"
+  },
+  {
+   "id": "electrons_1",
+   "label": "Next expiry",
+   "parent": "electrons"
+  },
+  {
+   "id": "electrons_2",
+   "label": "History with order links",
+   "parent": "electrons"
+  },
+  {
+   "id": "membership",
+   "label": "Electra Membership",
+   "parent": "root",
+   "sublabel": "/account/membership"
+  },
+  {
+   "id": "membership_0",
+   "label": "Benefits, \u20b9650 a year",
+   "parent": "membership"
+  },
+  {
+   "id": "membership_1",
+   "label": "Pay with money or Electrons",
+   "parent": "membership"
+  },
+  {
+   "id": "membership_2",
+   "label": "Auto-renew toggle",
+   "parent": "membership"
+  },
+  {
+   "id": "membership_3",
+   "label": "Next charge date",
+   "parent": "membership"
+  },
+  {
+   "id": "wishlist",
+   "label": "Wishlist",
+   "parent": "root",
+   "sublabel": "/account/wishlist"
+  },
+  {
+   "id": "wishlist_0",
+   "label": "Back-in-stock alerts",
+   "parent": "wishlist"
+  },
+  {
+   "id": "wishlist_1",
+   "label": "Price-drop alerts",
+   "parent": "wishlist"
+  },
+  {
+   "id": "settings",
+   "label": "Account settings",
+   "parent": "root",
+   "sublabel": "/account/*"
+  },
+  {
+   "id": "settings_0",
+   "label": "Addresses",
+   "parent": "settings"
+  },
+  {
+   "id": "settings_1",
+   "label": "Notification preferences",
+   "parent": "settings"
+  },
+  {
+   "id": "settings_2",
+   "label": "Sessions",
+   "parent": "settings"
+  },
+  {
+   "id": "settings_3",
+   "label": "Profile and deletion",
+   "parent": "settings"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "emerald",
+   "title": "Member extras",
+   "items": [
+    "Buy with 80% discount on launch pages",
+    "2% Electrons from \u20b9800",
+    "COD on orders under \u20b98,000"
+   ]
+  },
+  {
+   "dot": "amber",
+   "title": "Prototype",
+   "items": [
+    "Payments go through the free sim-pay test checkout"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,242 @@
+{
+ "schema_version": 2,
+ "diagram_type": "workflow",
+ "meta": {
+  "title": "Page flow: admin",
+  "locale": "en",
+  "output": ".archify/ui-siliconics-pages-20261124-105850/flow-admin.html",
+  "quality_profile": "showcase",
+  "parentHref": "frontend-architecture.html",
+  "legend": {
+   "entries": {
+    "frontend": {
+     "label": "Page"
+    },
+    "external": {
+     "label": "Test simulator or outside step"
+    },
+    "security": {
+     "label": "Check or decision"
+    },
+    "backend": {
+     "label": "System step"
+    }
+   }
+  }
+ },
+ "lanes": [
+  {
+   "id": "in",
+   "label": "Sign in"
+  },
+  {
+   "id": "daily",
+   "label": "Daily work"
+  },
+  {
+   "id": "launch",
+   "label": "Launches"
+  },
+  {
+   "id": "plat",
+   "label": "Platform"
+  }
+ ],
+ "mainPath": [
+  "otp",
+  "totp",
+  "home",
+  "newl",
+  "calc",
+  "live"
+ ],
+ "nodes": [
+  {
+   "id": "otp",
+   "lane": "in",
+   "col": 0,
+   "type": "frontend",
+   "label": "Sign in",
+   "sublabel": "phone + OTP"
+  },
+  {
+   "id": "totp",
+   "lane": "in",
+   "col": 1,
+   "type": "security",
+   "label": "TOTP code",
+   "sublabel": "second step"
+  },
+  {
+   "id": "home",
+   "lane": "in",
+   "col": 2,
+   "type": "frontend",
+   "label": "Admin overview",
+   "sublabel": "health, approvals, overdue"
+  },
+  {
+   "id": "approvals",
+   "lane": "daily",
+   "col": 3,
+   "type": "frontend",
+   "label": "Approvals",
+   "sublabel": "sellers, creators, promoters"
+  },
+  {
+   "id": "ops",
+   "lane": "daily",
+   "col": 4,
+   "type": "frontend",
+   "label": "Orders, issues, returns",
+   "sublabel": "assign, decide"
+  },
+  {
+   "id": "payouts",
+   "lane": "daily",
+   "col": 5,
+   "type": "frontend",
+   "label": "Payout batches",
+   "sublabel": "approve, release (sim)"
+  },
+  {
+   "id": "newl",
+   "lane": "launch",
+   "col": 3,
+   "type": "frontend",
+   "label": "New launch",
+   "sublabel": "product, stock, cost"
+  },
+  {
+   "id": "calc",
+   "lane": "launch",
+   "col": 4,
+   "type": "security",
+   "label": "Deal-unit calculator",
+   "sublabel": "profit at least 4%"
+  },
+  {
+   "id": "live",
+   "lane": "launch",
+   "col": 5,
+   "type": "frontend",
+   "label": "Schedule and monitor",
+   "sublabel": "held, sold, queue"
+  },
+  {
+   "id": "health",
+   "lane": "plat",
+   "col": 3,
+   "type": "frontend",
+   "label": "Health monitor",
+   "sublabel": "checks every 5 min"
+  },
+  {
+   "id": "config",
+   "lane": "plat",
+   "col": 4,
+   "type": "frontend",
+   "label": "Config and categories",
+   "sublabel": "rules, specs, legal"
+  },
+  {
+   "id": "switch",
+   "lane": "plat",
+   "col": 5,
+   "type": "frontend",
+   "label": "Role switch",
+   "sublabel": "acting-as banner, audited"
+  }
+ ],
+ "edges": [
+  {
+   "id": "otp-totp",
+   "from": "otp",
+   "to": "totp",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "totp-home",
+   "from": "totp",
+   "to": "home",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "home-newl",
+   "from": "home",
+   "to": "newl",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "newl-calc",
+   "from": "newl",
+   "to": "calc",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "calc-live",
+   "from": "calc",
+   "to": "live",
+   "label": "viable",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "home-approvals",
+   "from": "home",
+   "to": "approvals",
+   "role": "branch",
+   "variant": "default"
+  },
+  {
+   "id": "approvals-ops",
+   "from": "approvals",
+   "to": "ops",
+   "role": "branch",
+   "variant": "default"
+  },
+  {
+   "id": "ops-payouts",
+   "from": "ops",
+   "to": "payouts",
+   "label": "Mondays",
+   "role": "branch",
+   "variant": "default"
+  },
+  {
+   "id": "home-health",
+   "from": "home",
+   "to": "health",
+   "role": "branch",
+   "variant": "default"
+  },
+  {
+   "id": "health-config",
+   "from": "health",
+   "to": "config",
+   "role": "branch",
+   "variant": "default"
+  },
+  {
+   "id": "config-switch",
+   "from": "config",
+   "to": "switch",
+   "role": "branch",
+   "variant": "default"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "rose",
+   "title": "Admin limits",
+   "items": [
+    "At most 3 admin accounts",
+    "Every action and role switch is in the audit log"
+   ]
+  }
+ ]
+}

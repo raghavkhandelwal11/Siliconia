@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/prototype.candidate.json",
+    "sha256": "237f99c6b7df253d403b3cae0149f97040a504b5134e13eac204ff15934c16a6",
+    "bytes": 10331
+  },
+  "artifact": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-prototype.html",
+    "sha256": "3bb69958c52761e5c159feac9d64d5046e9ae0bbb2c91e531d21512dfaa4e07e",
+    "bytes": 968232
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/proto-review-3/siliconics-prototype.finalize.json",
+    "summaryReceipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/proto-review-3/siliconics-prototype.finalize-summary.json",
+    "browserCheckReceipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/proto-review-3/siliconics-prototype.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.3.0",
+    "availableVersion": "3.3.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-23T07:20:15.536Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 2569,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "resolvedCrossovers": 3,
+      "routesOverSuggestedBends": 1
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [
+        {
+          "left": {
+            "id": "api-redis",
+            "from": "api",
+            "to": "redis",
+            "label": "cache, Lua gates",
+            "collectionIndex": 7,
+            "artifactIndex": 8
+          },
+          "right": {
+            "id": "worker-simpayout",
+            "from": "worker",
+            "to": "simpayout",
+            "label": "weekly payouts",
+            "collectionIndex": 20,
+            "artifactIndex": 21
+          },
+          "point": [
+            1025,
+            497
+          ]
+        },
+        {
+          "left": {
+            "id": "api-simpay",
+            "from": "api",
+            "to": "simpay",
+            "label": "orders, refunds",
+            "collectionIndex": 8,
+            "artifactIndex": 9
+          },
+          "right": {
+            "id": "api-notify",
+            "from": "api",
+            "to": "notify",
+            "label": "OTP",
+            "collectionIndex": 13,
+            "artifactIndex": 14
+          },
+          "point": [
+            454,
+            395
+          ],
+          "sharedNode": "api"
+        },
+        {
+          "left": {
+            "id": "simpay-api",
+            "from": "simpay",
+            "to": "api",
+            "label": "signed webhooks",
+            "collectionIndex": 9,
+            "artifactIndex": 10
+          },
+          "right": {
+            "id": "api-notify",
+            "from": "api",
+            "to": "notify",
+            "label": "OTP",
+            "collectionIndex": 13,
+            "artifactIndex": 14
+          },
+          "point": [
+            454,
+            409
+          ],
+          "sharedNode": "api"
+        }
+      ],
+      "detours": [
+        {
+          "relationship": {
+            "id": "worker-simpayout",
+            "from": "worker",
+            "to": "simpayout",
+            "label": "weekly payouts",
+            "collectionIndex": 20,
+            "artifactIndex": 21
+          },
+          "bends": 5,
+          "stretch": 1
+        }
+      ],
+      "truncated": false
+    },
+    "hints": [
+      "api → redis crosses worker → simpayout: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "api → simpay and api → notify cross next to api: move node simpay or notify so the two reach api from different sides (for example one level with it, one directly above or below it).",
+      "simpay → api and api → notify cross next to api: move node simpay or notify so the two reach api from different sides (for example one level with it, one directly above or below it).",
+      "worker → simpayout needs 5 bends: move node worker or simpayout so they share a row or column with matching centers, or sit diagonally with a clear corner."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  }
+}

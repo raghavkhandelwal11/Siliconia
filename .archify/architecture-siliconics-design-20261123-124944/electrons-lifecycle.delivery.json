@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "d68931f2-f1bf-47a3-b154-519f89c0dc38",
+  "receiptId": "642d3bd9-4d25-44da-be61-a1a602618e32",
   "status": "current",
   "command": "deliver",
   "type": "lifecycle",
   "input": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/electrons.candidate.json",
   "output": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/electrons-lifecycle.html",
   "specification": {
-    "sha256": "233f412414d81433cab0e8d4f68c2f37354779a8120d83f0a5cc383ee8f6a8c7",
-    "bytes": 2590
+    "sha256": "7956161ce9018258e25c9418f5b38ee9588bc05118aff734b6bf0309653d8e7d",
+    "bytes": 3098
   },
   "artifact": {
-    "sha256": "ae65e76129a4db74788d35b4ed5894ce5dfdc21f33c2ee700535111868689958",
-    "bytes": 924567
+    "sha256": "f47341206049f5bd7e2b7ac9992a1db91b2ebc7a6a192dd77300ef6132ee75f5",
+    "bytes": 924573
   }
 }

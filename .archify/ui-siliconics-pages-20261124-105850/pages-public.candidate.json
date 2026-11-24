@@ -1,0 +1,291 @@
+{
+ "schema_version": 1,
+ "diagram_type": "tree",
+ "meta": {
+  "title": "Page structure: public and sign-in",
+  "locale": "en",
+  "output": ".archify/ui-siliconics-pages-20261124-105850/pages-public.html",
+  "quality_profile": "showcase"
+ },
+ "layout": {
+  "direction": "right"
+ },
+ "nodes": [
+  {
+   "id": "root",
+   "label": "Public + sign-in",
+   "sublabel": "anyone can open"
+  },
+  {
+   "id": "shell",
+   "label": "Global shell",
+   "parent": "root",
+   "sublabel": "on every page"
+  },
+  {
+   "id": "shell_0",
+   "label": "Header: search, categories, cart, bell, account",
+   "parent": "shell"
+  },
+  {
+   "id": "shell_1",
+   "label": "TEST MODE and acting-as banners",
+   "parent": "shell"
+  },
+  {
+   "id": "shell_2",
+   "label": "Footer: programmes, legal, grievance",
+   "parent": "shell"
+  },
+  {
+   "id": "shell_3",
+   "label": "Phone bottom navigation",
+   "parent": "shell"
+  },
+  {
+   "id": "home",
+   "label": "Home",
+   "parent": "root",
+   "sublabel": "/"
+  },
+  {
+   "id": "home_0",
+   "label": "Launch hero with countdown",
+   "parent": "home"
+  },
+  {
+   "id": "home_1",
+   "label": "Products of the week",
+   "parent": "home"
+  },
+  {
+   "id": "home_2",
+   "label": "Local picks",
+   "parent": "home"
+  },
+  {
+   "id": "home_3",
+   "label": "Popular and recommended",
+   "parent": "home"
+  },
+  {
+   "id": "home_4",
+   "label": "Category grid",
+   "parent": "home"
+  },
+  {
+   "id": "home_5",
+   "label": "Creator and promoter panels",
+   "parent": "home"
+  },
+  {
+   "id": "listing",
+   "label": "Category and search",
+   "parent": "root",
+   "sublabel": "/c/[slug], /search"
+  },
+  {
+   "id": "listing_0",
+   "label": "Filters panel and chips",
+   "parent": "listing"
+  },
+  {
+   "id": "listing_1",
+   "label": "Sort menu",
+   "parent": "listing"
+  },
+  {
+   "id": "listing_2",
+   "label": "Product grid, load more",
+   "parent": "listing"
+  },
+  {
+   "id": "pdp",
+   "label": "Product page",
+   "parent": "root",
+   "sublabel": "/p/[slug]"
+  },
+  {
+   "id": "pdp_0",
+   "label": "Gallery and variants",
+   "parent": "pdp"
+  },
+  {
+   "id": "pdp_1",
+   "label": "Price, stock, Electrons preview",
+   "parent": "pdp"
+  },
+  {
+   "id": "pdp_2",
+   "label": "Action area",
+   "sublabel": "changes by role",
+   "parent": "pdp"
+  },
+  {
+   "id": "pdp_3",
+   "label": "Specifications, warranty, origin",
+   "parent": "pdp"
+  },
+  {
+   "id": "pdp_4",
+   "label": "Review tabs: promoted, creator, buyer",
+   "parent": "pdp"
+  },
+  {
+   "id": "pdp_5",
+   "label": "About the company",
+   "parent": "pdp"
+  },
+  {
+   "id": "pdp_6",
+   "label": "Similar products",
+   "parent": "pdp"
+  },
+  {
+   "id": "pdp_7",
+   "label": "Feedback to manufacturer",
+   "parent": "pdp"
+  },
+  {
+   "id": "launch",
+   "label": "Launch page",
+   "parent": "root",
+   "sublabel": "/launches/[id]"
+  },
+  {
+   "id": "launch_0",
+   "label": "Countdown and alert opt-in",
+   "parent": "launch"
+  },
+  {
+   "id": "launch_1",
+   "label": "Live units left",
+   "parent": "launch"
+  },
+  {
+   "id": "launch_2",
+   "label": "Waiting-room position",
+   "parent": "launch"
+  },
+  {
+   "id": "launch_3",
+   "label": "10-minute hold timer",
+   "parent": "launch"
+  },
+  {
+   "id": "launch_4",
+   "label": "Sold-out and reserved states",
+   "parent": "launch"
+  },
+  {
+   "id": "programmes",
+   "label": "For creators / promoters",
+   "parent": "root",
+   "sublabel": "/for-creators, /for-promoters"
+  },
+  {
+   "id": "programmes_0",
+   "label": "How it works",
+   "parent": "programmes"
+  },
+  {
+   "id": "programmes_1",
+   "label": "Criteria and rewards",
+   "parent": "programmes"
+  },
+  {
+   "id": "programmes_2",
+   "label": "Apply button",
+   "parent": "programmes"
+  },
+  {
+   "id": "legal",
+   "label": "Legal pages",
+   "parent": "root",
+   "sublabel": "/legal/[doc]"
+  },
+  {
+   "id": "legal_0",
+   "label": "Terms per role, privacy, returns",
+   "parent": "legal"
+  },
+  {
+   "id": "signin",
+   "label": "Sign in",
+   "parent": "root",
+   "sublabel": "/auth/sign-in"
+  },
+  {
+   "id": "signin_0",
+   "label": "Account type chooser",
+   "parent": "signin"
+  },
+  {
+   "id": "signin_1",
+   "label": "Phone + OTP",
+   "sublabel": "highlighted",
+   "parent": "signin"
+  },
+  {
+   "id": "signin_2",
+   "label": "Continue with Google",
+   "parent": "signin"
+  },
+  {
+   "id": "verify",
+   "label": "Verify code",
+   "parent": "root",
+   "sublabel": "/auth/verify"
+  },
+  {
+   "id": "verify_0",
+   "label": "6-digit code, resend timer",
+   "parent": "verify"
+  },
+  {
+   "id": "verify_1",
+   "label": "Link to test inbox",
+   "parent": "verify"
+  },
+  {
+   "id": "choose",
+   "label": "Choose account",
+   "parent": "root",
+   "sublabel": "/auth/choose-account"
+  },
+  {
+   "id": "choose_0",
+   "label": "One identity, several role accounts",
+   "parent": "choose"
+  },
+  {
+   "id": "mfa",
+   "label": "Admin second step",
+   "parent": "root",
+   "sublabel": "/auth/mfa"
+  },
+  {
+   "id": "mfa_0",
+   "label": "Authenticator (TOTP) code",
+   "parent": "mfa"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "cyan",
+   "title": "Rendering",
+   "items": [
+    "Home, category and product pages use ISR with a live block for price, stock and launch state",
+    "Launch page streams units left over SSE"
+   ]
+  },
+  {
+   "dot": "amber",
+   "title": "Prototype",
+   "items": [
+    "Sign-in codes are read from the free test inbox",
+    "Every page shows the TEST MODE banner"
+   ]
+  }
+ ]
+}

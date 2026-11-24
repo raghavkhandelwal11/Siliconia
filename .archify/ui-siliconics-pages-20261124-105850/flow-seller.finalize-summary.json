@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/flow-seller.candidate.json",
+    "sha256": "9bbbb9d24667c3e230beb95b22def498f67121a1936fcd70b621c1bc47bee033",
+    "bytes": 4405
+  },
+  "artifact": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/flow-seller.html",
+    "sha256": "7524ce9a02c0d3924c4b35ef430450d8864243e2c894f290213d677710633aaa",
+    "bytes": 936062
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/flow-seller.finalize.json",
+    "summaryReceipt": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/flow-seller.finalize-summary.json",
+    "browserCheckReceipt": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/flow-seller.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.3.0",
+    "availableVersion": "3.3.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-23T07:20:15.536Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 2189,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

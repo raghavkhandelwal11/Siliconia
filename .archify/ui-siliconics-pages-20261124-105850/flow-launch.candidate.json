@@ -1,0 +1,270 @@
+{
+ "schema_version": 2,
+ "diagram_type": "workflow",
+ "meta": {
+  "title": "Page flow: member launch deal",
+  "locale": "en",
+  "output": ".archify/ui-siliconics-pages-20261124-105850/flow-launch.html",
+  "quality_profile": "showcase",
+  "parentHref": "frontend-architecture.html",
+  "legend": {
+   "entries": {
+    "frontend": {
+     "label": "Page"
+    },
+    "external": {
+     "label": "Test simulator or outside step"
+    },
+    "security": {
+     "label": "Check or decision"
+    },
+    "backend": {
+     "label": "System step"
+    }
+   }
+  }
+ },
+ "lanes": [
+  {
+   "id": "mem",
+   "label": "Membership"
+  },
+  {
+   "id": "launch",
+   "label": "Launch page"
+  },
+  {
+   "id": "buy",
+   "label": "Checkout"
+  },
+  {
+   "id": "done",
+   "label": "Outcome"
+  },
+  {
+   "id": "miss",
+   "label": "Missed the deal",
+   "variant": "exception"
+  }
+ ],
+ "mainPath": [
+  "mpage",
+  "mpay",
+  "active",
+  "lpage",
+  "hold",
+  "checkout",
+  "simpay",
+  "confirmed"
+ ],
+ "nodes": [
+  {
+   "id": "mpage",
+   "lane": "mem",
+   "col": 0,
+   "type": "frontend",
+   "label": "Membership page",
+   "sublabel": "benefits, \u20b9650 a year"
+  },
+  {
+   "id": "mpay",
+   "lane": "mem",
+   "col": 1,
+   "type": "external",
+   "label": "Pay",
+   "sublabel": "sim-pay or Electrons"
+  },
+  {
+   "id": "active",
+   "lane": "mem",
+   "col": 2,
+   "type": "security",
+   "label": "Member active",
+   "sublabel": "badge, member prices"
+  },
+  {
+   "id": "lpage",
+   "lane": "launch",
+   "col": 2,
+   "type": "frontend",
+   "label": "Launch page",
+   "sublabel": "countdown, units left"
+  },
+  {
+   "id": "queue",
+   "lane": "launch",
+   "col": 3,
+   "type": "frontend",
+   "label": "Waiting room",
+   "sublabel": "position shown"
+  },
+  {
+   "id": "hold",
+   "lane": "launch",
+   "col": 4,
+   "type": "frontend",
+   "label": "Unit held",
+   "sublabel": "Buy with 80% discount, 10 min"
+  },
+  {
+   "id": "checkout",
+   "lane": "buy",
+   "col": 4,
+   "type": "frontend",
+   "label": "Checkout",
+   "sublabel": "prepaid only"
+  },
+  {
+   "id": "simpay",
+   "lane": "buy",
+   "col": 5,
+   "type": "external",
+   "label": "sim-pay checkout",
+   "sublabel": "test payment"
+  },
+  {
+   "id": "confirmed",
+   "lane": "done",
+   "col": 5,
+   "type": "frontend",
+   "label": "Order confirmed",
+   "sublabel": "launch claim paid"
+  },
+  {
+   "id": "normal",
+   "lane": "done",
+   "col": 3,
+   "type": "frontend",
+   "label": "Buy at normal price",
+   "sublabel": "launch stock or seller stock"
+  },
+  {
+   "id": "soldout",
+   "lane": "miss",
+   "col": 3,
+   "type": "security",
+   "label": "Deal sold out",
+   "sublabel": "All items on discount were purchased"
+  },
+  {
+   "id": "expired",
+   "lane": "miss",
+   "col": 4,
+   "type": "security",
+   "label": "Hold expired",
+   "sublabel": "unit goes back to the pool"
+  }
+ ],
+ "edges": [
+  {
+   "id": "mpage-mpay",
+   "from": "mpage",
+   "to": "mpay",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "mpay-active",
+   "from": "mpay",
+   "to": "active",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "active-lpage",
+   "from": "active",
+   "to": "lpage",
+   "label": "launch starts",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "lpage-hold",
+   "from": "lpage",
+   "to": "hold",
+   "label": "reserve",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "lpage-queue",
+   "from": "lpage",
+   "to": "queue",
+   "label": "busy",
+   "role": "branch",
+   "variant": "default"
+  },
+  {
+   "id": "queue-hold",
+   "from": "queue",
+   "to": "hold",
+   "label": "admitted",
+   "role": "branch",
+   "variant": "default"
+  },
+  {
+   "id": "hold-checkout",
+   "from": "hold",
+   "to": "checkout",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "checkout-simpay",
+   "from": "checkout",
+   "to": "simpay",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "simpay-confirmed",
+   "from": "simpay",
+   "to": "confirmed",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "lpage-soldout",
+   "from": "lpage",
+   "to": "soldout",
+   "label": "none left",
+   "role": "error",
+   "variant": "security"
+  },
+  {
+   "id": "soldout-normal",
+   "from": "soldout",
+   "to": "normal",
+   "label": "normal sale opens",
+   "role": "branch",
+   "variant": "default"
+  },
+  {
+   "id": "hold-expired",
+   "from": "hold",
+   "to": "expired",
+   "label": "not paid in 10 min",
+   "role": "error",
+   "variant": "security"
+  },
+  {
+   "id": "expired-lpage",
+   "from": "expired",
+   "to": "lpage",
+   "label": "try again",
+   "role": "return",
+   "variant": "dashed"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "emerald",
+   "title": "Deal rules",
+   "items": [
+    "80% off for Electra Members only",
+    "Per-member limit set by the seller",
+    "Never more deal units sold than exist"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/hld.candidate.json",
+    "sha256": "5490b1eea2f70ff46dbee549f8cd01109b0923cf0fb52772515596da38f76f8c",
+    "bytes": 10945
+  },
+  "artifact": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-hld.html",
+    "sha256": "ae2b2ef6b8a36b5ba24f0fe194f1ae4c484a3fbc578d09feec78c043aa4fd4f4",
+    "bytes": 967668
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/review-4/siliconics-hld.finalize.json",
+    "summaryReceipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/review-4/siliconics-hld.finalize-summary.json",
+    "browserCheckReceipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/review-4/siliconics-hld.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.3.0",
+    "availableVersion": "3.3.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-23T07:20:15.536Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 3776,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "resolvedCrossovers": 4,
+      "routesOverSuggestedBends": 2,
+      "routesOverSuggestedStretch": 1
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [
+        {
+          "left": {
+            "id": "api-redis",
+            "from": "api",
+            "to": "redis",
+            "label": "cache, Lua gates",
+            "collectionIndex": 7,
+            "artifactIndex": 8
+          },
+          "right": {
+            "id": "api-simpayout",
+            "from": "api",
+            "to": "simpayout",
+            "label": "KYC checks",
+            "collectionIndex": 14,
+            "artifactIndex": 15
+          },
+          "point": [
+            1066,
+            435
+          ],
+          "sharedNode": "api"
+        },
+        {
+          "left": {
+            "id": "api-google",
+            "from": "api",
+            "to": "google",
+            "label": "verify ID token",
+            "collectionIndex": 9,
+            "artifactIndex": 10
+          },
+          "right": {
+            "id": "simship-api",
+            "from": "simship",
+            "to": "api",
+            "label": "tracking webhooks",
+            "collectionIndex": 13,
+            "artifactIndex": 14
+          },
+          "point": [
+            1154,
+            166
+          ],
+          "sharedNode": "api"
+        },
+        {
+          "left": {
+            "id": "api-messaging",
+            "from": "api",
+            "to": "messaging",
+            "label": "OTP SMS",
+            "collectionIndex": 15,
+            "artifactIndex": 16
+          },
+          "right": {
+            "id": "worker-simpay",
+            "from": "worker",
+            "to": "simpay",
+            "label": "mandate renewals",
+            "collectionIndex": 20,
+            "artifactIndex": 21
+          },
+          "point": [
+            1533,
+            402
+          ]
+        },
+        {
+          "left": {
+            "id": "worker-simpayout",
+            "from": "worker",
+            "to": "simpayout",
+            "label": "weekly payouts",
+            "collectionIndex": 19,
+            "artifactIndex": 20
+          },
+          "right": {
+            "id": "worker-simpay",
+            "from": "worker",
+            "to": "simpay",
+            "label": "mandate renewals",
+            "collectionIndex": 20,
+            "artifactIndex": 21
+          },
+          "point": [
+            1316,
+            527
+          ],
+          "sharedNode": "worker"
+        }
+      ],
+      "detours": [
+        {
+          "relationship": {
+            "id": "api-messaging",
+            "from": "api",
+            "to": "messaging",
+            "label": "OTP SMS",
+            "collectionIndex": 15,
+            "artifactIndex": 16
+          },
+          "bends": 4,
+          "stretch": 1.069
+        },
+        {
+          "relationship": {
+            "id": "worker-simpay",
+            "from": "worker",
+            "to": "simpay",
+            "label": "mandate renewals",
+            "collectionIndex": 20,
+            "artifactIndex": 21
+          },
+          "bends": 5,
+          "stretch": 1.351
+        }
+      ],
+      "truncated": false
+    },
+    "hints": [
+      "api → redis and api → simpayout cross next to api: move node redis or simpayout so the two reach api from different sides (for example one level with it, one directly above or below it).",
+      "api → google and simship → api cross next to api: move node google or simship so the two reach api from different sides (for example one level with it, one directly above or below it).",
+      "api → messaging crosses worker → simpay: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "worker → simpayout and worker → simpay cross next to worker: move node simpayout or simpay so the two reach worker from different sides (for example one level with it, one directly above or below it).",
+      "api → messaging needs 4 bends: move node api or messaging so they share a row or column with matching centers, or sit diagonally with a clear corner.",
+      "worker → simpay needs 5 bends: move node worker or simpay so they share a row or column with matching centers, or sit diagonally with a clear corner."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  }
+}

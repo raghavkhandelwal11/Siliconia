@@ -6,28 +6,113 @@
     "locale": "en",
     "output": ".archify/architecture-siliconics-design-20261123-124944/electrons-lifecycle.html",
     "quality_profile": "showcase",
-    "parentHref": "siliconics-hld.html"
+    "parentHref": "siliconics-prototype.html"
   },
-  "mainPath": ["pending", "available", "exhausted"],
+  "mainPath": [
+    "pending",
+    "available",
+    "exhausted"
+  ],
   "states": [
-    { "id": "pending", "type": "start", "label": "Pending", "sublabel": "earned, not yet usable", "step": "01",
-      "explanation": "Created per order item when the order is confirmed (0.5% from ₹2,500 for buyers, 2% from ₹800 for members, rounded up), or per creator after the monthly reward pool settlement." },
-    { "id": "available", "type": "active", "label": "Available", "sublabel": "usable for 12 months", "step": "02",
-      "explanation": "Spent oldest-expiry first at checkout or for membership. Creators can cash out from 250 Electrons (1 Electron = ₹1), paid weekly." },
-    { "id": "exhausted", "type": "success", "label": "Exhausted", "sublabel": "fully spent or cashed out", "step": "03" },
-    { "id": "expired", "type": "failure", "label": "Expired", "sublabel": "remaining written off", "tag": "terminal" },
-    { "id": "reversed", "type": "neutral", "label": "Reversed", "sublabel": "item cancelled or returned", "tag": "terminal" }
+    {
+      "id": "pending",
+      "type": "start",
+      "label": "Pending",
+      "sublabel": "earned, not yet usable",
+      "step": "01",
+      "explanation": "Created per order item when the order is confirmed (0.5% from \u20b92,500 for buyers, 2% from \u20b9800 for members, rounded up), or per creator after the monthly reward pool settlement."
+    },
+    {
+      "id": "available",
+      "type": "active",
+      "label": "Available",
+      "sublabel": "usable for 12 months",
+      "step": "02",
+      "explanation": "Spent oldest-expiry first at checkout or for membership. Creators can cash out from 250 Electrons (1 Electron = \u20b91), paid weekly."
+    },
+    {
+      "id": "exhausted",
+      "type": "success",
+      "label": "Exhausted",
+      "sublabel": "fully spent or cashed out",
+      "step": "03"
+    },
+    {
+      "id": "expired",
+      "type": "failure",
+      "label": "Expired",
+      "sublabel": "remaining written off",
+      "tag": "terminal"
+    },
+    {
+      "id": "reversed",
+      "type": "neutral",
+      "label": "Reversed",
+      "sublabel": "item cancelled or returned",
+      "tag": "terminal"
+    }
   ],
   "transitions": [
-    { "id": "t-mature", "from": "pending", "to": "available", "label": "return window closed", "variant": "emphasis", "note": "hourly job; creator pool lots on the next run" },
-    { "id": "t-exhaust", "from": "available", "to": "exhausted", "label": "spent or cashed out" },
-    { "id": "t-expire", "from": "available", "to": "expired", "label": "12 months passed", "variant": "dashed", "note": "daily job; reminders 30 and 7 days before" },
-    { "id": "t-reverse", "from": "pending", "to": "reversed", "label": "cancel or return" },
-    { "id": "t-restore", "from": "exhausted", "to": "available", "label": "restored", "note": "refund, failed payment or failed payout; keeps original expiry" }
+    {
+      "id": "t-mature",
+      "from": "pending",
+      "to": "available",
+      "label": "return window closed",
+      "variant": "emphasis",
+      "note": "hourly job; creator pool lots on the next run"
+    },
+    {
+      "id": "t-exhaust",
+      "from": "available",
+      "to": "exhausted",
+      "label": "spent or cashed out"
+    },
+    {
+      "id": "t-expire",
+      "from": "available",
+      "to": "expired",
+      "label": "12 months passed",
+      "variant": "dashed",
+      "note": "daily job; reminders 30 and 7 days before"
+    },
+    {
+      "id": "t-reverse",
+      "from": "pending",
+      "to": "reversed",
+      "label": "cancel or return"
+    },
+    {
+      "id": "t-restore",
+      "from": "exhausted",
+      "to": "available",
+      "label": "restored",
+      "note": "refund, failed payment or failed payout; keeps original expiry"
+    }
   ],
   "cards": [
-    { "dot": "emerald", "title": "Ledger", "items": ["Append-only ledger_entries; balances are derived, never edited", "Each spend records which lots it used (spend_allocations)"] },
-    { "dot": "amber", "title": "Balances", "items": ["Available = remaining on AVAILABLE lots", "Pending = amount on PENDING lots", "Nightly check: ledger sum matches balances"] },
-    { "dot": "rose", "title": "Edge case", "items": ["Electrons restored after their lot expired are re-issued for 30 days (configurable)"] }
+    {
+      "dot": "emerald",
+      "title": "Ledger",
+      "items": [
+        "Append-only ledger_entries; balances are derived, never edited",
+        "Each spend records which lots it used (spend_allocations)"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Balances",
+      "items": [
+        "Available = remaining on AVAILABLE lots",
+        "Pending = amount on PENDING lots",
+        "Nightly check: ledger sum matches balances"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Edge case",
+      "items": [
+        "Electrons restored after their lot expired are re-issued for 30 days (configurable)"
+      ]
+    }
   ]
 }

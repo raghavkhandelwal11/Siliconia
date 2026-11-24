@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "60029fa5-a0b8-4beb-8571-cf09c8e480c1",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/prototype.candidate.json",
+  "output": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-prototype.html",
+  "specification": {
+    "sha256": "9a82308ffc0c83711212b96ae208db36f27a5a28165c5bd571ccc8a3c44fc8bf",
+    "bytes": 10336
+  },
+  "artifact": {
+    "sha256": "a5cb702c4492d3eb681bd586b2efaba683f471ac4f78777e9d2377dbc490c216",
+    "bytes": 968237
+  }
+}

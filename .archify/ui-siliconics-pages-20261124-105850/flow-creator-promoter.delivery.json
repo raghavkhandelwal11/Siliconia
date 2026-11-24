@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "341b6eb6-6ee4-4038-84ae-1e22ef0873de",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/flow-creator-promoter.candidate.json",
+  "output": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/flow-creator-promoter.html",
+  "specification": {
+    "sha256": "5eefeb74703599d38f83f0669316ea2f0dbabd055c2bd95cb95999d9d5cf1897",
+    "bytes": 4753
+  },
+  "artifact": {
+    "sha256": "f1c205ed08da747ff7a6727b2b5f87ee8d2dec4047ff2b59c4f71248d0935f6e",
+    "bytes": 938136
+  }
+}

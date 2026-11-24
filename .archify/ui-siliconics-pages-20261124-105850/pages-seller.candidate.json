@@ -1,0 +1,225 @@
+{
+ "schema_version": 1,
+ "diagram_type": "tree",
+ "meta": {
+  "title": "Page structure: seller portal",
+  "locale": "en",
+  "output": ".archify/ui-siliconics-pages-20261124-105850/pages-seller.html",
+  "quality_profile": "showcase"
+ },
+ "layout": {
+  "direction": "right"
+ },
+ "nodes": [
+  {
+   "id": "root",
+   "label": "Seller portal",
+   "sublabel": "/seller, approved sellers"
+  },
+  {
+   "id": "onboarding",
+   "label": "Onboarding",
+   "parent": "root",
+   "sublabel": "/seller/onboarding"
+  },
+  {
+   "id": "onboarding_0",
+   "label": "Business type and legal name",
+   "parent": "onboarding"
+  },
+  {
+   "id": "onboarding_1",
+   "label": "PAN and GSTIN",
+   "parent": "onboarding"
+  },
+  {
+   "id": "onboarding_2",
+   "label": "Bank check (sim)",
+   "parent": "onboarding"
+  },
+  {
+   "id": "onboarding_3",
+   "label": "Documents and terms",
+   "parent": "onboarding"
+  },
+  {
+   "id": "onboarding_4",
+   "label": "Approval status",
+   "parent": "onboarding"
+  },
+  {
+   "id": "dashboard",
+   "label": "Dashboard",
+   "parent": "root",
+   "sublabel": "/seller"
+  },
+  {
+   "id": "dashboard_0",
+   "label": "Sales and orders to fulfil",
+   "parent": "dashboard"
+  },
+  {
+   "id": "dashboard_1",
+   "label": "Returns and rating",
+   "parent": "dashboard"
+  },
+  {
+   "id": "dashboard_2",
+   "label": "Next payout",
+   "parent": "dashboard"
+  },
+  {
+   "id": "products",
+   "label": "Products",
+   "parent": "root",
+   "sublabel": "/seller/products"
+  },
+  {
+   "id": "products_0",
+   "label": "List with status",
+   "parent": "products"
+  },
+  {
+   "id": "products_1",
+   "label": "Product editor",
+   "sublabel": "category specs, variants, images",
+   "parent": "products"
+  },
+  {
+   "id": "products_2",
+   "label": "Inventory per variant",
+   "parent": "products"
+  },
+  {
+   "id": "products_3",
+   "label": "Local flag, warranty",
+   "parent": "products"
+  },
+  {
+   "id": "orders",
+   "label": "Orders",
+   "parent": "root",
+   "sublabel": "/seller/orders"
+  },
+  {
+   "id": "orders_0",
+   "label": "Queue by status",
+   "parent": "orders"
+  },
+  {
+   "id": "orders_1",
+   "label": "Pack",
+   "parent": "orders"
+  },
+  {
+   "id": "orders_2",
+   "label": "Ship: label and tracking (sim)",
+   "parent": "orders"
+  },
+  {
+   "id": "orders_3",
+   "label": "Invoice",
+   "parent": "orders"
+  },
+  {
+   "id": "returns",
+   "label": "Returns",
+   "parent": "root",
+   "sublabel": "/seller/returns"
+  },
+  {
+   "id": "returns_0",
+   "label": "Approve or reject with reason",
+   "parent": "returns"
+  },
+  {
+   "id": "demos",
+   "label": "Demo requests",
+   "parent": "root",
+   "sublabel": "/seller/demo-requests"
+  },
+  {
+   "id": "demos_0",
+   "label": "Approve or decline",
+   "parent": "demos"
+  },
+  {
+   "id": "demos_1",
+   "label": "Ship demo unit",
+   "parent": "demos"
+  },
+  {
+   "id": "promoters",
+   "label": "Promoters",
+   "parent": "root",
+   "sublabel": "/seller/promoters"
+  },
+  {
+   "id": "promoters_0",
+   "label": "Confirm investors",
+   "parent": "promoters"
+  },
+  {
+   "id": "promoters_1",
+   "label": "Reward per product",
+   "parent": "promoters"
+  },
+  {
+   "id": "feedback",
+   "label": "Feedback",
+   "parent": "root",
+   "sublabel": "/seller/feedback"
+  },
+  {
+   "id": "feedback_0",
+   "label": "Inbox",
+   "parent": "feedback"
+  },
+  {
+   "id": "feedback_1",
+   "label": "One reply",
+   "parent": "feedback"
+  },
+  {
+   "id": "payouts",
+   "label": "Payouts",
+   "parent": "root",
+   "sublabel": "/seller/payouts"
+  },
+  {
+   "id": "payouts_0",
+   "label": "Weekly statements",
+   "parent": "payouts"
+  },
+  {
+   "id": "payouts_1",
+   "label": "Commission and deductions",
+   "parent": "payouts"
+  },
+  {
+   "id": "company",
+   "label": "Company profile",
+   "parent": "root",
+   "sublabel": "/seller/company"
+  },
+  {
+   "id": "company_0",
+   "label": "Description and links",
+   "parent": "company"
+  },
+  {
+   "id": "company_1",
+   "label": "Verified status",
+   "parent": "company"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "cyan",
+   "title": "Access",
+   "items": [
+    "Only approved sellers see the portal; others see the onboarding status"
+   ]
+  }
+ ]
+}

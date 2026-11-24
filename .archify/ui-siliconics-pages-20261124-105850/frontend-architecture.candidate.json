@@ -1,0 +1,412 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Siliconics: Front-end Architecture (Next.js)",
+    "locale": "en",
+    "output": ".archify/ui-siliconics-pages-20261124-105850/frontend-architecture.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "browser",
+      "type": "external",
+      "label": "Browser",
+      "sublabel": "phone, tablet, desktop",
+      "icon": "person",
+      "pos": [
+        40,
+        270
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "middleware",
+      "type": "security",
+      "label": "middleware.ts",
+      "sublabel": "session, role routing, acting-as",
+      "explanation": "Verifies the access token, sends each role to its route group, redirects guests to sign-in for protected pages, requires TOTP for /admin and shows the acting-as banner for switched admins.",
+      "pos": [
+        280,
+        270
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "shell",
+      "type": "frontend",
+      "label": "App shell",
+      "sublabel": "layouts, header, footer, banners",
+      "pos": [
+        540,
+        40
+      ],
+      "size": [
+        190,
+        510
+      ]
+    },
+    {
+      "id": "ui",
+      "type": "frontend",
+      "label": "Design system",
+      "sublabel": "Radix + Tailwind, chips, next-intl",
+      "pos": [
+        540,
+        620
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "public",
+      "type": "frontend",
+      "label": "(public)",
+      "sublabel": "home, category, product, launch",
+      "drilldowns": [
+        {
+          "href": "pages-public.html",
+          "label": "Page structure: public and sign-in"
+        },
+        {
+          "href": "flow-shopping.html",
+          "label": "Page flow: shopping and checkout",
+          "diagram_type": "workflow"
+        },
+        {
+          "href": "flow-launch.html",
+          "label": "Page flow: member launch deal",
+          "diagram_type": "workflow"
+        }
+      ],
+      "pos": [
+        800,
+        40
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "auth",
+      "type": "frontend",
+      "label": "(auth)",
+      "sublabel": "sign-in, verify, choose, MFA",
+      "drilldowns": [
+        {
+          "href": "pages-public.html",
+          "label": "Page structure: public and sign-in"
+        }
+      ],
+      "pos": [
+        800,
+        400
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "buyer",
+      "type": "frontend",
+      "label": "(buyer)",
+      "sublabel": "cart, checkout, account",
+      "drilldowns": [
+        {
+          "href": "pages-buyer.html",
+          "label": "Page structure: buyer and member"
+        },
+        {
+          "href": "flow-shopping.html",
+          "label": "Page flow: shopping and checkout",
+          "diagram_type": "workflow"
+        },
+        {
+          "href": "flow-launch.html",
+          "label": "Page flow: member launch deal",
+          "diagram_type": "workflow"
+        }
+      ],
+      "pos": [
+        800,
+        490
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "seller",
+      "type": "frontend",
+      "label": "(seller)",
+      "sublabel": "seller portal",
+      "drilldowns": [
+        {
+          "href": "pages-seller.html",
+          "label": "Page structure: seller portal"
+        },
+        {
+          "href": "flow-seller.html",
+          "label": "Page flow: seller",
+          "diagram_type": "workflow"
+        }
+      ],
+      "pos": [
+        800,
+        130
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "creator",
+      "type": "frontend",
+      "label": "(creator) + (promoter)",
+      "sublabel": "programme portals",
+      "drilldowns": [
+        {
+          "href": "pages-creator-promoter.html",
+          "label": "Page structure: creator and promoter"
+        },
+        {
+          "href": "flow-creator-promoter.html",
+          "label": "Page flow: creator and promoter",
+          "diagram_type": "workflow"
+        }
+      ],
+      "pos": [
+        800,
+        220
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "admin",
+      "type": "frontend",
+      "label": "(admin)",
+      "sublabel": "admin console, TOTP",
+      "drilldowns": [
+        {
+          "href": "pages-admin.html",
+          "label": "Page structure: admin console"
+        },
+        {
+          "href": "flow-admin.html",
+          "label": "Page flow: admin",
+          "diagram_type": "workflow"
+        }
+      ],
+      "pos": [
+        800,
+        310
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "data",
+      "type": "backend",
+      "label": "Data layer",
+      "sublabel": "server fetch, TanStack Query, SSE",
+      "explanation": "Server components fetch with forwarded cookies; client components use the generated TypeScript API client with TanStack Query; launch pages and the notification bell use SSE.",
+      "pos": [
+        1080,
+        40
+      ],
+      "size": [
+        190,
+        514
+      ]
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "Go API",
+      "sublabel": "/api/v1, same origin",
+      "pos": [
+        1360,
+        270
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "sims",
+      "type": "external",
+      "label": "Test pages",
+      "sublabel": "sim-pay checkout, test inbox",
+      "tag": "free",
+      "pos": [
+        1360,
+        590
+      ],
+      "size": [
+        170,
+        64
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Next.js app (apps/web)",
+      "wraps": [
+        "middleware",
+        "shell",
+        "ui",
+        "public",
+        "auth",
+        "buyer",
+        "seller",
+        "creator",
+        "admin",
+        "data"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "browser-middleware",
+      "from": "browser",
+      "to": "middleware",
+      "label": "request",
+      "variant": "emphasis"
+    },
+    {
+      "id": "middleware-shell",
+      "from": "middleware",
+      "to": "shell",
+      "label": "allowed route",
+      "variant": "emphasis"
+    },
+    {
+      "id": "shell-ui",
+      "from": "shell",
+      "to": "ui",
+      "label": "uses"
+    },
+    {
+      "id": "shell-public",
+      "from": "shell",
+      "to": "public"
+    },
+    {
+      "id": "shell-auth",
+      "from": "shell",
+      "to": "auth"
+    },
+    {
+      "id": "shell-buyer",
+      "from": "shell",
+      "to": "buyer"
+    },
+    {
+      "id": "shell-seller",
+      "from": "shell",
+      "to": "seller"
+    },
+    {
+      "id": "shell-creator",
+      "from": "shell",
+      "to": "creator"
+    },
+    {
+      "id": "shell-admin",
+      "from": "shell",
+      "to": "admin"
+    },
+    {
+      "id": "public-data",
+      "from": "public",
+      "to": "data"
+    },
+    {
+      "id": "auth-data",
+      "from": "auth",
+      "to": "data"
+    },
+    {
+      "id": "buyer-data",
+      "from": "buyer",
+      "to": "data"
+    },
+    {
+      "id": "seller-data",
+      "from": "seller",
+      "to": "data"
+    },
+    {
+      "id": "creator-data",
+      "from": "creator",
+      "to": "data"
+    },
+    {
+      "id": "admin-data",
+      "from": "admin",
+      "to": "data"
+    },
+    {
+      "id": "data-api",
+      "from": "data",
+      "to": "api",
+      "label": "REST + SSE",
+      "variant": "emphasis"
+    },
+    {
+      "id": "buyer-sims",
+      "from": "buyer",
+      "to": "sims",
+      "label": "test payment",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Rendering",
+      "items": [
+        "Public pages: ISR with a live client block",
+        "Account, portals, admin: server-rendered per request",
+        "Launch page and bell: SSE live updates"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Shared",
+      "items": [
+        "One design system with colour-blind safe status chips",
+        "All text in messages/en.json (Hindi-ready)",
+        "Generated API client from openapi.yaml"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Free build",
+      "items": [
+        "Sign-in pages link to the free test inbox for OTPs",
+        "Checkout hands off to the free sim-pay test page",
+        "Open a route group to see its pages and flows"
+      ]
+    }
+  ]
+}

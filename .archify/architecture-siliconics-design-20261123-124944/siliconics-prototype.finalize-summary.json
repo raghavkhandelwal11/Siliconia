@@ -1,0 +1,294 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/prototype.candidate.json",
+    "sha256": "1c182fe0d27d2a91aea37e39ff935c1b0bb0ab8cb8463f3f5f913b3724a729b4",
+    "bytes": 7280
+  },
+  "artifact": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-prototype.html",
+    "sha256": "648f14340be17e6f886f5e27e404e285af7f9caeb3259b270e9bf8f84349b9f0",
+    "bytes": 975195
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-prototype.finalize.json",
+    "summaryReceipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-prototype.finalize-summary.json",
+    "browserCheckReceipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-prototype.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.3.0",
+    "availableVersion": "3.3.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-23T07:20:15.536Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 14818,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "resolvedCrossovers": 34,
+      "routesOverSuggestedBends": 3
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [
+        {
+          "left": {
+            "id": "caddy-api",
+            "from": "caddy",
+            "to": "api",
+            "label": "/api + SSE",
+            "collectionIndex": 3,
+            "artifactIndex": 4
+          },
+          "right": {
+            "id": "worker-notify",
+            "from": "worker",
+            "to": "notify",
+            "label": "SMS, WhatsApp",
+            "collectionIndex": 19,
+            "artifactIndex": 20
+          },
+          "point": [
+            509.9,
+            508
+          ]
+        },
+        {
+          "left": {
+            "id": "caddy-simpay",
+            "from": "caddy",
+            "to": "simpay",
+            "label": "/sim/pay",
+            "collectionIndex": 4,
+            "artifactIndex": 5
+          },
+          "right": {
+            "id": "caddy-notify",
+            "from": "caddy",
+            "to": "notify",
+            "label": "/test-inbox",
+            "collectionIndex": 5,
+            "artifactIndex": 6
+          },
+          "point": [
+            906.3,
+            290
+          ],
+          "sharedNode": "caddy"
+        },
+        {
+          "left": {
+            "id": "caddy-simpay",
+            "from": "caddy",
+            "to": "simpay",
+            "label": "/sim/pay",
+            "collectionIndex": 4,
+            "artifactIndex": 5
+          },
+          "right": {
+            "id": "simpay-api",
+            "from": "simpay",
+            "to": "api",
+            "label": "signed webhooks",
+            "collectionIndex": 10,
+            "artifactIndex": 11
+          },
+          "point": [
+            930.3,
+            931
+          ],
+          "sharedNode": "simpay"
+        },
+        {
+          "left": {
+            "id": "web-api",
+            "from": "web",
+            "to": "api",
+            "label": "SSR fetch",
+            "collectionIndex": 6,
+            "artifactIndex": 7
+          },
+          "right": {
+            "id": "worker-notify",
+            "from": "worker",
+            "to": "notify",
+            "label": "SMS, WhatsApp",
+            "collectionIndex": 19,
+            "artifactIndex": 20
+          },
+          "point": [
+            348,
+            568
+          ]
+        },
+        {
+          "left": {
+            "id": "api-redis",
+            "from": "api",
+            "to": "redis",
+            "label": "cache, Lua gates",
+            "collectionIndex": 8,
+            "artifactIndex": 9
+          },
+          "right": {
+            "id": "api-simpay",
+            "from": "api",
+            "to": "simpay",
+            "label": "orders, refunds",
+            "collectionIndex": 9,
+            "artifactIndex": 10
+          },
+          "point": [
+            542.7,
+            884
+          ],
+          "sharedNode": "api"
+        },
+        {
+          "left": {
+            "id": "api-redis",
+            "from": "api",
+            "to": "redis",
+            "label": "cache, Lua gates",
+            "collectionIndex": 8,
+            "artifactIndex": 9
+          },
+          "right": {
+            "id": "api-simpayout",
+            "from": "api",
+            "to": "simpayout",
+            "label": "KYC checks",
+            "collectionIndex": 13,
+            "artifactIndex": 14
+          },
+          "point": [
+            528.7,
+            884
+          ],
+          "sharedNode": "api"
+        },
+        {
+          "left": {
+            "id": "api-redis",
+            "from": "api",
+            "to": "redis",
+            "label": "cache, Lua gates",
+            "collectionIndex": 8,
+            "artifactIndex": 9
+          },
+          "right": {
+            "id": "api-storage",
+            "from": "api",
+            "to": "storage",
+            "label": "presigned URLs",
+            "collectionIndex": 16,
+            "artifactIndex": 17
+          },
+          "point": [
+            514.7,
+            677.0333704529043
+          ],
+          "sharedNode": "api"
+        },
+        {
+          "left": {
+            "id": "api-redis",
+            "from": "api",
+            "to": "redis",
+            "label": "cache, Lua gates",
+            "collectionIndex": 8,
+            "artifactIndex": 9
+          },
+          "right": {
+            "id": "worker-pg",
+            "from": "worker",
+            "to": "pg",
+            "label": "jobs, outbox",
+            "collectionIndex": 17,
+            "artifactIndex": 18
+          },
+          "point": [
+            514.7,
+            733.5
+          ]
+        }
+      ],
+      "detours": [
+        {
+          "relationship": {
+            "id": "caddy-simpay",
+            "from": "caddy",
+            "to": "simpay",
+            "label": "/sim/pay",
+            "collectionIndex": 4,
+            "artifactIndex": 5
+          },
+          "bends": 3,
+          "stretch": 1.041
+        },
+        {
+          "relationship": {
+            "id": "simpay-api",
+            "from": "simpay",
+            "to": "api",
+            "label": "signed webhooks",
+            "collectionIndex": 10,
+            "artifactIndex": 11
+          },
+          "bends": 4,
+          "stretch": 1.313
+        },
+        {
+          "relationship": {
+            "id": "worker-notify",
+            "from": "worker",
+            "to": "notify",
+            "label": "SMS, WhatsApp",
+            "collectionIndex": 19,
+            "artifactIndex": 20
+          },
+          "bends": 3,
+          "stretch": 1.07
+        }
+      ],
+      "truncated": true
+    },
+    "hints": [
+      "api has 4 relationships facing its right side, which fits 3 ports: make that side at least 74px, or move some of those neighbours so they face another side of api.",
+      "worker has 5 relationships facing its right side, which fits 3 ports: make that side at least 88px, or move some of those neighbours so they face another side of worker.",
+      "caddy → api crosses worker → notify: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "caddy → simpay and caddy → notify cross next to caddy: move node simpay or notify so the two reach caddy from different sides (for example one level with it, one directly above or below it).",
+      "caddy → simpay and simpay → api cross next to simpay: move node caddy or api so the two reach simpay from different sides (for example one level with it, one directly above or below it).",
+      "web → api crosses worker → notify: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "api → redis and api → simpay cross next to api: move node redis or simpay so the two reach api from different sides (for example one level with it, one directly above or below it).",
+      "api → redis and api → simpayout cross next to api: move node redis or simpayout so the two reach api from different sides (for example one level with it, one directly above or below it)."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  }
+}
