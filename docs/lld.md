@@ -2,12 +2,21 @@
 
 | | |
 |---|---|
-| **Version** | 1.0 (Draft), 23 Nov 2026 |
-| **Implements** | Technical Requirements Specification v1.1 (TRS), Business Requirements Document v1.1 (BRD) |
+| **Version** | 1.1 (Draft), 24 Nov 2026 |
+| **Implements** | Technical Requirements Specification v1.2 (TRS), Business Requirements Document v1.2 (BRD) |
 | **Readers** | Developers, QA, DevOps, tech lead, project manager |
 | **Scope** | End-to-end design of v1: web app, API, worker, data, integrations (simulated), jobs, infra, tests |
+| **Hosting** | v1 is a **prototype on free services only** (TRS D-20 to D-23). The code is identical for the later paid production setup; only configuration and hosting differ (section 17). |
 
-> IDs like `FR-LAU-07`, `NFR-CAP-02`, `D-11`, `A-06`, `Q-02` refer to the TRS. This document says **how** they are built.
+> IDs like `FR-LAU-07`, `NFR-CAP-02`, `D-11`, `A-06`, `Q-02` refer to the TRS. This document says **how** they are built. Paid services to add later are listed in [integrations.md](integrations.md); the team's working rules are in [dev-workflow.md](dev-workflow.md).
+
+**Diagrams** (exported from the interactive versions in `.archify/`):
+[High-level architecture](design/siliconics-high-level-architecture-v1.png) (production target; prototype layout in 17.1) ·
+[Checkout and payment](design/lld-checkout-and-payment.png) ·
+[Launch deal reservation](design/lld-launch-deal-reservation-never-oversell.png) ·
+[Sub-order lifecycle](design/lld-sub-order-lifecycle-per-seller-shipment.png) ·
+[Electrons lot lifecycle](design/lld-electrons-lot-lifecycle.png) ·
+[Core data model](design/lld-core-data-model-postgresql.png)
 
 ---
 
@@ -37,12 +46,12 @@
 | `sim-ship` | Go | 9002 | Simulated shipping aggregator (serviceability, AWB, labels, tracking webhooks) | 1 task |
 | `sim-payout` | Go | 9003 | Simulated bank payouts | 1 task |
 | `sim-kyc` | Go | 9004 | Simulated PAN check and penny-drop | 1 task |
-| `sim-notify` | Go | 9005 | Dev-only inbox for SMS / WhatsApp / email | dev only |
-| PostgreSQL 16 | RDS Multi-AZ | 5432 | System of record | vertical + read replica |
-| Redis 7 | ElastiCache (primary + replica) | 6379 | Cache, rate limits, launch gates, queues, SSE fan-out | vertical |
-| S3 + CloudFront | — | — | Images, documents (KYC bucket separate, SSE-KMS), invoices | managed |
+| `sim-notify` | Go | 9005 | Test inbox for SMS and WhatsApp (and email locally), searchable by phone number (FR-NOT-05) | local, CI and prototype only; off in production |
+| PostgreSQL 16 | Container (prototype) / RDS Multi-AZ (production) | 5432 | System of record | vertical + read replica (production) |
+| Redis 7 | Container (prototype) / ElastiCache (production) | 6379 | Cache, rate limits, launch gates, queues, SSE fan-out | vertical |
+| Object storage | MinIO or Cloudflare R2 (prototype) / S3 + CloudFront (production) | — | Images, documents (KYC bucket separate, encrypted), invoices | managed |
 
-All services are stateless; the only state is in PostgreSQL, Redis and S3.
+All services are stateless; the only state is in PostgreSQL, Redis and object storage. The **Scaling** column describes production. The prototype runs one container of each on a single free VM (section 17.1).
 
 ---
 
@@ -137,6 +146,20 @@ siliconics/
 | `ratelimit.*` | per TRS 8.5 | `refund.reissue_expiry_days` | 30 |
 
 `categories.commission_bps` and `categories.gst_rate_bps` live on the category (Q-01).
+
+**Deployment settings (environment variables, not admin-editable).** These pick the provider adapter per environment, so switching a paid service on later is a settings change ([integrations.md](integrations.md)):
+
+| Variable | Prototype value | Production value (later) |
+|---|---|---|
+| `PROVIDER_PAYMENT` / `PROVIDER_SHIPPING` / `PROVIDER_PAYOUT` / `PROVIDER_KYC` | `sim` | e.g. `razorpay` / `shiprocket` / `razorpayx` / chosen KYC vendor |
+| `PROVIDER_SMS` / `PROVIDER_WHATSAPP` | `sim` (test inbox) | e.g. `msg91` / `gupshup` |
+| `PROVIDER_EMAIL` | `brevo` (`log` locally) | e.g. `ses` |
+| `STORAGE_ENDPOINT`, `STORAGE_BUCKET_*` | MinIO or R2 (S3 API) | S3 |
+| `ENCRYPTION_MASTER_KEY` | secret on the VM | replaced by a KMS key |
+| `FEATURE_TEST_INBOX` | `true` (password `TEST_INBOX_PASSWORD`) | `false` |
+| `OTEL_EXPORTER_OTLP_ENDPOINT`, `SENTRY_DSN` | Grafana Cloud free, Sentry free | paid or self-hosted |
+
+Startup refuses to boot in production mode if any `PROVIDER_*` is `sim` or `FEATURE_TEST_INBOX` is on.
 
 ---
 
@@ -861,7 +884,7 @@ type PayoutProvider interface { Transfer(ctx, TransferReq{Ref string; Amount int
 type KYCProvider    interface { VerifyPAN(ctx, pan, name string) (KYCResult, error); PennyDrop(ctx, BankAccount, name string) (KYCResult, error) }
 type Messenger      interface { Send(ctx, Message{Channel Channel; To string; Template string; Vars map[string]string}) (string, error) }
 ```
-Adapters are chosen by config (`provider.payment = sim|razorpay|…`). Each call has a timeout (3 s; 10 s for label PDFs), 3 retries with jittered backoff for idempotent calls, and a circuit breaker (opens after 50% errors over 20 calls, 30 s).
+Adapters are chosen by the `PROVIDER_*` settings (section 4.7). In the prototype, payment, shipping, payouts, KYC, SMS and WhatsApp use the simulators; email uses the Brevo adapter; storage uses the S3-compatible client pointed at MinIO or R2. Each call has a timeout (3 s; 10 s for label PDFs), 3 retries with jittered backoff for idempotent calls, and a circuit breaker (opens after 50% errors over 20 calls, 30 s).
 
 **Webhook security (all simulators and future real providers):** header `X-Sim-Signature: t=<unix>,v1=<hex HMAC-SHA256(secret, t + "." + body)>`; reject if |now − t| > 300 s; dedupe on `(provider, event_id)` in `webhook_events`; respond 200 only after the DB commit; simulators retry with backoff (1 s → 1 h, 10 attempts) and deliberately send ~5% duplicates in non-prod.
 
@@ -871,13 +894,13 @@ Adapters are chosen by config (`provider.payment = sim|razorpay|…`). Each call
 | sim-ship | Serviceability from seeded PIN table (~19k PINs, COD flag); ETA by zone 1–7 days; status steps every N minutes (`SIM_SHIP_SPEED`, 1 min in dev, real-time-ish in staging); PIN `999999` → RTO; `000001` → failed attempt then delivered. |
 | sim-payout | Account `000000000000` → fail (invalid account); others succeed in 30 s with a bank reference. |
 | sim-kyc | PAN `ABCDE1234F` pass; `AAAAA0000A` fail; name-match fuzzy ≥ 0.8. Penny-drop accounts ending `0000` → name mismatch. |
-| sim-notify | Captures SMS/WhatsApp/email in a dev inbox UI; fixed OTP `123456` only for the reserved health-check number. |
+| sim-notify | Test inbox UI for SMS and WhatsApp (and email locally), searchable by phone number, newest first, messages kept 24 h. In the prototype it is served at `/test-inbox` behind the tester password, with a red TEST banner; testers read their OTP there (TRS A-21). Fixed OTP `123456` only for the reserved health-check number. |
 
 ---
 
 ## 13. Notifications
 - Event → template routing table in code (TRS 6.17 event catalogue). Template keys: `otp`, `order_confirmed`, `order_shipped`, `order_out_for_delivery`, `order_delivered`, `order_cancelled`, `refund_processed`, `return_status`, `issue_update`, `electrons_available`, `electrons_expiring`, `launch_starting`, `membership_predebit`, `membership_renewed`, `membership_failed`, `membership_lapsed`, `approval_result`, `seller_new_order`, `seller_return_requested`, `payout_sent`, `demo_approved`, `cashout_paid`, `health_alert`.
-- Channel rules: transactional always; marketing (`launch_starting`, offers) only if `marketing_opt_in`. SMS uses DLT-registered template IDs; WhatsApp uses pre-approved templates; email via SES with List-Unsubscribe on marketing.
+- Channel rules: transactional always; marketing (`launch_starting`, offers) only if `marketing_opt_in`. In production, SMS uses DLT-registered template IDs and WhatsApp uses pre-approved templates; in the prototype both go to the test inbox. Email goes through Brevo (prototype) or SES (production), with List-Unsubscribe on marketing.
 - In-app: row in `notifications` + `PUBLISH stream:notif:<id>` → SSE to open tabs.
 
 ---
@@ -905,7 +928,7 @@ Adapters are chosen by config (`provider.payment = sim|razorpay|…`). Each call
 - **Status chips**: icon + text + colour from an Okabe-Ito-based palette; never colour alone (NFR-ACC-02).
 
 ### 14.3 Quality budgets
-JS ≤ 200 KB gzip per buyer route; LCP < 2.5 s (Moto G-class, 4G); images via `next/image` → CloudFront (AVIF/WebP, responsive sizes); fonts self-hosted, `font-display: swap`; skeletons for all async blocks; `prefers-reduced-motion` respected; WCAG 2.2 AA checked with axe in CI; all strings in `messages/en.json` (next-intl).
+JS ≤ 200 KB gzip per buyer route; LCP < 2.5 s (Moto G-class, 4G); images via `next/image` (AVIF/WebP, responsive sizes; optimised by the Next.js server in the prototype, served through Cloudflare once a domain exists, CloudFront in production); fonts self-hosted, `font-display: swap`; skeletons for all async blocks; `prefers-reduced-motion` respected; WCAG 2.2 AA checked with axe in CI; all strings in `messages/en.json` (next-intl).
 
 ---
 
@@ -922,18 +945,71 @@ JS ≤ 200 KB gzip per buyer route; LCP < 2.5 s (Moto G-class, 4G); images via `
 | Supply chain | Dependabot, `govulncheck`, `npm audit`, Trivy image scan, gosec/semgrep; signed images; critical findings block deploy |
 | Privacy | DPDP consent records (`legal_acceptances`), data export & deletion jobs, data in ap-south-1 only |
 
+**Prototype substitutions** (free tier; TRS 8.0):
+
+| Production control | Prototype equivalent |
+|---|---|
+| AWS WAF + CloudFront | API rate limits (always on) + Caddy security headers; Cloudflare free managed rules and one rate-limit rule once a domain exists |
+| Secrets Manager + KMS | GitHub Actions encrypted secrets; `/opt/siliconics/.env` owned by root, mode 600; `ENCRYPTION_MASTER_KEY` used for AES-256-GCM envelope encryption of `pan_enc`, `bank_enc`, `totp_secret_enc` and KYC files (data keys per record) |
+| RDS encryption | Encrypted VM boot and block volumes (provider default); PostgreSQL bound to the Docker network only |
+| ClamAV Lambda | ClamAV container scanning uploads from a queue (can be disabled if the VM runs short of memory; uploads then stay "unscanned" and only admins can open them) |
+| Private subnets | Only Caddy (80/443) and SSH (key-only, restricted source IPs) open on the VM firewall |
+| Data only in India | VM and storage in an Indian region; logs, traces and errors sent to free tools abroad have personal data masked first |
+
 ---
 
 ## 16. Observability
 
-- **Logs**: JSON (`ts, level, msg, request_id, trace_id, account_id(hashed), role, route, status, latency_ms`) → Loki/CloudWatch, 30 days.
+- **Where it goes**: prototype → Grafana Alloy (OpenTelemetry collector) on the VM → Grafana Cloud free tier (logs, metrics, traces; about 14 days), Sentry free for errors, UptimeRobot free for an outside check every 5 minutes. Production → the same signals to paid Grafana/CloudWatch with the retention below.
+- **Logs**: JSON (`ts, level, msg, request_id, trace_id, account_id(hashed), role, route, status, latency_ms`) → Loki/CloudWatch, 30 days (production).
 - **Metrics** (Prometheus names): `http_requests_total{route,status}`, `http_request_duration_seconds` (histogram), `launch_reserve_total{result}`, `launch_deal_remaining{launch}`, `checkout_orders_total{method,result}`, `payment_webhook_lag_seconds`, `outbox_backlog`, `asynq_queue_size{queue}`, `electrons_liability{state}`, `synthetic_check_success{check}`, `provider_calls_total{provider,op,result}`.
 - **Traces**: OTel across web → api → DB/Redis/providers; 10% sampling, 100% on errors and on launch endpoints during launches.
-- **SLOs & alerts**: availability 99.9% (synthetic); p95 < 3 s overall (alert at p95 > 1.5 s for 10 min); 5xx > 1% for 5 min; payment success < 90% for 15 min; outbox backlog > 1,000 for 5 min; any oversell invariant breach (`deal_remaining < 0` impossible by constraint — alert on Redis/DB counter drift > 0 after sweep).
+- **SLOs & alerts**: availability 99.9% in production, 99% target in the prototype (synthetic); p95 < 3 s overall (alert at p95 > 1.5 s for 10 min); 5xx > 1% for 5 min; payment success < 90% for 15 min; outbox backlog > 1,000 for 5 min; any oversell invariant breach (`deal_remaining < 0` impossible by constraint — alert on Redis/DB counter drift > 0 after sweep).
 
 ---
 
 ## 17. Infrastructure and delivery
+
+### 17.1 Prototype hosting (free tier, current)
+
+**One address, one origin.** Everything is served from a single HTTPS address on a free subdomain (for example DuckDNS) until a domain is bought (TRS Q-11). Caddy routes by path, so sign-in cookies stay first-party, there is no CORS, and SSE streams are not cut off:
+
+| Path | Goes to |
+|---|---|
+| `/api/*` | `api:8080` (SSE passed through without buffering) |
+| `/sim/pay/*` | `sim-pay:9001` (hosted checkout page the buyer is redirected to) |
+| `/test-inbox*` | `sim-notify:9005`, behind the tester password |
+| everything else | `web:3000` (Next.js) |
+
+Simulator webhooks reach the API over the internal Docker network, never through the public address.
+
+**Machine:** Oracle Cloud Always Free Ampere A1 VM: 4 ARM cores, 24 GB RAM, Ubuntu 24.04 (arm64), 100–200 GB block volume, Mumbai or Hyderabad region (TRS A-18, Q-09). CI builds multi-arch images (`linux/arm64` and `linux/amd64`).
+
+**Docker Compose services** (memory limits keep one service from starving the rest):
+
+| Service | Image | Memory limit | Notes |
+|---|---|---|---|
+| `caddy` | caddy:2 | 128 MB | Automatic HTTPS (Let's Encrypt), security headers, path routing, health-checked load balancing |
+| `web` × 2 | ghcr.io/…/web | 1 GB each | Two copies so deploys restart one at a time without errors |
+| `api` × 2 | ghcr.io/…/api | 1 GB each | Same rolling restart |
+| `worker` | ghcr.io/…/api (`cmd/worker`) | 512 MB | Takes `lock:<job>` so only one copy runs each scheduled job |
+| `sim-pay`, `sim-ship`, `sim-payout`, `sim-kyc`, `sim-notify` | ghcr.io/…/sim-* | 128 MB each | Same simulators as local and CI |
+| `postgres` | postgres:16 | 4 GB | `shared_buffers` 1 GB, data on the block volume, Docker network only |
+| `redis` | redis:7 | 512 MB | `maxmemory` with `noeviction` for queue keys, AOF every second |
+| `minio` | minio | 512 MB | Only if Cloudflare R2 is not used |
+| `clamav` | clamav | 1.5 GB | Upload scanning (optional, section 15) |
+| `alloy` | grafana/alloy | 256 MB | Sends logs, metrics and traces to Grafana Cloud free |
+| `backup` | postgres:16 + age | 64 MB | Nightly 02:00 IST `pg_dump -Fc`, encrypted with `age`, uploaded to object storage, 14 kept |
+
+Total is about 11 GB, leaving headroom on the 24 GB VM.
+
+**Deploy (from `main`):** build and push images to GHCR (tag = commit SHA) → SSH with a deploy key → `docker compose pull` → `docker compose run --rm migrate` (expand/contract migrations only, so the previous version still works) → rolling `docker compose up -d --wait` → smoke tests and one synthetic-check run → if any fail, redeploy the previous SHA. A manual "deploy SHA" workflow allows rollback at any time.
+
+**Keeping it alive:** Oracle may reclaim idle Always Free VMs. The 5-minute health checks and normal traffic keep it active. If the VM is lost, `infra/prototype/bootstrap.sh` rebuilds it (Docker, firewall, Caddy, Compose files, secrets from GitHub) and the latest backup is restored: RTO about 4 hours, RPO up to 24 hours (TRS 8.0).
+
+**Fallback without a card (TRS 12.1):** web on Vercel Hobby with Next.js rewrites proxying `/api/*` to the API, so cookies stay first-party; API and worker as one process on a Render free web service with `SIM_EMBEDDED=true` (simulators served as routes inside the API); Neon free PostgreSQL; Upstash free Redis with longer queue polling intervals. Render sleeps after about 15 minutes idle, so a GitHub Actions schedule calls `POST /internal/jobs/tick` (secret-protected) every 10 minutes to run due jobs, and launch pages fall back from SSE to 3-second polling. It works end to end, but is noticeably slower after idle periods.
+
+### 17.2 Production hosting (later, paid)
 
 | Resource | Production baseline | Launch mode |
 |---|---|---|
@@ -948,13 +1024,32 @@ JS ≤ 200 KB gzip per buyer route; LCP < 2.5 s (Moto G-class, 4G); images via `
 
 **Capacity reasoning (1,000 rps launch):** ~70% of traffic is cacheable page/asset GETs served by CloudFront; `/live` and SSE reads come from Redis; only reserve and checkout writes hit PostgreSQL, bounded by deal units, per-member limits and the waiting room. Load test target 1,500 rps (NFR-CAP-02).
 
-**Environments:** local (Docker Compose: postgres, redis, all simulators, mailpit-style notify) → dev (auto from `main`) → staging (tagged release, anonymised data) → prod (tagged release + manual approval).
-
-**CI/CD (GitHub Actions):** lint → unit tests → sqlc/openapi drift check → build → integration tests (testcontainers: Postgres, Redis, simulators) → security scans → image push (ECR) → Terraform plan/apply → migrate (`cmd/migrate`, expand/contract only) → rolling deploy (ECS, min healthy 100%) → smoke + synthetic checks → auto-rollback on failed health.
-
 **Backups & DR:** PITR 14 days + daily snapshots 35 days, cross-region snapshot copy weekly; RPO ≤ 5 min, RTO ≤ 1 h; quarterly restore drill.
 
----
+Moving from 17.1 to 17.2 changes hosting and `PROVIDER_*` settings only: the same images, migrations and tests are used.
+
+### 17.3 Environments
+
+| Environment | Where | Data | Providers |
+|---|---|---|---|
+| Local | Developer machine, `docker compose up` | Seed data (`cmd/seed`) | All simulated, email to the test inbox |
+| CI | GitHub Actions runner, throw-away stack per job | Seed data | All simulated |
+| Preview (optional) | Vercel Hobby preview of `web` per pull request, `/api/*` proxied to the prototype | Prototype test data | As prototype; for reviewing UI changes only |
+| Prototype | Free VM (17.1) | Test data, synthetic records flagged | Simulators + Brevo email + real Google sign-in |
+| Production (later) | AWS (17.2) | Real | Paid providers ([integrations.md](integrations.md)) |
+
+### 17.4 Continuous integration (parallel)
+
+Workflows in `.github/workflows/` (details and team rules in [dev-workflow.md](dev-workflow.md)):
+
+| Workflow | Trigger | Jobs (run in parallel unless noted) |
+|---|---|---|
+| `ci.yml` | every pull request and push to a PR branch | `lint-go` (golangci-lint) · `lint-web` (ESLint, Prettier, `tsc`) · `unit-go` (`go test -race`, coverage gate 80% on core modules) · `unit-web` (Vitest) · `integration` (PostgreSQL 16 + Redis 7 service containers, simulators) · `contract` (OpenAPI lint, `sqlc diff`, generated client diff, migration lint) · `e2e` (full Compose stack, Playwright split into 3 shards, Chromium) · `security` (govulncheck, `npm audit`, gitleaks, Trivy) · `build` (images built, not pushed) → `ci-success` (single required check that waits for all) |
+| `deploy.yml` | push to `main` | Build multi-arch images → push to GHCR → deploy to prototype (17.1) → smoke + synthetic checks → automatic rollback |
+| `nightly.yml` | daily (weekdays) | Playwright on Chromium, Firefox and WebKit · k6 load test against local Compose · 5,000-buyer oversell test · OWASP ZAP baseline against local Compose |
+| `jobs-tick.yml` | every 10 min, fallback hosting only | Calls `/internal/jobs/tick` |
+
+**Speed and free-minute budget:** each PR run is cancelled when a newer commit arrives (`concurrency` group per branch); path filters skip jobs whose code did not change; Go, npm, Playwright and Docker layer caches are restored; Linux runners only. Estimated use: about 15 runner-minutes per PR run, about 20 per nightly and about 8 per deploy, which fits roughly 2,000 free minutes a month at around 80 PR runs. A public repository removes the limit (TRS Q-10).
 
 ## 18. Testing specifics
 
@@ -965,9 +1060,9 @@ JS ≤ 200 KB gzip per buyer route; LCP < 2.5 s (Moto G-class, 4G); images via `
 | Concurrency | 5,000 goroutines reserving 6 deal units with limit 1 → exactly 6 claims, counters consistent after sweep; double-submit with same Idempotency-Key → one order |
 | Contract | OpenAPI schema tests; provider adapter contract tests run against simulators (and later real sandboxes) |
 | E2E (Playwright) | Journeys: guest→buyer purchase, member launch deal, return, issue, membership auto-renew toggle, creator onboarding→demo→review→cash-out, promoter verify→promote, seller onboarding→list→fulfil→payout, admin approvals/launch creation/role switch/health |
-| Load (k6) | Ramp to 1,500 rps: 60% browse, 25% PDP live, 10% reserve, 5% checkout; assert p95 < 3 s, 0 oversell, error rate < 1% |
+| Load (k6) | Production: ramp to 1,500 rps: 60% browse, 25% PDP live, 10% reserve, 5% checkout; assert p95 < 3 s, 0 oversell, error rate < 1%. Prototype: same mix against local Compose in CI, ramped to the measured VM capacity (aim ≥ 100 rps). Never load-test free hosted services. |
 | Accessibility | axe on every route; manual screen reader pass; colour-blind simulation screenshots |
-| Security | ZAP baseline in staging; authorization matrix tests; pen test before go-live |
+| Security | ZAP baseline nightly against local Compose; authorization matrix tests; pen test before production go-live |
 
 ---
 
@@ -987,7 +1082,7 @@ JS ≤ 200 KB gzip per buyer route; LCP < 2.5 s (Moto G-class, 4G); images via `
 | Sellers & payouts (FR-SEL) | 7.6, 8.10, 8.11 |
 | Notifications (FR-NOT) | 4.4, 13 |
 | Admin & health (FR-ADM/HLT) | 4.3, 4.7, 7.7, 8.12 |
-| Performance, capacity, reliability (NFR-PERF/CAP/REL) | 6, 8.4, 11, 16, 17 |
+| Performance, capacity, reliability (NFR-PERF/CAP/REL) | 6, 8.4, 11, 16, 17 (prototype targets: TRS 8.0) |
 | Security, privacy, rate limits (NFR-SEC/PRIV/RATE) | 4, 9.5, 15 |
 | Accessibility (NFR-ACC) | 14.2, 14.3, 18 |
 
@@ -1003,4 +1098,7 @@ JS ≤ 200 KB gzip per buyer route; LCP < 2.5 s (Moto G-class, 4G); images via `
 | Q-06 GST in launch profit | `DealUnits` takes GST-inclusive values today; a `launch.profit_basis` config can switch to ex-GST |
 | Q-07 extra seller reports | `report` module with pluggable SQL reports |
 | Q-08 returned launch units | Quarantine lot; disposition action added later |
+| Q-09 card for Oracle free VM | If declined, use the fallback in 17.1 (`SIM_EMBEDDED`, jobs tick, polling instead of SSE); no data model change |
+| Q-10 public or private repo | Only changes CI minute budgeting (17.4) |
+| Q-11 domain | Caddy config and Cloudflare in front; no code change |
 | Design choice to confirm | Spent Electrons returned after their lot expired are re-issued for `refund.reissue_expiry_days` (30) |
