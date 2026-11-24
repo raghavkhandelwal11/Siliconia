@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "25a74874-16d2-4a0c-8535-b5f3b188d85d",
+  "receiptId": "f1dccc42-c1f3-4e2c-8aa7-46cb8c2f5a7a",
   "status": "current",
   "command": "deliver",
   "type": "architecture",
   "input": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/hld.candidate.json",
   "output": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-hld.html",
   "specification": {
-    "sha256": "e40c1a44ce065b8db585c69dd7b776fe083d1406093da464c9f35d1f62a0adea",
-    "bytes": 10936
+    "sha256": "4d417a62af86c192036933e83289dda1995f7f9cf96be2d50a6a86b544f935e5",
+    "bytes": 10825
   },
   "artifact": {
-    "sha256": "a4b021fe3c69cf0d2c5fd56d6744002cecef53383a6317be45482d395dc91e51",
-    "bytes": 967641
+    "sha256": "01d77bc7da51d9c75d4131a80ece165a01a663cb153e125bfa3adf2527687e3e",
+    "bytes": 967153
   }
 }

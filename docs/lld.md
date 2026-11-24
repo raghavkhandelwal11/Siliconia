@@ -11,7 +11,8 @@
 > IDs like `FR-LAU-07`, `NFR-CAP-02`, `D-11`, `A-06`, `Q-02` refer to the TRS. This document says **how** they are built. Paid services to add later are listed in [integrations.md](integrations.md); the team's working rules are in [dev-workflow.md](dev-workflow.md).
 
 **Diagrams** (exported from the interactive versions in `.archify/`):
-[High-level architecture](design/siliconics-high-level-architecture-v1.png) (production target; prototype layout in 17.1) ·
+[Prototype architecture (current, free)](design/siliconics-prototype-architecture-free-tier.png) ·
+[Production architecture (later, paid)](design/siliconics-production-architecture.png) ·
 [Checkout and payment](design/lld-checkout-and-payment.png) ·
 [Launch deal reservation](design/lld-launch-deal-reservation-never-oversell.png) ·
 [Sub-order lifecycle](design/lld-sub-order-lifecycle-per-seller-shipment.png) ·
@@ -972,6 +973,8 @@ JS ≤ 200 KB gzip per buyer route; LCP < 2.5 s (Moto G-class, 4G); images via `
 
 ### 17.1 Prototype hosting (free tier, current)
 
+![Prototype architecture](design/siliconics-prototype-architecture-free-tier.png)
+
 **One address, one origin.** Everything is served from a single HTTPS address on a free subdomain (for example DuckDNS) until a domain is bought (TRS Q-11). Caddy routes by path, so sign-in cookies stay first-party, there is no CORS, and SSE streams are not cut off:
 
 | Path | Goes to |
@@ -1010,6 +1013,8 @@ Total is about 11 GB, leaving headroom on the 24 GB VM.
 **Fallback without a card (TRS 12.1):** web on Vercel Hobby with Next.js rewrites proxying `/api/*` to the API, so cookies stay first-party; API and worker as one process on a Render free web service with `SIM_EMBEDDED=true` (simulators served as routes inside the API); Neon free PostgreSQL; Upstash free Redis with longer queue polling intervals. Render sleeps after about 15 minutes idle, so a GitHub Actions schedule calls `POST /internal/jobs/tick` (secret-protected) every 10 minutes to run due jobs, and launch pages fall back from SSE to 3-second polling. It works end to end, but is noticeably slower after idle periods.
 
 ### 17.2 Production hosting (later, paid)
+
+![Production architecture](design/siliconics-production-architecture.png)
 
 | Resource | Production baseline | Launch mode |
 |---|---|---|

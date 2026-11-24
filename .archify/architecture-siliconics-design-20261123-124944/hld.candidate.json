@@ -2,7 +2,7 @@
   "schema_version": 1,
   "diagram_type": "architecture",
   "meta": {
-    "title": "Siliconics: High-Level Architecture (v1)",
+    "title": "Siliconics: Production Architecture (later, paid)",
     "locale": "en",
     "output": ".archify/architecture-siliconics-design-20261123-124944/siliconics-hld.html",
     "quality_profile": "showcase"
@@ -194,9 +194,8 @@
     {
       "id": "simpay",
       "type": "external",
-      "label": "sim-pay",
-      "sublabel": "simulated payment gateway",
-      "tag": "v1 simulator",
+      "label": "Payment gateway",
+      "sublabel": "Razorpay or similar, paid",
       "pos": [
         1340,
         300
@@ -209,9 +208,8 @@
     {
       "id": "simship",
       "type": "external",
-      "label": "sim-ship",
-      "sublabel": "simulated shipping aggregator",
-      "tag": "v1 simulator",
+      "label": "Shipping aggregator",
+      "sublabel": "Shiprocket or similar, paid",
       "pos": [
         1340,
         190
@@ -224,9 +222,8 @@
     {
       "id": "simpayout",
       "type": "external",
-      "label": "sim-payout + sim-kyc",
-      "sublabel": "bank payouts, PAN, penny-drop",
-      "tag": "v1 simulator",
+      "label": "Payouts + KYC",
+      "sublabel": "RazorpayX, KYC vendor, paid",
       "pos": [
         1340,
         410
@@ -471,12 +468,11 @@
     },
     {
       "dot": "amber",
-      "title": "Simulated in v1",
+      "title": "Paid providers (later)",
       "items": [
-        "Payments, shipping, payouts and KYC use realistic simulators",
-        "Same interfaces as real providers, swapped by config later",
-        "SMS, WhatsApp, email and Google sign-in are real",
-        "Simulators stand in for external providers outside AWS"
+        "Real payment, shipping, payout, KYC, SMS and WhatsApp providers",
+        "The free prototype uses simulators with the same interfaces instead",
+        "Switch-on steps for each service: docs/integrations.md"
       ]
     },
     {

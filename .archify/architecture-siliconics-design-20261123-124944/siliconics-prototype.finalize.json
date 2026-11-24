@@ -1,0 +1,1789 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "startedAt": "2026-11-24T05:08:06.794Z",
+  "specification": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/prototype.candidate.json",
+    "sha256": "1c182fe0d27d2a91aea37e39ff935c1b0bb0ab8cb8463f3f5f913b3724a729b4",
+    "bytes": 7280
+  },
+  "artifact": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-prototype.html",
+    "sha256": "648f14340be17e6f886f5e27e404e285af7f9caeb3259b270e9bf8f84349b9f0",
+    "bytes": 975195
+  },
+  "stages": {
+    "validate": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": null,
+      "execution": "embedded-in-deliver",
+      "command": [
+        "/opt/homebrew/Cellar/node/25.1.0_1/bin/node",
+        "/Users/gegerot/.claude/skills/archify/bin/archify.mjs",
+        "deliver",
+        "architecture",
+        "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/prototype.candidate.json",
+        "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-prototype.html",
+        "--quality",
+        "showcase",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "validate",
+        "specification": {
+          "sha256": "1c182fe0d27d2a91aea37e39ff935c1b0bb0ab8cb8463f3f5f913b3724a729b4",
+          "bytes": 7280
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        }
+      }
+    },
+    "deliver": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 5131,
+      "command": [
+        "/opt/homebrew/Cellar/node/25.1.0_1/bin/node",
+        "/Users/gegerot/.claude/skills/archify/bin/archify.mjs",
+        "deliver",
+        "architecture",
+        "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/prototype.candidate.json",
+        "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-prototype.html",
+        "--quality",
+        "showcase",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "receiptId": "780f3cb2-f024-470a-a9a9-35cfa930061c",
+        "ok": true,
+        "command": "deliver",
+        "type": "architecture",
+        "input": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/prototype.candidate.json",
+        "output": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-prototype.html",
+        "specification": {
+          "sha256": "1c182fe0d27d2a91aea37e39ff935c1b0bb0ab8cb8463f3f5f913b3724a729b4",
+          "bytes": 7280
+        },
+        "artifact": {
+          "sha256": "648f14340be17e6f886f5e27e404e285af7f9caeb3259b270e9bf8f84349b9f0",
+          "bytes": 975195
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        },
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      }
+    },
+    "check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 169,
+      "command": [
+        "/opt/homebrew/Cellar/node/25.1.0_1/bin/node",
+        "/Users/gegerot/.claude/skills/archify/bin/archify.mjs",
+        "check",
+        "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-prototype.html",
+        "--require-provenance"
+      ],
+      "receipt": {
+        "ok": true,
+        "file": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-prototype.html",
+        "artifact": {
+          "sha256": "648f14340be17e6f886f5e27e404e285af7f9caeb3259b270e9bf8f84349b9f0",
+          "bytes": 975195
+        },
+        "checks": [
+          {
+            "name": "single_svg",
+            "ok": true,
+            "details": [
+              "found 1 <svg> block(s)"
+            ]
+          },
+          {
+            "name": "finite_svg",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "orthogonal_arrows",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "label_route_clearance",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_crossings",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_corridors",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "container_border_runs",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "route_rhythm",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "legend_clearance",
+            "ok": true,
+            "details": []
+          }
+        ],
+        "composition": {
+          "schemaVersion": 1,
+          "profile": "showcase",
+          "status": "pass",
+          "summary": {
+            "errors": 0,
+            "warnings": 0
+          },
+          "metrics": {
+            "properCrossings": 0,
+            "resolvedCrossovers": 34,
+            "ambiguousCorridors": 0,
+            "arrowheadCollisions": 0,
+            "containerBorderRuns": 0,
+            "labelRouteClearanceIssues": 0,
+            "labelCanvasOverflowIssues": 0,
+            "minLabelRouteClearance": 11,
+            "desktopReadabilityIssues": 0,
+            "viewportHeightIssues": 0,
+            "minProjectedNodeTextPx": 7.40053050397878,
+            "maxBends": 4,
+            "routesOverSuggestedBends": 3,
+            "maxStretch": 1.313,
+            "routesOverSuggestedStretch": 0,
+            "minSegmentPx": 24,
+            "minInteriorSegmentPx": 29,
+            "shortSegmentCount": 0,
+            "shortEndpointSegmentCount": 0,
+            "shortInteriorSegmentCount": 0,
+            "microSegmentCount": 0
+          },
+          "suggestedLimits": {
+            "bendsPerRelationship": 2,
+            "stretch": 1.35,
+            "segmentPx": 16,
+            "microSegmentPx": 8
+          },
+          "routeReview": {
+            "crossings": [
+              {
+                "left": {
+                  "id": "caddy-api",
+                  "from": "caddy",
+                  "to": "api",
+                  "label": "/api + SSE",
+                  "collectionIndex": 3,
+                  "artifactIndex": 4
+                },
+                "right": {
+                  "id": "worker-notify",
+                  "from": "worker",
+                  "to": "notify",
+                  "label": "SMS, WhatsApp",
+                  "collectionIndex": 19,
+                  "artifactIndex": 20
+                },
+                "point": [
+                  509.9,
+                  508
+                ]
+              },
+              {
+                "left": {
+                  "id": "caddy-simpay",
+                  "from": "caddy",
+                  "to": "simpay",
+                  "label": "/sim/pay",
+                  "collectionIndex": 4,
+                  "artifactIndex": 5
+                },
+                "right": {
+                  "id": "caddy-notify",
+                  "from": "caddy",
+                  "to": "notify",
+                  "label": "/test-inbox",
+                  "collectionIndex": 5,
+                  "artifactIndex": 6
+                },
+                "point": [
+                  906.3,
+                  290
+                ],
+                "sharedNode": "caddy"
+              },
+              {
+                "left": {
+                  "id": "caddy-simpay",
+                  "from": "caddy",
+                  "to": "simpay",
+                  "label": "/sim/pay",
+                  "collectionIndex": 4,
+                  "artifactIndex": 5
+                },
+                "right": {
+                  "id": "simpay-api",
+                  "from": "simpay",
+                  "to": "api",
+                  "label": "signed webhooks",
+                  "collectionIndex": 10,
+                  "artifactIndex": 11
+                },
+                "point": [
+                  930.3,
+                  931
+                ],
+                "sharedNode": "simpay"
+              },
+              {
+                "left": {
+                  "id": "web-api",
+                  "from": "web",
+                  "to": "api",
+                  "label": "SSR fetch",
+                  "collectionIndex": 6,
+                  "artifactIndex": 7
+                },
+                "right": {
+                  "id": "worker-notify",
+                  "from": "worker",
+                  "to": "notify",
+                  "label": "SMS, WhatsApp",
+                  "collectionIndex": 19,
+                  "artifactIndex": 20
+                },
+                "point": [
+                  348,
+                  568
+                ]
+              },
+              {
+                "left": {
+                  "id": "api-redis",
+                  "from": "api",
+                  "to": "redis",
+                  "label": "cache, Lua gates",
+                  "collectionIndex": 8,
+                  "artifactIndex": 9
+                },
+                "right": {
+                  "id": "api-simpay",
+                  "from": "api",
+                  "to": "simpay",
+                  "label": "orders, refunds",
+                  "collectionIndex": 9,
+                  "artifactIndex": 10
+                },
+                "point": [
+                  542.7,
+                  884
+                ],
+                "sharedNode": "api"
+              },
+              {
+                "left": {
+                  "id": "api-redis",
+                  "from": "api",
+                  "to": "redis",
+                  "label": "cache, Lua gates",
+                  "collectionIndex": 8,
+                  "artifactIndex": 9
+                },
+                "right": {
+                  "id": "api-simpayout",
+                  "from": "api",
+                  "to": "simpayout",
+                  "label": "KYC checks",
+                  "collectionIndex": 13,
+                  "artifactIndex": 14
+                },
+                "point": [
+                  528.7,
+                  884
+                ],
+                "sharedNode": "api"
+              },
+              {
+                "left": {
+                  "id": "api-redis",
+                  "from": "api",
+                  "to": "redis",
+                  "label": "cache, Lua gates",
+                  "collectionIndex": 8,
+                  "artifactIndex": 9
+                },
+                "right": {
+                  "id": "api-storage",
+                  "from": "api",
+                  "to": "storage",
+                  "label": "presigned URLs",
+                  "collectionIndex": 16,
+                  "artifactIndex": 17
+                },
+                "point": [
+                  514.7,
+                  677.0333704529043
+                ],
+                "sharedNode": "api"
+              },
+              {
+                "left": {
+                  "id": "api-redis",
+                  "from": "api",
+                  "to": "redis",
+                  "label": "cache, Lua gates",
+                  "collectionIndex": 8,
+                  "artifactIndex": 9
+                },
+                "right": {
+                  "id": "worker-pg",
+                  "from": "worker",
+                  "to": "pg",
+                  "label": "jobs, outbox",
+                  "collectionIndex": 17,
+                  "artifactIndex": 18
+                },
+                "point": [
+                  514.7,
+                  733.5
+                ]
+              },
+              {
+                "left": {
+                  "id": "api-simpay",
+                  "from": "api",
+                  "to": "simpay",
+                  "label": "orders, refunds",
+                  "collectionIndex": 9,
+                  "artifactIndex": 10
+                },
+                "right": {
+                  "id": "worker-pg",
+                  "from": "worker",
+                  "to": "pg",
+                  "label": "jobs, outbox",
+                  "collectionIndex": 17,
+                  "artifactIndex": 18
+                },
+                "point": [
+                  542.7,
+                  733.5
+                ]
+              },
+              {
+                "left": {
+                  "id": "api-simpay",
+                  "from": "api",
+                  "to": "simpay",
+                  "label": "orders, refunds",
+                  "collectionIndex": 9,
+                  "artifactIndex": 10
+                },
+                "right": {
+                  "id": "worker-redis",
+                  "from": "worker",
+                  "to": "redis",
+                  "label": "queues",
+                  "collectionIndex": 18,
+                  "artifactIndex": 19
+                },
+                "point": [
+                  542.7,
+                  898
+                ]
+              },
+              {
+                "left": {
+                  "id": "api-simpay",
+                  "from": "api",
+                  "to": "simpay",
+                  "label": "orders, refunds",
+                  "collectionIndex": 9,
+                  "artifactIndex": 10
+                },
+                "right": {
+                  "id": "worker-simpay",
+                  "from": "worker",
+                  "to": "simpay",
+                  "label": "renewals",
+                  "collectionIndex": 22,
+                  "artifactIndex": 23
+                },
+                "point": [
+                  542.7,
+                  1060
+                ],
+                "sharedNode": "simpay"
+              },
+              {
+                "left": {
+                  "id": "api-simship",
+                  "from": "api",
+                  "to": "simship",
+                  "label": "book shipment",
+                  "collectionIndex": 11,
+                  "artifactIndex": 12
+                },
+                "right": {
+                  "id": "worker-notify",
+                  "from": "worker",
+                  "to": "notify",
+                  "label": "SMS, WhatsApp",
+                  "collectionIndex": 19,
+                  "artifactIndex": 20
+                },
+                "point": [
+                  536.75,
+                  508
+                ]
+              },
+              {
+                "left": {
+                  "id": "simship-api",
+                  "from": "simship",
+                  "to": "api",
+                  "label": "tracking webhooks",
+                  "collectionIndex": 12,
+                  "artifactIndex": 13
+                },
+                "right": {
+                  "id": "worker-notify",
+                  "from": "worker",
+                  "to": "notify",
+                  "label": "SMS, WhatsApp",
+                  "collectionIndex": 19,
+                  "artifactIndex": 20
+                },
+                "point": [
+                  598.2,
+                  508
+                ]
+              },
+              {
+                "left": {
+                  "id": "api-simpayout",
+                  "from": "api",
+                  "to": "simpayout",
+                  "label": "KYC checks",
+                  "collectionIndex": 13,
+                  "artifactIndex": 14
+                },
+                "right": {
+                  "id": "worker-pg",
+                  "from": "worker",
+                  "to": "pg",
+                  "label": "jobs, outbox",
+                  "collectionIndex": 17,
+                  "artifactIndex": 18
+                },
+                "point": [
+                  528.7,
+                  733.5
+                ]
+              },
+              {
+                "left": {
+                  "id": "api-simpayout",
+                  "from": "api",
+                  "to": "simpayout",
+                  "label": "KYC checks",
+                  "collectionIndex": 13,
+                  "artifactIndex": 14
+                },
+                "right": {
+                  "id": "worker-redis",
+                  "from": "worker",
+                  "to": "redis",
+                  "label": "queues",
+                  "collectionIndex": 18,
+                  "artifactIndex": 19
+                },
+                "point": [
+                  528.7,
+                  898
+                ]
+              },
+              {
+                "left": {
+                  "id": "api-simpayout",
+                  "from": "api",
+                  "to": "simpayout",
+                  "label": "KYC checks",
+                  "collectionIndex": 13,
+                  "artifactIndex": 14
+                },
+                "right": {
+                  "id": "worker-simpay",
+                  "from": "worker",
+                  "to": "simpay",
+                  "label": "renewals",
+                  "collectionIndex": 22,
+                  "artifactIndex": 23
+                },
+                "point": [
+                  528.7,
+                  1060
+                ]
+              },
+              {
+                "left": {
+                  "id": "api-google",
+                  "from": "api",
+                  "to": "google",
+                  "label": "verify ID token",
+                  "collectionIndex": 15,
+                  "artifactIndex": 16
+                },
+                "right": {
+                  "id": "worker-pg",
+                  "from": "worker",
+                  "to": "pg",
+                  "label": "jobs, outbox",
+                  "collectionIndex": 17,
+                  "artifactIndex": 18
+                },
+                "point": [
+                  350.9,
+                  733.5
+                ]
+              },
+              {
+                "left": {
+                  "id": "api-google",
+                  "from": "api",
+                  "to": "google",
+                  "label": "verify ID token",
+                  "collectionIndex": 15,
+                  "artifactIndex": 16
+                },
+                "right": {
+                  "id": "worker-redis",
+                  "from": "worker",
+                  "to": "redis",
+                  "label": "queues",
+                  "collectionIndex": 18,
+                  "artifactIndex": 19
+                },
+                "point": [
+                  350.9,
+                  898
+                ]
+              },
+              {
+                "left": {
+                  "id": "api-google",
+                  "from": "api",
+                  "to": "google",
+                  "label": "verify ID token",
+                  "collectionIndex": 15,
+                  "artifactIndex": 16
+                },
+                "right": {
+                  "id": "worker-brevo",
+                  "from": "worker",
+                  "to": "brevo",
+                  "label": "email",
+                  "collectionIndex": 20,
+                  "artifactIndex": 21
+                },
+                "point": [
+                  350.9,
+                  1383
+                ]
+              },
+              {
+                "left": {
+                  "id": "api-google",
+                  "from": "api",
+                  "to": "google",
+                  "label": "verify ID token",
+                  "collectionIndex": 15,
+                  "artifactIndex": 16
+                },
+                "right": {
+                  "id": "worker-simpayout",
+                  "from": "worker",
+                  "to": "simpayout",
+                  "label": "weekly payouts",
+                  "collectionIndex": 21,
+                  "artifactIndex": 22
+                },
+                "point": [
+                  350.9,
+                  1236
+                ]
+              },
+              {
+                "left": {
+                  "id": "api-google",
+                  "from": "api",
+                  "to": "google",
+                  "label": "verify ID token",
+                  "collectionIndex": 15,
+                  "artifactIndex": 16
+                },
+                "right": {
+                  "id": "worker-simpay",
+                  "from": "worker",
+                  "to": "simpay",
+                  "label": "renewals",
+                  "collectionIndex": 22,
+                  "artifactIndex": 23
+                },
+                "point": [
+                  350.9,
+                  1060
+                ]
+              },
+              {
+                "left": {
+                  "id": "api-google",
+                  "from": "api",
+                  "to": "google",
+                  "label": "verify ID token",
+                  "collectionIndex": 15,
+                  "artifactIndex": 16
+                },
+                "right": {
+                  "id": "worker-obs",
+                  "from": "worker",
+                  "to": "obs",
+                  "label": "telemetry",
+                  "collectionIndex": 23,
+                  "artifactIndex": 24
+                },
+                "point": [
+                  350.9,
+                  1358
+                ]
+              },
+              {
+                "left": {
+                  "id": "api-google",
+                  "from": "api",
+                  "to": "google",
+                  "label": "verify ID token",
+                  "collectionIndex": 15,
+                  "artifactIndex": 16
+                },
+                "right": {
+                  "id": "github-compose",
+                  "from": "github",
+                  "to": "compose",
+                  "label": "deploy over SSH",
+                  "collectionIndex": 24,
+                  "artifactIndex": 25
+                },
+                "point": [
+                  350.9,
+                  1416
+                ]
+              },
+              {
+                "left": {
+                  "id": "api-storage",
+                  "from": "api",
+                  "to": "storage",
+                  "label": "presigned URLs",
+                  "collectionIndex": 16,
+                  "artifactIndex": 17
+                },
+                "right": {
+                  "id": "worker-pg",
+                  "from": "worker",
+                  "to": "pg",
+                  "label": "jobs, outbox",
+                  "collectionIndex": 17,
+                  "artifactIndex": 18
+                },
+                "point": [
+                  521.7,
+                  733.5
+                ]
+              },
+              {
+                "left": {
+                  "id": "api-storage",
+                  "from": "api",
+                  "to": "storage",
+                  "label": "presigned URLs",
+                  "collectionIndex": 16,
+                  "artifactIndex": 17
+                },
+                "right": {
+                  "id": "worker-redis",
+                  "from": "worker",
+                  "to": "redis",
+                  "label": "queues",
+                  "collectionIndex": 18,
+                  "artifactIndex": 19
+                },
+                "point": [
+                  521.7,
+                  898
+                ]
+              },
+              {
+                "left": {
+                  "id": "api-storage",
+                  "from": "api",
+                  "to": "storage",
+                  "label": "presigned URLs",
+                  "collectionIndex": 16,
+                  "artifactIndex": 17
+                },
+                "right": {
+                  "id": "worker-brevo",
+                  "from": "worker",
+                  "to": "brevo",
+                  "label": "email",
+                  "collectionIndex": 20,
+                  "artifactIndex": 21
+                },
+                "point": [
+                  521.7,
+                  1383
+                ]
+              },
+              {
+                "left": {
+                  "id": "api-storage",
+                  "from": "api",
+                  "to": "storage",
+                  "label": "presigned URLs",
+                  "collectionIndex": 16,
+                  "artifactIndex": 17
+                },
+                "right": {
+                  "id": "worker-simpayout",
+                  "from": "worker",
+                  "to": "simpayout",
+                  "label": "weekly payouts",
+                  "collectionIndex": 21,
+                  "artifactIndex": 22
+                },
+                "point": [
+                  521.7,
+                  1236
+                ]
+              },
+              {
+                "left": {
+                  "id": "api-storage",
+                  "from": "api",
+                  "to": "storage",
+                  "label": "presigned URLs",
+                  "collectionIndex": 16,
+                  "artifactIndex": 17
+                },
+                "right": {
+                  "id": "worker-simpay",
+                  "from": "worker",
+                  "to": "simpay",
+                  "label": "renewals",
+                  "collectionIndex": 22,
+                  "artifactIndex": 23
+                },
+                "point": [
+                  521.7,
+                  1060
+                ]
+              },
+              {
+                "left": {
+                  "id": "api-storage",
+                  "from": "api",
+                  "to": "storage",
+                  "label": "presigned URLs",
+                  "collectionIndex": 16,
+                  "artifactIndex": 17
+                },
+                "right": {
+                  "id": "worker-obs",
+                  "from": "worker",
+                  "to": "obs",
+                  "label": "telemetry",
+                  "collectionIndex": 23,
+                  "artifactIndex": 24
+                },
+                "point": [
+                  521.7,
+                  1358
+                ]
+              },
+              {
+                "left": {
+                  "id": "api-storage",
+                  "from": "api",
+                  "to": "storage",
+                  "label": "presigned URLs",
+                  "collectionIndex": 16,
+                  "artifactIndex": 17
+                },
+                "right": {
+                  "id": "github-compose",
+                  "from": "github",
+                  "to": "compose",
+                  "label": "deploy over SSH",
+                  "collectionIndex": 24,
+                  "artifactIndex": 25
+                },
+                "point": [
+                  521.7,
+                  1416
+                ]
+              },
+              {
+                "left": {
+                  "id": "worker-redis",
+                  "from": "worker",
+                  "to": "redis",
+                  "label": "queues",
+                  "collectionIndex": 18,
+                  "artifactIndex": 19
+                },
+                "right": {
+                  "id": "worker-simpayout",
+                  "from": "worker",
+                  "to": "simpayout",
+                  "label": "weekly payouts",
+                  "collectionIndex": 21,
+                  "artifactIndex": 22
+                },
+                "point": [
+                  308,
+                  898
+                ],
+                "sharedNode": "worker"
+              },
+              {
+                "left": {
+                  "id": "worker-brevo",
+                  "from": "worker",
+                  "to": "brevo",
+                  "label": "email",
+                  "collectionIndex": 20,
+                  "artifactIndex": 21
+                },
+                "right": {
+                  "id": "github-compose",
+                  "from": "github",
+                  "to": "compose",
+                  "label": "deploy over SSH",
+                  "collectionIndex": 24,
+                  "artifactIndex": 25
+                },
+                "point": [
+                  726.9,
+                  1416
+                ]
+              },
+              {
+                "left": {
+                  "id": "worker-simpayout",
+                  "from": "worker",
+                  "to": "simpayout",
+                  "label": "weekly payouts",
+                  "collectionIndex": 21,
+                  "artifactIndex": 22
+                },
+                "right": {
+                  "id": "worker-simpay",
+                  "from": "worker",
+                  "to": "simpay",
+                  "label": "renewals",
+                  "collectionIndex": 22,
+                  "artifactIndex": 23
+                },
+                "point": [
+                  308,
+                  1060
+                ],
+                "sharedNode": "worker"
+              },
+              {
+                "left": {
+                  "id": "worker-obs",
+                  "from": "worker",
+                  "to": "obs",
+                  "label": "telemetry",
+                  "collectionIndex": 23,
+                  "artifactIndex": 24
+                },
+                "right": {
+                  "id": "github-compose",
+                  "from": "github",
+                  "to": "compose",
+                  "label": "deploy over SSH",
+                  "collectionIndex": 24,
+                  "artifactIndex": 25
+                },
+                "point": [
+                  962.4,
+                  1416
+                ]
+              }
+            ],
+            "crowdedSides": [
+              {
+                "node": "api",
+                "label": "API x2",
+                "side": "right",
+                "relationships": 4,
+                "sidePx": 72,
+                "neededPx": 74
+              },
+              {
+                "node": "worker",
+                "label": "Worker",
+                "side": "right",
+                "relationships": 5,
+                "sidePx": 72,
+                "neededPx": 88
+              }
+            ],
+            "detours": [
+              {
+                "relationship": {
+                  "id": "caddy-simpay",
+                  "from": "caddy",
+                  "to": "simpay",
+                  "label": "/sim/pay",
+                  "collectionIndex": 4,
+                  "artifactIndex": 5
+                },
+                "bends": 3,
+                "stretch": 1.041
+              },
+              {
+                "relationship": {
+                  "id": "simpay-api",
+                  "from": "simpay",
+                  "to": "api",
+                  "label": "signed webhooks",
+                  "collectionIndex": 10,
+                  "artifactIndex": 11
+                },
+                "bends": 4,
+                "stretch": 1.313
+              },
+              {
+                "relationship": {
+                  "id": "worker-notify",
+                  "from": "worker",
+                  "to": "notify",
+                  "label": "SMS, WhatsApp",
+                  "collectionIndex": 19,
+                  "artifactIndex": 20
+                },
+                "bends": 3,
+                "stretch": 1.07
+              }
+            ]
+          },
+          "leadingSpace": {
+            "measured": false,
+            "reviewSuggested": false
+          },
+          "desktopReadability": {
+            "budgetBasis": "legacy-930",
+            "readerContract": "declared-wide-v1",
+            "availableDiagramWidth": 930,
+            "actualBudgetPx": 930,
+            "limit": "legacy",
+            "requestedTargetPx": 7.5,
+            "requestedTargetMet": false,
+            "hardFloorPx": 6,
+            "hardFloorMet": true,
+            "minimumOwner": {
+              "kind": "boundary",
+              "id": null
+            },
+            "minimumSourceTextPx": 9,
+            "minimumProjectedTextPx": 7.40053050397878,
+            "semanticTextCount": 63
+          },
+          "issues": []
+        },
+        "provenance": "current",
+        "deliveryReceiptId": "780f3cb2-f024-470a-a9a9-35cfa930061c"
+      }
+    },
+    "browser-check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 9361,
+      "command": [
+        "/opt/homebrew/Cellar/node/25.1.0_1/bin/node",
+        "/Users/gegerot/.claude/skills/archify/bin/archify.mjs",
+        "browser-check",
+        "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-prototype.html",
+        "--json",
+        "--require-provenance"
+      ],
+      "execution": "in-process",
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "browser-check",
+        "evidenceKind": "automated-browser",
+        "status": "pass",
+        "visualReview": "not-requested",
+        "provenance": "current",
+        "deliveryReceiptId": "780f3cb2-f024-470a-a9a9-35cfa930061c",
+        "artifact": {
+          "path": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-prototype.html",
+          "sha256": "648f14340be17e6f886f5e27e404e285af7f9caeb3259b270e9bf8f84349b9f0",
+          "bytes": 975195
+        },
+        "state": {
+          "detail": "read",
+          "motion": "still"
+        },
+        "chrome": {
+          "status": "available",
+          "executable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+        },
+        "diagnostics": [],
+        "containment": {
+          "status": "pass",
+          "policy": "fit-or-reader-declared-readable-vertical-scroll",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 1554,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 973,
+              "diagramWidth": 943,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 52,
+                "diagramChromePx": 78,
+                "svgPx": 1411,
+                "cardsPx": 0,
+                "viewBoxHeight": 1692
+              },
+              "viewBoxWidth": 1131,
+              "minimumProjectedNodeTextPx": 7.503978779840849,
+              "minimumProjectedNonEdgeTextPx": 7.503978779840849,
+              "minimumProjectedEdgeTextPx": 8.337754199823165,
+              "minimumProjectedNodeText": "Oracle Cloud Always Free VM (Mumbai or Hyderabad)",
+              "minimumProjectedNodeTextDetail": "boundary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "boundary",
+                "id": null
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1620,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 973,
+              "diagramWidth": 943,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 1411,
+                "cardsPx": 0,
+                "viewBoxHeight": 1692
+              },
+              "viewBoxWidth": 1131,
+              "minimumProjectedNodeTextPx": 7.503978779840849,
+              "minimumProjectedNonEdgeTextPx": 7.503978779840849,
+              "minimumProjectedEdgeTextPx": 8.337754199823165,
+              "minimumProjectedNodeText": "Oracle Cloud Always Free VM (Mumbai or Hyderabad)",
+              "minimumProjectedNodeTextDetail": "boundary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "boundary",
+                "id": null
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1620,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 973,
+              "diagramWidth": 943,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 1411,
+                "cardsPx": 0,
+                "viewBoxHeight": 1692
+              },
+              "viewBoxWidth": 1131,
+              "minimumProjectedNodeTextPx": 7.503978779840849,
+              "minimumProjectedNonEdgeTextPx": 7.503978779840849,
+              "minimumProjectedEdgeTextPx": 8.337754199823165,
+              "minimumProjectedNodeText": "Oracle Cloud Always Free VM (Mumbai or Hyderabad)",
+              "minimumProjectedNodeTextDetail": "boundary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "boundary",
+                "id": null
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1638,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 993,
+              "diagramWidth": 943,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 68,
+                "diagramChromePx": 94,
+                "svgPx": 1411,
+                "cardsPx": 0,
+                "viewBoxHeight": 1692
+              },
+              "viewBoxWidth": 1131,
+              "minimumProjectedNodeTextPx": 7.503978779840849,
+              "minimumProjectedNonEdgeTextPx": 7.503978779840849,
+              "minimumProjectedEdgeTextPx": 8.337754199823165,
+              "minimumProjectedNodeText": "Oracle Cloud Always Free VM (Mumbai or Hyderabad)",
+              "minimumProjectedNodeTextDetail": "boundary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "boundary",
+                "id": null
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "themeStates": {
+          "status": "pass",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1440,
+              "height": 900,
+              "requestedTheme": "dark",
+              "resolvedTheme": "dark",
+              "ok": true
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "requestedTheme": "dark",
+              "resolvedTheme": "dark",
+              "ok": true
+            }
+          ]
+        },
+        "readability": {
+          "status": "pass",
+          "minimumProjectedNodeTextPx": 6,
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 1554,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 973,
+              "diagramWidth": 943,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 52,
+                "diagramChromePx": 78,
+                "svgPx": 1411,
+                "cardsPx": 0,
+                "viewBoxHeight": 1692
+              },
+              "viewBoxWidth": 1131,
+              "minimumProjectedNodeTextPx": 7.503978779840849,
+              "minimumProjectedNonEdgeTextPx": 7.503978779840849,
+              "minimumProjectedEdgeTextPx": 8.337754199823165,
+              "minimumProjectedNodeText": "Oracle Cloud Always Free VM (Mumbai or Hyderabad)",
+              "minimumProjectedNodeTextDetail": "boundary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "boundary",
+                "id": null
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1620,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 973,
+              "diagramWidth": 943,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 1411,
+                "cardsPx": 0,
+                "viewBoxHeight": 1692
+              },
+              "viewBoxWidth": 1131,
+              "minimumProjectedNodeTextPx": 7.503978779840849,
+              "minimumProjectedNonEdgeTextPx": 7.503978779840849,
+              "minimumProjectedEdgeTextPx": 8.337754199823165,
+              "minimumProjectedNodeText": "Oracle Cloud Always Free VM (Mumbai or Hyderabad)",
+              "minimumProjectedNodeTextDetail": "boundary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "boundary",
+                "id": null
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1620,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 973,
+              "diagramWidth": 943,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 1411,
+                "cardsPx": 0,
+                "viewBoxHeight": 1692
+              },
+              "viewBoxWidth": 1131,
+              "minimumProjectedNodeTextPx": 7.503978779840849,
+              "minimumProjectedNonEdgeTextPx": 7.503978779840849,
+              "minimumProjectedEdgeTextPx": 8.337754199823165,
+              "minimumProjectedNodeText": "Oracle Cloud Always Free VM (Mumbai or Hyderabad)",
+              "minimumProjectedNodeTextDetail": "boundary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "boundary",
+                "id": null
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1638,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 993,
+              "diagramWidth": 943,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 68,
+                "diagramChromePx": 94,
+                "svgPx": 1411,
+                "cardsPx": 0,
+                "viewBoxHeight": 1692
+              },
+              "viewBoxWidth": 1131,
+              "minimumProjectedNodeTextPx": 7.503978779840849,
+              "minimumProjectedNonEdgeTextPx": 7.503978779840849,
+              "minimumProjectedEdgeTextPx": 8.337754199823165,
+              "minimumProjectedNodeText": "Oracle Cloud Always Free VM (Mumbai or Hyderabad)",
+              "minimumProjectedNodeTextDetail": "boundary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "boundary",
+                "id": null
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "viewerChrome": {
+          "status": "pass",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 1554,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 973,
+              "diagramWidth": 943,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 52,
+                "diagramChromePx": 78,
+                "svgPx": 1411,
+                "cardsPx": 0,
+                "viewBoxHeight": 1692
+              },
+              "viewBoxWidth": 1131,
+              "minimumProjectedNodeTextPx": 7.503978779840849,
+              "minimumProjectedNonEdgeTextPx": 7.503978779840849,
+              "minimumProjectedEdgeTextPx": 8.337754199823165,
+              "minimumProjectedNodeText": "Oracle Cloud Always Free VM (Mumbai or Hyderabad)",
+              "minimumProjectedNodeTextDetail": "boundary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "boundary",
+                "id": null
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1620,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 973,
+              "diagramWidth": 943,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 1411,
+                "cardsPx": 0,
+                "viewBoxHeight": 1692
+              },
+              "viewBoxWidth": 1131,
+              "minimumProjectedNodeTextPx": 7.503978779840849,
+              "minimumProjectedNonEdgeTextPx": 7.503978779840849,
+              "minimumProjectedEdgeTextPx": 8.337754199823165,
+              "minimumProjectedNodeText": "Oracle Cloud Always Free VM (Mumbai or Hyderabad)",
+              "minimumProjectedNodeTextDetail": "boundary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "boundary",
+                "id": null
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1620,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 973,
+              "diagramWidth": 943,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 1411,
+                "cardsPx": 0,
+                "viewBoxHeight": 1692
+              },
+              "viewBoxWidth": 1131,
+              "minimumProjectedNodeTextPx": 7.503978779840849,
+              "minimumProjectedNonEdgeTextPx": 7.503978779840849,
+              "minimumProjectedEdgeTextPx": 8.337754199823165,
+              "minimumProjectedNodeText": "Oracle Cloud Always Free VM (Mumbai or Hyderabad)",
+              "minimumProjectedNodeTextDetail": "boundary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "boundary",
+                "id": null
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1638,
+              "overflowX": false,
+              "overflowY": true,
+              "verticalScrollAccepted": true,
+              "overflowDisposition": "readable-vertical-scroll",
+              "readerLayout": "adaptive",
+              "readerOverflow": "authored",
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 993,
+              "diagramWidth": 943,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 68,
+                "diagramChromePx": 94,
+                "svgPx": 1411,
+                "cardsPx": 0,
+                "viewBoxHeight": 1692
+              },
+              "viewBoxWidth": 1131,
+              "minimumProjectedNodeTextPx": 7.503978779840849,
+              "minimumProjectedNonEdgeTextPx": 7.503978779840849,
+              "minimumProjectedEdgeTextPx": 8.337754199823165,
+              "minimumProjectedNodeText": "Oracle Cloud Always Free VM (Mumbai or Hyderabad)",
+              "minimumProjectedNodeTextDetail": "boundary",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "boundary",
+                "id": null
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "captures": {
+          "status": "not-requested",
+          "screenshots": [],
+          "contactSheet": null
+        },
+        "sidecars": {
+          "receipt": "siliconics-prototype.browser-check.json",
+          "files": []
+        }
+      }
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "diagnostics": [],
+  "evidence": {
+    "receipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-prototype.finalize.json",
+    "summaryReceipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-prototype.finalize-summary.json",
+    "browserCheckReceipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/siliconics-prototype.browser-check.json"
+  },
+  "visualReview": "not-requested",
+  "finishedAt": "2026-11-24T05:08:21.611Z",
+  "durationMs": 14818,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.3.0",
+    "availableVersion": "3.3.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-23T07:20:15.536Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}
