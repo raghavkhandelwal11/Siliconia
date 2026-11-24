@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "tree",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/pages-buyer.candidate.json",
+    "sha256": "3031ebf13ab8da89fc26346259a05f1125bfaf5fe8d32c7cabb37cfcb9bd298d",
+    "bytes": 4786
+  },
+  "artifact": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/pages-buyer.html",
+    "sha256": "3301fa7d3048edbe5a59241a39c9861d6f3c850da8bde213f210e691a2863efe",
+    "bytes": 985314
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/pages-buyer.finalize.json",
+    "summaryReceipt": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/pages-buyer.finalize-summary.json",
+    "browserCheckReceipt": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/pages-buyer.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.3.0",
+    "availableVersion": "3.3.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-23T07:20:15.536Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 2515,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

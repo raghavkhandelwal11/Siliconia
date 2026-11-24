@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "05909336-b9ab-4938-9b18-d43be04c78dc",
+  "status": "current",
+  "command": "deliver",
+  "type": "tree",
+  "input": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/pages-seller.candidate.json",
+  "output": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/pages-seller.html",
+  "specification": {
+    "sha256": "30e2ef1a1dbde8d82873407127b5b986bce0ddc2b77346a55ea866360baf7b71",
+    "bytes": 4089
+  },
+  "artifact": {
+    "sha256": "4b80987fb6c1460184b87cbbf3b75f7cfbbcaafbe26cb71212b0dab819f008e4",
+    "bytes": 975847
+  }
+}

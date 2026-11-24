@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "fb422e8c-1b33-495c-af8a-b8030592357b",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/flow-admin.candidate.json",
+  "output": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/flow-admin.html",
+  "specification": {
+    "sha256": "82810373f79c9570aca95666038f19523adef5a60c9a27f743eba5ab977dc316",
+    "bytes": 4143
+  },
+  "artifact": {
+    "sha256": "c97e9d98b72bd524006f580b41254479d206d6e936a5cb47e2fa5e24d77be3d8",
+    "bytes": 934330
+  }
+}

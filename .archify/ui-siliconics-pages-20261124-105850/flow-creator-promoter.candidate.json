@@ -1,0 +1,271 @@
+{
+ "schema_version": 2,
+ "diagram_type": "workflow",
+ "meta": {
+  "title": "Page flow: creator and promoter",
+  "locale": "en",
+  "output": ".archify/ui-siliconics-pages-20261124-105850/flow-creator-promoter.html",
+  "quality_profile": "showcase",
+  "parentHref": "frontend-architecture.html",
+  "legend": {
+   "entries": {
+    "frontend": {
+     "label": "Page"
+    },
+    "external": {
+     "label": "Test simulator or outside step"
+    },
+    "security": {
+     "label": "Check or decision"
+    },
+    "backend": {
+     "label": "System step"
+    }
+   }
+  }
+ },
+ "lanes": [
+  {
+   "id": "creator",
+   "label": "Creator"
+  },
+  {
+   "id": "checks",
+   "label": "Checks",
+   "variant": "exception"
+  },
+  {
+   "id": "buyers",
+   "label": "Buyers"
+  },
+  {
+   "id": "promoter",
+   "label": "Promoter"
+  }
+ ],
+ "mainPath": [
+  "info",
+  "apply",
+  "approve",
+  "demo",
+  "sellerok",
+  "review",
+  "votes",
+  "earn",
+  "cash"
+ ],
+ "nodes": [
+  {
+   "id": "info",
+   "lane": "creator",
+   "col": 0,
+   "type": "frontend",
+   "label": "For creators page",
+   "sublabel": "criteria, rewards"
+  },
+  {
+   "id": "apply",
+   "lane": "creator",
+   "col": 1,
+   "type": "frontend",
+   "label": "Apply",
+   "sublabel": "5,000+ followers"
+  },
+  {
+   "id": "approve",
+   "lane": "checks",
+   "col": 2,
+   "type": "security",
+   "label": "Admin approval",
+   "sublabel": "criteria checked"
+  },
+  {
+   "id": "demo",
+   "lane": "creator",
+   "col": 2,
+   "type": "frontend",
+   "label": "Request demo",
+   "sublabel": "product page"
+  },
+  {
+   "id": "sellerok",
+   "lane": "checks",
+   "col": 3,
+   "type": "security",
+   "label": "Seller ships demo",
+   "sublabel": "sim-ship tracking"
+  },
+  {
+   "id": "review",
+   "lane": "creator",
+   "col": 3,
+   "type": "frontend",
+   "label": "Post review",
+   "sublabel": "rating, video link"
+  },
+  {
+   "id": "votes",
+   "lane": "buyers",
+   "col": 4,
+   "type": "frontend",
+   "label": "Buyers agree",
+   "sublabel": "verified thumbs up"
+  },
+  {
+   "id": "earn",
+   "lane": "creator",
+   "col": 4,
+   "type": "frontend",
+   "label": "Earnings",
+   "sublabel": "monthly reward pool"
+  },
+  {
+   "id": "cash",
+   "lane": "creator",
+   "col": 5,
+   "type": "frontend",
+   "label": "KYC and cash-out",
+   "sublabel": "min 250, weekly (sim)"
+  },
+  {
+   "id": "pinfo",
+   "lane": "promoter",
+   "col": 0,
+   "type": "frontend",
+   "label": "For promoters page",
+   "sublabel": "how it works"
+  },
+  {
+   "id": "papply",
+   "lane": "promoter",
+   "col": 1,
+   "type": "frontend",
+   "label": "Apply",
+   "sublabel": "investment proof"
+  },
+  {
+   "id": "pcheck",
+   "lane": "checks",
+   "col": 1,
+   "type": "security",
+   "label": "Admin + seller confirm",
+   "sublabel": "investor verified"
+  },
+  {
+   "id": "promote",
+   "lane": "promoter",
+   "col": 3,
+   "type": "frontend",
+   "label": "Promote products",
+   "sublabel": "Promoted by"
+  },
+  {
+   "id": "reward",
+   "lane": "promoter",
+   "col": 4,
+   "type": "frontend",
+   "label": "Rewards",
+   "sublabel": "set by the seller"
+  }
+ ],
+ "edges": [
+  {
+   "id": "info-apply",
+   "from": "info",
+   "to": "apply",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "apply-approve",
+   "from": "apply",
+   "to": "approve",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "approve-demo",
+   "from": "approve",
+   "to": "demo",
+   "label": "approved",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "demo-sellerok",
+   "from": "demo",
+   "to": "sellerok",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "sellerok-review",
+   "from": "sellerok",
+   "to": "review",
+   "label": "received",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "review-votes",
+   "from": "review",
+   "to": "votes",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "votes-earn",
+   "from": "votes",
+   "to": "earn",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "earn-cash",
+   "from": "earn",
+   "to": "cash",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "pinfo-papply",
+   "from": "pinfo",
+   "to": "papply",
+   "role": "branch",
+   "variant": "default"
+  },
+  {
+   "id": "papply-pcheck",
+   "from": "papply",
+   "to": "pcheck",
+   "role": "branch",
+   "variant": "default"
+  },
+  {
+   "id": "pcheck-promote",
+   "from": "pcheck",
+   "to": "promote",
+   "label": "verified",
+   "role": "branch",
+   "variant": "default"
+  },
+  {
+   "id": "promote-reward",
+   "from": "promote",
+   "to": "reward",
+   "label": "sales",
+   "role": "branch",
+   "variant": "default"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "violet",
+   "title": "Rewards",
+   "items": [
+    "Earlier creator reviews get a bigger pool share",
+    "Promoter rewards are optional, set per product by the seller"
+   ]
+  }
+ ]
+}

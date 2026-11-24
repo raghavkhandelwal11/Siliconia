@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "lifecycle",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/order.candidate.json",
+    "sha256": "1c187cd335e85366b7e392bfa31f5fd0853653ff3d87f631a42ec253864c9500",
+    "bytes": 4550
+  },
+  "artifact": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/order-lifecycle.html",
+    "sha256": "503d9cd41ad01bda0d8792c3eb9ca21c21c6abb99a658aea307ae88dffa3efb5",
+    "bytes": 940792
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/parent-relink/order-lifecycle.finalize.json",
+    "summaryReceipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/parent-relink/order-lifecycle.finalize-summary.json",
+    "browserCheckReceipt": "/Users/gegerot/side_projects/siliconia/.archify/architecture-siliconics-design-20261123-124944/parent-relink/order-lifecycle.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.3.0",
+    "availableVersion": "3.3.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-23T07:20:15.536Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 2383,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

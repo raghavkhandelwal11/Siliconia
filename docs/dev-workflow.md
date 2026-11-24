@@ -2,8 +2,8 @@
 
 | | |
 |---|---|
-| **Version** | 1.0, 24 Nov 2026 |
-| **Related** | TRS v1.2 (D-22, D-23, section 12.3), LLD v1.1 (section 17.4), [integrations.md](integrations.md) |
+| **Version** | 1.1, 24 Nov 2026 |
+| **Related** | TRS v1.3 (D-22 to D-24, section 12.3), LLD v1.2 (section 17.3), [free-services.md](free-services.md), [paid-later/](../paid-later/README.md) |
 | **Goal** | Several people (and several Claude Code sessions) can fix and build things in parallel, with every change tested before it reaches `main`, and `main` always deployable. |
 
 ---
@@ -79,7 +79,7 @@ Tests must be deterministic: fake clock for time-based rules, seeded data, simul
 
 - No secrets in the repository; gitleaks blocks them. Keys live in GitHub encrypted secrets and the VM's root-only env file. `.env.example` lists every variable with dummy values.
 - No real personal data in CI, local or prototype: seed data and synthetic accounts only.
-- Paid provider keys are never added until a service is switched on ([integrations.md](integrations.md)).
+- Only free services and simulators are used ([free-services.md](free-services.md)). No paid provider keys, accounts or adapters are added; paid plans stay in [paid-later/](../paid-later/README.md) until the client approves them.
 
 ## 7. Definition of done
 

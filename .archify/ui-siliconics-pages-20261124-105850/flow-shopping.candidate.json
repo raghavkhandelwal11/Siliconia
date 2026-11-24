@@ -1,0 +1,277 @@
+{
+ "schema_version": 2,
+ "diagram_type": "workflow",
+ "meta": {
+  "title": "Page flow: shopping and checkout",
+  "locale": "en",
+  "output": ".archify/ui-siliconics-pages-20261124-105850/flow-shopping.html",
+  "quality_profile": "showcase",
+  "parentHref": "frontend-architecture.html",
+  "legend": {
+   "entries": {
+    "frontend": {
+     "label": "Page"
+    },
+    "external": {
+     "label": "Test simulator or outside step"
+    },
+    "security": {
+     "label": "Check or decision"
+    },
+    "backend": {
+     "label": "System step"
+    }
+   }
+  }
+ },
+ "lanes": [
+  {
+   "id": "browse",
+   "label": "Browse (public)"
+  },
+  {
+   "id": "signin",
+   "label": "Sign in"
+  },
+  {
+   "id": "buy",
+   "label": "Cart and checkout"
+  },
+  {
+   "id": "pay",
+   "label": "Test payment"
+  },
+  {
+   "id": "after",
+   "label": "After purchase"
+  }
+ ],
+ "mainPath": [
+  "home",
+  "listing",
+  "pdp",
+  "cart",
+  "checkout",
+  "simpay",
+  "result",
+  "orders"
+ ],
+ "nodes": [
+  {
+   "id": "home",
+   "lane": "browse",
+   "col": 0,
+   "type": "frontend",
+   "label": "Home",
+   "sublabel": "launch hero, sections"
+  },
+  {
+   "id": "listing",
+   "lane": "browse",
+   "col": 1,
+   "type": "frontend",
+   "label": "Category or search",
+   "sublabel": "filters, sort"
+  },
+  {
+   "id": "pdp",
+   "lane": "browse",
+   "col": 2,
+   "type": "frontend",
+   "label": "Product page",
+   "sublabel": "price, Electrons, reviews"
+  },
+  {
+   "id": "cart",
+   "lane": "buy",
+   "col": 3,
+   "type": "frontend",
+   "label": "Cart",
+   "sublabel": "grouped by seller"
+  },
+  {
+   "id": "signin",
+   "lane": "signin",
+   "col": 3,
+   "type": "frontend",
+   "label": "Sign in",
+   "sublabel": "OTP from test inbox, or Google"
+  },
+  {
+   "id": "checkout",
+   "lane": "buy",
+   "col": 4,
+   "type": "frontend",
+   "label": "Checkout",
+   "sublabel": "address, Electrons, payment"
+  },
+  {
+   "id": "simpay",
+   "lane": "pay",
+   "col": 5,
+   "type": "external",
+   "label": "sim-pay checkout",
+   "sublabel": "test UPI, cards, net banking"
+  },
+  {
+   "id": "result",
+   "lane": "buy",
+   "col": 5,
+   "type": "frontend",
+   "label": "Result page",
+   "sublabel": "waits for confirmation"
+  },
+  {
+   "id": "orders",
+   "lane": "after",
+   "col": 5,
+   "type": "frontend",
+   "label": "Orders and order detail",
+   "sublabel": "timeline, tracking, invoice"
+  },
+  {
+   "id": "ret",
+   "lane": "after",
+   "col": 4,
+   "type": "frontend",
+   "label": "Return or replace",
+   "sublabel": "within 7 days"
+  },
+  {
+   "id": "review",
+   "lane": "after",
+   "col": 3,
+   "type": "frontend",
+   "label": "Write a review",
+   "sublabel": "delivered items"
+  },
+  {
+   "id": "issue",
+   "lane": "after",
+   "col": 2,
+   "type": "frontend",
+   "label": "Raise an issue",
+   "sublabel": "3 steps"
+  }
+ ],
+ "edges": [
+  {
+   "id": "home-listing",
+   "from": "home",
+   "to": "listing",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "listing-pdp",
+   "from": "listing",
+   "to": "pdp",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "pdp-cart",
+   "from": "pdp",
+   "to": "cart",
+   "label": "add to cart",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "cart-signin",
+   "from": "cart",
+   "to": "signin",
+   "label": "guest",
+   "role": "branch",
+   "variant": "default"
+  },
+  {
+   "id": "signin-checkout",
+   "from": "signin",
+   "to": "checkout",
+   "label": "signed in",
+   "role": "branch",
+   "variant": "default"
+  },
+  {
+   "id": "cart-checkout",
+   "from": "cart",
+   "to": "checkout",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "checkout-simpay",
+   "from": "checkout",
+   "to": "simpay",
+   "label": "pay online",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "checkout-result",
+   "from": "checkout",
+   "to": "result",
+   "label": "COD or all Electrons",
+   "role": "branch",
+   "variant": "default"
+  },
+  {
+   "id": "simpay-result",
+   "from": "simpay",
+   "to": "result",
+   "label": "redirect back",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "result-orders",
+   "from": "result",
+   "to": "orders",
+   "role": "main",
+   "variant": "emphasis"
+  },
+  {
+   "id": "orders-ret",
+   "from": "orders",
+   "to": "ret",
+   "label": "return",
+   "role": "branch",
+   "variant": "default"
+  },
+  {
+   "id": "orders-review",
+   "from": "orders",
+   "to": "review",
+   "label": "review",
+   "role": "branch",
+   "variant": "default"
+  },
+  {
+   "id": "orders-issue",
+   "from": "orders",
+   "to": "issue",
+   "label": "problem",
+   "role": "branch",
+   "variant": "default"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "amber",
+   "title": "Free test path",
+   "items": [
+    "OTP codes come from the test inbox",
+    "Payments use the sim-pay test checkout; no real money"
+   ]
+  },
+  {
+   "dot": "cyan",
+   "title": "Rules shown on the way",
+   "items": [
+    "COD only for members, under \u20b98,000, no launch units",
+    "Electrons earned show as pending until the 7-day window closes"
+   ]
+  }
+ ]
+}

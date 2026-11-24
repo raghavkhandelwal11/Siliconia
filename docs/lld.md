@@ -2,22 +2,22 @@
 
 | | |
 |---|---|
-| **Version** | 1.1 (Draft), 24 Nov 2026 |
-| **Implements** | Technical Requirements Specification v1.2 (TRS), Business Requirements Document v1.2 (BRD) |
+| **Version** | 1.2 (Draft), 24 Nov 2026 |
+| **Implements** | Technical Requirements Specification v1.3 (TRS), Business Requirements Document v1.2 (BRD) |
 | **Readers** | Developers, QA, DevOps, tech lead, project manager |
 | **Scope** | End-to-end design of v1: web app, API, worker, data, integrations (simulated), jobs, infra, tests |
-| **Hosting** | v1 is a **prototype on free services only** (TRS D-20 to D-23). The code is identical for the later paid production setup; only configuration and hosting differ (section 17). |
+| **Hosting** | v1 is a **prototype on free services only** (TRS D-20 to D-24). Everything here is free to run and test. Paid providers and paid hosting are planned separately in [`paid-later/`](../paid-later/README.md) and are not part of this build. |
 
-> IDs like `FR-LAU-07`, `NFR-CAP-02`, `D-11`, `A-06`, `Q-02` refer to the TRS. This document says **how** they are built. Paid services to add later are listed in [integrations.md](integrations.md); the team's working rules are in [dev-workflow.md](dev-workflow.md).
+> IDs like `FR-LAU-07`, `NFR-CAP-02`, `D-11`, `A-06`, `Q-02` refer to the TRS. This document says **how** they are built. The free services this build uses are listed in [free-services.md](free-services.md); the team's working rules are in [dev-workflow.md](dev-workflow.md).
 
 **Diagrams** (exported from the interactive versions in `.archify/`):
-[Prototype architecture (current, free)](design/siliconics-prototype-architecture-free-tier.png) ·
-[Production architecture (later, paid)](design/siliconics-production-architecture.png) ·
+[Prototype architecture](design/siliconics-prototype-architecture-free-tier.png) ·
 [Checkout and payment](design/lld-checkout-and-payment.png) ·
 [Launch deal reservation](design/lld-launch-deal-reservation-never-oversell.png) ·
 [Sub-order lifecycle](design/lld-sub-order-lifecycle-per-seller-shipment.png) ·
 [Electrons lot lifecycle](design/lld-electrons-lot-lifecycle.png) ·
-[Core data model](design/lld-core-data-model-postgresql.png)
+[Core data model](design/lld-core-data-model-postgresql.png) ·
+[Front-end architecture](design/ui/frontend-architecture.png) (UI page structures and flows: section 14)
 
 ---
 
@@ -38,21 +38,21 @@
 
 ## 2. Runtime components
 
-| Component | Tech | Port | Responsibility | Scaling |
+| Component | Tech | Port | Responsibility | Copies on the VM |
 |---|---|---|---|---|
-| `web` | Next.js 15 (React 19, App Router), TypeScript | 3000 | SSR/ISR pages, role-based UI, BFF cookie forwarding | ECS 2–10 tasks (1 vCPU / 2 GB) |
-| `api` | Go 1.23, chi, pgx, sqlc | 8080 | REST API `/api/v1`, webhooks, SSE streams | ECS 2–20 tasks (0.5 vCPU / 1 GB) |
-| `worker` | Go, asynq | — | Outbox relay, notifications, scheduled jobs, payouts, synthetic checks | ECS 1–4 tasks |
-| `sim-pay` | Go + small HTML UI | 9001 | Simulated payment gateway (hosted checkout, webhooks, refunds, mandates) | 1–2 tasks |
-| `sim-ship` | Go | 9002 | Simulated shipping aggregator (serviceability, AWB, labels, tracking webhooks) | 1 task |
-| `sim-payout` | Go | 9003 | Simulated bank payouts | 1 task |
-| `sim-kyc` | Go | 9004 | Simulated PAN check and penny-drop | 1 task |
-| `sim-notify` | Go | 9005 | Test inbox for SMS and WhatsApp (and email locally), searchable by phone number (FR-NOT-05) | local, CI and prototype only; off in production |
-| PostgreSQL 16 | Container (prototype) / RDS Multi-AZ (production) | 5432 | System of record | vertical + read replica (production) |
-| Redis 7 | Container (prototype) / ElastiCache (production) | 6379 | Cache, rate limits, launch gates, queues, SSE fan-out | vertical |
-| Object storage | MinIO or Cloudflare R2 (prototype) / S3 + CloudFront (production) | — | Images, documents (KYC bucket separate, encrypted), invoices | managed |
+| `web` | Next.js 15 (React 19, App Router), TypeScript | 3000 | SSR/ISR pages, role-based UI, BFF cookie forwarding | 2 (1 GB each) |
+| `api` | Go 1.23, chi, pgx, sqlc | 8080 | REST API `/api/v1`, webhooks, SSE streams | 2 (1 GB each) |
+| `worker` | Go, asynq | — | Outbox relay, notifications, scheduled jobs, payouts, synthetic checks | 1 |
+| `sim-pay` | Go + small HTML UI | 9001 | Simulated payment gateway (hosted checkout, webhooks, refunds, mandates) | 1 |
+| `sim-ship` | Go | 9002 | Simulated shipping aggregator (serviceability, AWB, labels, tracking webhooks) | 1 |
+| `sim-payout` | Go | 9003 | Simulated bank payouts | 1 |
+| `sim-kyc` | Go | 9004 | Simulated PAN check and penny-drop | 1 |
+| `sim-notify` | Go | 9005 | Test inbox for SMS and WhatsApp (and email locally), searchable by phone number (FR-NOT-05) | 1 |
+| PostgreSQL 16 | Container | 5432 | System of record | 1 |
+| Redis 7 | Container | 6379 | Cache, rate limits, launch gates, queues, SSE fan-out | 1 |
+| Object storage | Cloudflare R2 free or MinIO container (S3 API) | — | Images, documents (KYC bucket separate, encrypted), invoices | 1 (MinIO) |
 
-All services are stateless; the only state is in PostgreSQL, Redis and object storage. The **Scaling** column describes production. The prototype runs one container of each on a single free VM (section 17.1).
+All services are stateless; the only state is in PostgreSQL, Redis and object storage. Everything runs on one free VM (section 17.1).
 
 ---
 
@@ -80,7 +80,7 @@ siliconics/
 ├─ services/simulators/ (pay, ship, payout, kyc, notify)
 ├─ db/ (migrations/, queries/, seed/)
 ├─ packages/api-client/           # generated from openapi.yaml
-├─ infra/terraform/ (envs/dev, staging, prod; modules/)
+├─ infra/prototype/ (docker-compose.yml, Caddyfile, bootstrap.sh, backup scripts)
 └─ tests/ (e2e/ Playwright, load/ k6, contract/)
 ```
 
@@ -96,7 +96,7 @@ siliconics/
 ### 4.2 Authentication
 | Item | Design |
 |---|---|
-| OTP | `otp_challenges(id, phone, role, code_hash, attempts, sends, expires_at, consumed_at)`. Code = 6 random digits; stored as `HMAC-SHA256(pepper, phone‖role‖code)`. Valid 5 min, 5 attempts, resend after 30 s, 3 sends / phone / 15 min (FR-AUTH-02). Delivered by SMS provider (DLT template). |
+| OTP | `otp_challenges(id, phone, role, code_hash, attempts, sends, expires_at, consumed_at)`. Code = 6 random digits; stored as `HMAC-SHA256(pepper, phone‖role‖code)`. Valid 5 min, 5 attempts, resend after 30 s, 3 sends / phone / 15 min (FR-AUTH-02). Delivered through the SMS adapter; in this build it lands in the sim-notify test inbox. |
 | Google | OIDC Authorization Code + PKCE. `state` and `nonce` in a signed, short-lived cookie that also carries the chosen `role`. On callback, look up `(google_sub, role)`; create if new. New Google accounts get `phone_verified_at = NULL` → blocked from checkout and role applications until `/me/phone/verify` (A-04). |
 | Multiple role accounts | If a phone/Google identity matches more than one role account and no role was chosen, return `409 ROLE_CHOICE_REQUIRED` with the list; UI shows a picker (FR-ROLE-03). |
 | Tokens | `sx_at`: EdDSA-signed JWT, 15 min, claims `sub, role, sid, act` (acting role, admins only), `HttpOnly; Secure; SameSite=Lax; Path=/`. `sx_rt`: opaque 256-bit, 30 days, stored hashed in `sessions` with `family_id`; rotated on each refresh; reuse of an old token revokes the whole family (FR-AUTH-05). |
@@ -148,19 +148,18 @@ siliconics/
 
 `categories.commission_bps` and `categories.gst_rate_bps` live on the category (Q-01).
 
-**Deployment settings (environment variables, not admin-editable).** These pick the provider adapter per environment, so switching a paid service on later is a settings change ([integrations.md](integrations.md)):
+**Deployment settings (environment variables, not admin-editable).** These pick the provider adapter, so every outside service in this build is free ([free-services.md](free-services.md)):
 
-| Variable | Prototype value | Production value (later) |
-|---|---|---|
-| `PROVIDER_PAYMENT` / `PROVIDER_SHIPPING` / `PROVIDER_PAYOUT` / `PROVIDER_KYC` | `sim` | e.g. `razorpay` / `shiprocket` / `razorpayx` / chosen KYC vendor |
-| `PROVIDER_SMS` / `PROVIDER_WHATSAPP` | `sim` (test inbox) | e.g. `msg91` / `gupshup` |
-| `PROVIDER_EMAIL` | `brevo` (`log` locally) | e.g. `ses` |
-| `STORAGE_ENDPOINT`, `STORAGE_BUCKET_*` | MinIO or R2 (S3 API) | S3 |
-| `ENCRYPTION_MASTER_KEY` | secret on the VM | replaced by a KMS key |
-| `FEATURE_TEST_INBOX` | `true` (password `TEST_INBOX_PASSWORD`) | `false` |
-| `OTEL_EXPORTER_OTLP_ENDPOINT`, `SENTRY_DSN` | Grafana Cloud free, Sentry free | paid or self-hosted |
-
-Startup refuses to boot in production mode if any `PROVIDER_*` is `sim` or `FEATURE_TEST_INBOX` is on.
+| Variable | Value in this build |
+|---|---|
+| `PROVIDER_PAYMENT` / `PROVIDER_SHIPPING` / `PROVIDER_PAYOUT` / `PROVIDER_KYC` | `sim` |
+| `PROVIDER_SMS` / `PROVIDER_WHATSAPP` | `sim` (test inbox) |
+| `PROVIDER_EMAIL` | `brevo` (`log` locally) |
+| `STORAGE_ENDPOINT`, `STORAGE_BUCKET_*` | R2 or MinIO (S3 API) |
+| `ENCRYPTION_MASTER_KEY` | secret on the VM |
+| `FEATURE_TEST_INBOX` | `true` (password `TEST_INBOX_PASSWORD`) |
+| `OTEL_EXPORTER_OTLP_ENDPOINT`, `SENTRY_DSN` | Grafana Cloud free, Sentry free |
+| `APP_MODE` | `prototype` (a later `production` mode refuses to start while any provider is `sim` or the test inbox is on) |
 
 ---
 
@@ -217,7 +216,7 @@ CREATE TABLE accounts (
   status           text NOT NULL DEFAULT 'ACTIVE' CHECK (status IN ('ACTIVE','SUSPENDED','DELETED')),
   approval         approval_status NOT NULL,   -- BUYER/ADMIN start APPROVED, others DRAFT
   approval_reason  text,
-  totp_secret_enc  bytea,                      -- admins only (KMS envelope)
+  totp_secret_enc  bytea,                      -- admins only (app-level envelope encryption)
   is_synthetic     boolean NOT NULL DEFAULT false,
   created_at       timestamptz NOT NULL DEFAULT now(),
   version          int NOT NULL DEFAULT 1
@@ -592,12 +591,12 @@ sequenceDiagram
   participant A as API
   participant R as Redis
   participant DB as PostgreSQL
-  participant S as SMS provider
+  participant S as sim-notify (SMS)
   U->>W: Enter mobile number, choose account type
   W->>A: POST /auth/otp/send
   A->>R: rate limits and 30s cooldown
   A->>DB: insert otp_challenge (hashed code, 5 min)
-  A->>S: send DLT template with code
+  A->>S: send OTP template (sim-notify test inbox)
   A-->>W: challengeId, resendAfterSec
   U->>W: Enter 6-digit code
   W->>A: POST /auth/otp/verify
@@ -703,7 +702,7 @@ INSERT INTO launch_claims(id, launch_id, account_id, qty, status, held_until) VA
 - Display rules (FR-LAU-08): `deal_remaining = 0 AND held = 0` → **"All items on discount were purchased"**, Buy/Add to cart disabled. `deal_remaining = 0 AND held > 0` → "All discounted units are reserved; some may free up in a few minutes."
 - Status job (every 5 s during live launches): `LIVE → DEAL_SOLD_OUT` when `deal_remaining = 0` and no holds; `→ NORMAL_ON_SALE` immediately or at `normal_sale_at`; `→ COMPLETED` when all launch-normal units are sold, then the PDP falls back to the seller's own stock (FR-LAU-09).
 - Waiting room: when `waiting_room_rps` is set and traffic exceeds it, `/reserve` returns `428 LAUNCH_QUEUE_REQUIRED`. Members `POST /queue` (ZADD NX). A worker admits `waiting_room_rps` members per second by issuing a signed admission token (JWT, `launch_id`, `sub`, 10 min). Position = ZRANK − admit cursor.
-- Pre-scale: 15 min before `starts_at`, the scheduler raises ECS desired counts (api ×4, web ×3) and warms `pdp:` and `launch:` keys.
+- Warm-up: 15 min before `starts_at`, the scheduler warms the `pdp:` and `launch:` Redis keys and checks that both API copies are healthy.
 
 ### 8.5 Shipping lifecycle (simulated aggregator)
 1. Seller `POST /seller/sub-orders/:id/ship` → `ShippingProvider.CreateShipment` → AWB + label PDF (S3) → sub-order `SHIPPED`.
@@ -885,9 +884,9 @@ type PayoutProvider interface { Transfer(ctx, TransferReq{Ref string; Amount int
 type KYCProvider    interface { VerifyPAN(ctx, pan, name string) (KYCResult, error); PennyDrop(ctx, BankAccount, name string) (KYCResult, error) }
 type Messenger      interface { Send(ctx, Message{Channel Channel; To string; Template string; Vars map[string]string}) (string, error) }
 ```
-Adapters are chosen by the `PROVIDER_*` settings (section 4.7). In the prototype, payment, shipping, payouts, KYC, SMS and WhatsApp use the simulators; email uses the Brevo adapter; storage uses the S3-compatible client pointed at MinIO or R2. Each call has a timeout (3 s; 10 s for label PDFs), 3 retries with jittered backoff for idempotent calls, and a circuit breaker (opens after 50% errors over 20 calls, 30 s).
+Adapters are chosen by the `PROVIDER_*` settings (section 4.7). In this build, payment, shipping, payouts, KYC, SMS and WhatsApp use the simulators; email uses the Brevo adapter; storage uses the S3-compatible client pointed at R2 or MinIO. Only the interfaces and simulators exist in code; paid adapters are planned in `paid-later/`. Each call has a timeout (3 s; 10 s for label PDFs), 3 retries with jittered backoff for idempotent calls, and a circuit breaker (opens after 50% errors over 20 calls, 30 s).
 
-**Webhook security (all simulators and future real providers):** header `X-Sim-Signature: t=<unix>,v1=<hex HMAC-SHA256(secret, t + "." + body)>`; reject if |now − t| > 300 s; dedupe on `(provider, event_id)` in `webhook_events`; respond 200 only after the DB commit; simulators retry with backoff (1 s → 1 h, 10 attempts) and deliberately send ~5% duplicates in non-prod.
+**Webhook security (all simulators):** header `X-Sim-Signature: t=<unix>,v1=<hex HMAC-SHA256(secret, t + "." + body)>`; reject if |now − t| > 300 s; dedupe on `(provider, event_id)` in `webhook_events`; respond 200 only after the DB commit; simulators retry with backoff (1 s → 1 h, 10 attempts) and deliberately send ~5% duplicates in non-prod.
 
 | Simulator | Test fixtures / behaviour |
 |---|---|
@@ -901,12 +900,14 @@ Adapters are chosen by the `PROVIDER_*` settings (section 4.7). In the prototype
 
 ## 13. Notifications
 - Event → template routing table in code (TRS 6.17 event catalogue). Template keys: `otp`, `order_confirmed`, `order_shipped`, `order_out_for_delivery`, `order_delivered`, `order_cancelled`, `refund_processed`, `return_status`, `issue_update`, `electrons_available`, `electrons_expiring`, `launch_starting`, `membership_predebit`, `membership_renewed`, `membership_failed`, `membership_lapsed`, `approval_result`, `seller_new_order`, `seller_return_requested`, `payout_sent`, `demo_approved`, `cashout_paid`, `health_alert`.
-- Channel rules: transactional always; marketing (`launch_starting`, offers) only if `marketing_opt_in`. In production, SMS uses DLT-registered template IDs and WhatsApp uses pre-approved templates; in the prototype both go to the test inbox. Email goes through Brevo (prototype) or SES (production), with List-Unsubscribe on marketing.
+- Channel rules: transactional always; marketing (`launch_starting`, offers) only if `marketing_opt_in`. SMS and WhatsApp go to the test inbox. Email goes through Brevo, with List-Unsubscribe on marketing.
 - In-app: row in `notifications` + `PUBLISH stream:notif:<id>` → SSE to open tabs.
 
 ---
 
 ## 14. Frontend design (apps/web)
+
+Every page, its sections, the product categories and the UI features are listed in [product-catalogue-and-ui-features.md](product-catalogue-and-ui-features.md). UI diagrams: [front-end architecture](design/ui/frontend-architecture.png), page structures ([public](design/ui/pages-public.png), [buyer](design/ui/pages-buyer.png), [seller](design/ui/pages-seller.png), [creator and promoter](design/ui/pages-creator-promoter.png), [admin](design/ui/pages-admin.png)) and page flows ([shopping](design/ui/flow-shopping.png), [launch deal](design/ui/flow-launch.png), [seller](design/ui/flow-seller.png), [creator and promoter](design/ui/flow-creator-promoter.png), [admin](design/ui/flow-admin.png)).
 
 ### 14.1 Route map
 | Area | Routes | Rendering |
@@ -929,7 +930,7 @@ Adapters are chosen by the `PROVIDER_*` settings (section 4.7). In the prototype
 - **Status chips**: icon + text + colour from an Okabe-Ito-based palette; never colour alone (NFR-ACC-02).
 
 ### 14.3 Quality budgets
-JS ≤ 200 KB gzip per buyer route; LCP < 2.5 s (Moto G-class, 4G); images via `next/image` (AVIF/WebP, responsive sizes; optimised by the Next.js server in the prototype, served through Cloudflare once a domain exists, CloudFront in production); fonts self-hosted, `font-display: swap`; skeletons for all async blocks; `prefers-reduced-motion` respected; WCAG 2.2 AA checked with axe in CI; all strings in `messages/en.json` (next-intl).
+JS ≤ 200 KB gzip per buyer route; LCP < 2.5 s (Moto G-class, 4G); images via `next/image` (AVIF/WebP, responsive sizes; optimised by the Next.js server; cached by Cloudflare once a domain exists); fonts self-hosted, `font-display: swap`; skeletons for all async blocks; `prefers-reduced-motion` respected; WCAG 2.2 AA checked with axe in CI; all strings in `messages/en.json` (next-intl).
 
 ---
 
@@ -937,35 +938,25 @@ JS ≤ 200 KB gzip per buyer route; LCP < 2.5 s (Moto G-class, 4G); images via `
 
 | Area | Control |
 |---|---|
-| Edge | AWS WAF managed rules (Core, Known Bad Inputs, Bot Control) + rate rules; CloudFront TLS 1.2+; HSTS preload |
-| App | CSP (`default-src 'self'`, nonce scripts, image CDN allowlist), CSRF double-submit, strict CORS (web origin only), input validation from OpenAPI schemas, output encoding by React |
-| Secrets | AWS Secrets Manager; rotation 90 days; KMS envelope for `pan_enc`, `bank_enc`, `totp_secret_enc`; separate KMS key + bucket for KYC documents, access-logged |
-| DB | App role has least privilege; `ledger_entries` and `audit_log` INSERT/SELECT only; RDS encryption at rest; TLS in transit |
-| PII | Logs mask phone (`+91******3210`), email, PAN, bank; OTP, tokens and webhook secrets never logged |
-| Uploads | Presigned PUT with content-type and size limits; async malware scan (ClamAV Lambda) before a document is usable |
-| Supply chain | Dependabot, `govulncheck`, `npm audit`, Trivy image scan, gosec/semgrep; signed images; critical findings block deploy |
-| Privacy | DPDP consent records (`legal_acceptances`), data export & deletion jobs, data in ap-south-1 only |
-
-**Prototype substitutions** (free tier; TRS 8.0):
-
-| Production control | Prototype equivalent |
-|---|---|
-| AWS WAF + CloudFront | API rate limits (always on) + Caddy security headers; Cloudflare free managed rules and one rate-limit rule once a domain exists |
-| Secrets Manager + KMS | GitHub Actions encrypted secrets; `/opt/siliconics/.env` owned by root, mode 600; `ENCRYPTION_MASTER_KEY` used for AES-256-GCM envelope encryption of `pan_enc`, `bank_enc`, `totp_secret_enc` and KYC files (data keys per record) |
-| RDS encryption | Encrypted VM boot and block volumes (provider default); PostgreSQL bound to the Docker network only |
-| ClamAV Lambda | ClamAV container scanning uploads from a queue (can be disabled if the VM runs short of memory; uploads then stay "unscanned" and only admins can open them) |
-| Private subnets | Only Caddy (80/443) and SSH (key-only, restricted source IPs) open on the VM firewall |
-| Data only in India | VM and storage in an Indian region; logs, traces and errors sent to free tools abroad have personal data masked first |
+| Edge | API rate limits (always on) + Caddy security headers (HSTS, CSP); Cloudflare free managed rules and one rate-limit rule once a domain exists |
+| VM | Only Caddy (80/443) and SSH (key-only, restricted source IPs) open on the firewall; everything else on the internal Docker network |
+| App | CSP (`default-src 'self'`, nonce scripts, image allowlist), CSRF double-submit, strict CORS (same origin), input validation from OpenAPI schemas, output encoding by React |
+| Secrets | GitHub Actions encrypted secrets; `/opt/siliconics/.env` owned by root, mode 600; `ENCRYPTION_MASTER_KEY` used for AES-256-GCM envelope encryption of `pan_enc`, `bank_enc`, `totp_secret_enc` and KYC files (data key per record) |
+| DB | App role has least privilege; `ledger_entries` and `audit_log` INSERT/SELECT only; encrypted VM volumes; PostgreSQL reachable only on the Docker network |
+| PII | Logs mask phone (`+91******3210`), email, PAN, bank; OTP, tokens and webhook secrets never logged; personal data masked before telemetry leaves the VM |
+| Uploads | Presigned PUT with content-type and size limits; ClamAV container scans uploads from a queue before a document is usable (if disabled for memory, files stay "unscanned" and only admins can open them) |
+| Supply chain | Dependabot, `govulncheck`, `npm audit`, Trivy image scan, gosec/semgrep, gitleaks; critical findings block deploy |
+| Privacy | DPDP consent records (`legal_acceptances`), data export & deletion jobs; VM and storage in an Indian region |
 
 ---
 
 ## 16. Observability
 
-- **Where it goes**: prototype → Grafana Alloy (OpenTelemetry collector) on the VM → Grafana Cloud free tier (logs, metrics, traces; about 14 days), Sentry free for errors, UptimeRobot free for an outside check every 5 minutes. Production → the same signals to paid Grafana/CloudWatch with the retention below.
-- **Logs**: JSON (`ts, level, msg, request_id, trace_id, account_id(hashed), role, route, status, latency_ms`) → Loki/CloudWatch, 30 days (production).
+- **Where it goes**: Grafana Alloy (OpenTelemetry collector) on the VM → Grafana Cloud free tier (logs, metrics, traces; about 14 days), Sentry free for errors, UptimeRobot free for an outside check every 5 minutes.
+- **Logs**: JSON (`ts, level, msg, request_id, trace_id, account_id(hashed), role, route, status, latency_ms`) → Grafana Cloud (Loki), about 14 days.
 - **Metrics** (Prometheus names): `http_requests_total{route,status}`, `http_request_duration_seconds` (histogram), `launch_reserve_total{result}`, `launch_deal_remaining{launch}`, `checkout_orders_total{method,result}`, `payment_webhook_lag_seconds`, `outbox_backlog`, `asynq_queue_size{queue}`, `electrons_liability{state}`, `synthetic_check_success{check}`, `provider_calls_total{provider,op,result}`.
 - **Traces**: OTel across web → api → DB/Redis/providers; 10% sampling, 100% on errors and on launch endpoints during launches.
-- **SLOs & alerts**: availability 99.9% in production, 99% target in the prototype (synthetic); p95 < 3 s overall (alert at p95 > 1.5 s for 10 min); 5xx > 1% for 5 min; payment success < 90% for 15 min; outbox backlog > 1,000 for 5 min; any oversell invariant breach (`deal_remaining < 0` impossible by constraint — alert on Redis/DB counter drift > 0 after sweep).
+- **SLOs & alerts**: availability target 99% (synthetic); p95 < 3 s overall (alert at p95 > 1.5 s for 10 min); 5xx > 1% for 5 min; payment success < 90% for 15 min; outbox backlog > 1,000 for 5 min; any oversell invariant breach (`deal_remaining < 0` impossible by constraint — alert on Redis/DB counter drift > 0 after sweep).
 
 ---
 
@@ -1012,28 +1003,7 @@ Total is about 11 GB, leaving headroom on the 24 GB VM.
 
 **Fallback without a card (TRS 12.1):** web on Vercel Hobby with Next.js rewrites proxying `/api/*` to the API, so cookies stay first-party; API and worker as one process on a Render free web service with `SIM_EMBEDDED=true` (simulators served as routes inside the API); Neon free PostgreSQL; Upstash free Redis with longer queue polling intervals. Render sleeps after about 15 minutes idle, so a GitHub Actions schedule calls `POST /internal/jobs/tick` (secret-protected) every 10 minutes to run due jobs, and launch pages fall back from SSE to 3-second polling. It works end to end, but is noticeably slower after idle periods.
 
-### 17.2 Production hosting (later, paid)
-
-![Production architecture](design/siliconics-production-architecture.png)
-
-| Resource | Production baseline | Launch mode |
-|---|---|---|
-| ECS Fargate `api` | 2 × (0.5 vCPU, 1 GB), autoscale CPU 60% / RPS | pre-scale to 8, max 20 |
-| ECS Fargate `web` | 2 × (1 vCPU, 2 GB) | pre-scale to 6, max 10 |
-| ECS Fargate `worker` | 1 × (0.5 vCPU, 1 GB) | 2 |
-| RDS PostgreSQL 16 | db.t4g.large Multi-AZ, gp3 20 GB auto-grow (≥ 200 MB requirement), PITR 14 days | optional temporary upsize to db.r6g.large; read replica for reports |
-| ElastiCache Redis 7 | cache.t4g.small, 1 replica, Multi-AZ | cache.t4g.medium |
-| S3 | `media`, `docs-kyc` (KMS), `invoices`, `exports` | — |
-| CloudFront + WAF | static, images, HTML (ISR) | Bot Control + waiting room rule |
-| Networking | VPC, 3 AZs, private subnets for tasks/DB/Redis, NAT, ALB in public subnets | — |
-
-**Capacity reasoning (1,000 rps launch):** ~70% of traffic is cacheable page/asset GETs served by CloudFront; `/live` and SSE reads come from Redis; only reserve and checkout writes hit PostgreSQL, bounded by deal units, per-member limits and the waiting room. Load test target 1,500 rps (NFR-CAP-02).
-
-**Backups & DR:** PITR 14 days + daily snapshots 35 days, cross-region snapshot copy weekly; RPO ≤ 5 min, RTO ≤ 1 h; quarterly restore drill.
-
-Moving from 17.1 to 17.2 changes hosting and `PROVIDER_*` settings only: the same images, migrations and tests are used.
-
-### 17.3 Environments
+### 17.2 Environments
 
 | Environment | Where | Data | Providers |
 |---|---|---|---|
@@ -1041,9 +1011,8 @@ Moving from 17.1 to 17.2 changes hosting and `PROVIDER_*` settings only: the sam
 | CI | GitHub Actions runner, throw-away stack per job | Seed data | All simulated |
 | Preview (optional) | Vercel Hobby preview of `web` per pull request, `/api/*` proxied to the prototype | Prototype test data | As prototype; for reviewing UI changes only |
 | Prototype | Free VM (17.1) | Test data, synthetic records flagged | Simulators + Brevo email + real Google sign-in |
-| Production (later) | AWS (17.2) | Real | Paid providers ([integrations.md](integrations.md)) |
 
-### 17.4 Continuous integration (parallel)
+### 17.3 Continuous integration (parallel)
 
 Workflows in `.github/workflows/` (details and team rules in [dev-workflow.md](dev-workflow.md)):
 
@@ -1065,9 +1034,9 @@ Workflows in `.github/workflows/` (details and team rules in [dev-workflow.md](d
 | Concurrency | 5,000 goroutines reserving 6 deal units with limit 1 → exactly 6 claims, counters consistent after sweep; double-submit with same Idempotency-Key → one order |
 | Contract | OpenAPI schema tests; provider adapter contract tests run against simulators (and later real sandboxes) |
 | E2E (Playwright) | Journeys: guest→buyer purchase, member launch deal, return, issue, membership auto-renew toggle, creator onboarding→demo→review→cash-out, promoter verify→promote, seller onboarding→list→fulfil→payout, admin approvals/launch creation/role switch/health |
-| Load (k6) | Production: ramp to 1,500 rps: 60% browse, 25% PDP live, 10% reserve, 5% checkout; assert p95 < 3 s, 0 oversell, error rate < 1%. Prototype: same mix against local Compose in CI, ramped to the measured VM capacity (aim ≥ 100 rps). Never load-test free hosted services. |
+| Load (k6) | Mix of 60% browse, 25% product live data, 10% reserve, 5% checkout against local Compose in CI, ramped to the measured VM capacity (aim ≥ 100 rps); assert p95 < 3 s, 0 oversell, error rate < 1%. Never load-test free hosted services. |
 | Accessibility | axe on every route; manual screen reader pass; colour-blind simulation screenshots |
-| Security | ZAP baseline nightly against local Compose; authorization matrix tests; pen test before production go-live |
+| Security | ZAP baseline nightly against local Compose; authorization matrix tests per role |
 
 ---
 
@@ -1087,7 +1056,7 @@ Workflows in `.github/workflows/` (details and team rules in [dev-workflow.md](d
 | Sellers & payouts (FR-SEL) | 7.6, 8.10, 8.11 |
 | Notifications (FR-NOT) | 4.4, 13 |
 | Admin & health (FR-ADM/HLT) | 4.3, 4.7, 7.7, 8.12 |
-| Performance, capacity, reliability (NFR-PERF/CAP/REL) | 6, 8.4, 11, 16, 17 (prototype targets: TRS 8.0) |
+| Performance, capacity, reliability (NFR-PERF/CAP/REL) | 6, 8.4, 11, 16, 17 |
 | Security, privacy, rate limits (NFR-SEC/PRIV/RATE) | 4, 9.5, 15 |
 | Accessibility (NFR-ACC) | 14.2, 14.3, 18 |
 
@@ -1104,6 +1073,6 @@ Workflows in `.github/workflows/` (details and team rules in [dev-workflow.md](d
 | Q-07 extra seller reports | `report` module with pluggable SQL reports |
 | Q-08 returned launch units | Quarantine lot; disposition action added later |
 | Q-09 card for Oracle free VM | If declined, use the fallback in 17.1 (`SIM_EMBEDDED`, jobs tick, polling instead of SSE); no data model change |
-| Q-10 public or private repo | Only changes CI minute budgeting (17.4) |
+| Q-10 public or private repo | Only changes CI minute budgeting (17.3) |
 | Q-11 domain | Caddy config and Cloudflare in front; no code change |
 | Design choice to confirm | Spent Electrons returned after their lot expired are re-issued for `refund.reissue_expiry_days` (30) |

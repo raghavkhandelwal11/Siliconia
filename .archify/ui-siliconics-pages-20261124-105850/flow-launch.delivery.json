@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "14e8e22a-4f49-428a-a931-6f7932e67c5d",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/flow-launch.candidate.json",
+  "output": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/flow-launch.html",
+  "specification": {
+    "sha256": "d7253557ecbad2a44580c21fcc96c28979e12abcec8aa9582224eccb2c2bbd2c",
+    "bytes": 4769
+  },
+  "artifact": {
+    "sha256": "04a9d865484c8ab082ad26eaafda0cf34ae550f3ed751aa88726977ff62f9977",
+    "bytes": 938446
+  }
+}

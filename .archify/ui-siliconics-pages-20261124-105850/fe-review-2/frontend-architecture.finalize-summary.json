@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/frontend-architecture.candidate.json",
+    "sha256": "de7ab9b0137c0e1bea5b2f55c1ad70f0b226a47f470c81ec98c410eeccc46f2a",
+    "bytes": 8489
+  },
+  "artifact": {
+    "path": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/frontend-architecture.html",
+    "sha256": "1ac4ec6c94e008b11e9b6fefd1c8b2ba5032d794308456dc06cb99481e98a8bb",
+    "bytes": 950428
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/fe-review-2/frontend-architecture.finalize.json",
+    "summaryReceipt": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/fe-review-2/frontend-architecture.finalize-summary.json",
+    "browserCheckReceipt": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/fe-review-2/frontend-architecture.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.3.0",
+    "availableVersion": "3.3.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-23T07:20:15.536Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 4229,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

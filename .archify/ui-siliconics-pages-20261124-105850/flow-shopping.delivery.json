@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "756083f8-3a0e-4882-9743-0b4d06723109",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/flow-shopping.candidate.json",
+  "output": "/Users/gegerot/side_projects/siliconia/.archify/ui-siliconics-pages-20261124-105850/flow-shopping.html",
+  "specification": {
+    "sha256": "536e1b50eab304f262e57e4a5ea91523682c3e68ffaa5205261836e8006ee02b",
+    "bytes": 4962
+  },
+  "artifact": {
+    "sha256": "9dfaeb653e2cd343b009cb31a90ff64dad260c9bd6fa0d519f9d73f38200463d",
+    "bytes": 939005
+  }
+}
