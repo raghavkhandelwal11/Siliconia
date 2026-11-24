@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Version** | 1.2 (Draft), 24 Nov 2026 |
+| **Version** | 1.3 (Draft), 24 Nov 2026 |
 | **Implements** | Technical Requirements Specification v1.3 (TRS), Business Requirements Document v1.2 (BRD) |
 | **Readers** | Developers, QA, DevOps, tech lead, project manager |
 | **Scope** | End-to-end design of v1: web app, API, worker, data, integrations (simulated), jobs, infra, tests |
@@ -40,8 +40,8 @@
 
 | Component | Tech | Port | Responsibility | Copies on the VM |
 |---|---|---|---|---|
-| `web` | Next.js 15 (React 19, App Router), TypeScript | 3000 | SSR/ISR pages, role-based UI, BFF cookie forwarding | 2 (1 GB each) |
-| `api` | Go 1.23, chi, pgx, sqlc | 8080 | REST API `/api/v1`, webhooks, SSE streams | 2 (1 GB each) |
+| `web` | Next.js 16 (React 19, App Router), TypeScript | 3000 | SSR/ISR pages, role-based UI, BFF cookie forwarding | 2 (1 GB each) |
+| `api` | Go 1.27, chi, pgx, sqlc | 8080 | REST API `/api/v1`, webhooks, SSE streams | 2 (1 GB each) |
 | `worker` | Go, asynq | — | Outbox relay, notifications, scheduled jobs, payouts, synthetic checks | 1 |
 | `sim-pay` | Go + small HTML UI | 9001 | Simulated payment gateway (hosted checkout, webhooks, refunds, mandates) | 1 |
 | `sim-ship` | Go | 9002 | Simulated shipping aggregator (serviceability, AWB, labels, tracking webhooks) | 1 |
@@ -56,32 +56,43 @@ All services are stateless; the only state is in PostgreSQL, Redis and object st
 
 ---
 
-## 3. Repository layout (monorepo)
+## 3. Repositories and layout
 
+Three GitHub repositories (all public):
+
+| Repository | Local folder | Contents |
+|---|---|---|
+| [Siliconia](https://github.com/raghavkhandelwal11/Siliconia) | `siliconia/` | Docs (BRD, TRS, LLD, plans, diagrams), `paid-later/`, and the issue tracker (milestones M0–M6) |
+| [Siliconia_Backend](https://github.com/raghavkhandelwal11/Siliconia_Backend) | `siliconia/siliconia_backend/` | Go API, worker, simulators, migrations, OpenAPI contract, Docker Compose + Caddy |
+| [Siliconia-Frontend](https://github.com/raghavkhandelwal11/Siliconia-Frontend) | `siliconia/siliconia_frontend/` | Next.js web app |
+
+The two app folders sit inside the docs checkout but are separate Git repositories (ignored by the docs repo's `.gitignore`). Pull requests in the app repos reference issues as `raghavkhandelwal11/Siliconia#N`.
+
+**Backend (`Siliconia_Backend`)**
 ```
-siliconics/
-├─ apps/web/                      # Next.js
-│  ├─ app/(public)/ (buyer)/ (seller)/ (creator)/ (promoter)/ (admin)/
-│  ├─ components/ (ui/, product/, checkout/, launch/, status/)
-│  ├─ lib/ (api-client, auth, i18n, format, flags)
-│  └─ messages/en.json            # all UI text (A-01)
-├─ services/api/
-│  ├─ cmd/api  cmd/worker  cmd/migrate  cmd/seed
-│  ├─ internal/
-│  │  ├─ auth  account  catalogue  pdp  cart  checkout  payment  order  shipping
-│  │  ├─ returns  issue  membership  launch  electrons  review  creator  promoter
-│  │  ├─ seller  payout  discovery  notify  admin  health  report  legal
-│  │  │     └─ each: handler.go  service.go  repo.go (sqlc)  model.go  events.go  *_test.go
-│  │  ├─ platform/ (db, redis, config, httpx, authn, authz, idempotency, ratelimit,
-│  │  │             outbox, jobs, money, clock, audit, otel, storage, crypto)
-│  │  └─ provider/ (payment, shipping, payout, kyc, sms, whatsapp, email, oauth)
-│  │                 └─ each: interface.go  sim/  (real adapters added later)
-│  └─ api/openapi.yaml            # source of truth for the HTTP contract
-├─ services/simulators/ (pay, ship, payout, kyc, notify)
-├─ db/ (migrations/, queries/, seed/)
-├─ packages/api-client/           # generated from openapi.yaml
-├─ infra/prototype/ (docker-compose.yml, Caddyfile, bootstrap.sh, backup scripts)
-└─ tests/ (e2e/ Playwright, load/ k6, contract/)
+cmd/            api · worker · migrate · seed · sim-notify (later: sim-pay, sim-ship, sim-payout, sim-kyc)
+internal/
+  platform/     config · httpx (errors, middleware) · db · redisx · ratelimit · outbox · jobs · migrate · logx
+                (later: authn, authz, idempotency, money, clock, audit, otel, storage, crypto)
+  provider/     messaging (sim, log) · later payment, shipping, payout, kyc, oauth; each: interface + sim
+  sim/          simulator servers (notify today)
+  server/       router (middleware order 4.1)    health/   liveness + readiness
+  store/        sqlc-generated queries
+  <module>/     auth · catalogue · cart · checkout · order · launch · electrons · membership · review ·
+                creator · promoter · seller · payout · discovery · notify · admin · report · legal
+                each: handler.go  service.go  model.go  events.go  *_test.go
+db/             migrations (goose, timestamp-named) · queries (sqlc)
+api/openapi.yaml  source of truth for the HTTP contract
+deploy/compose/   docker-compose.yml · Caddyfile · .env.example   (later: bootstrap.sh, backups)
+```
+
+**Frontend (`Siliconia-Frontend`)**
+```
+app/            (public) (auth) (buyer) (seller) (creator) (promoter) (admin) · layout · providers · globals.css
+components/     shell/ (header, footer, banners, bottom nav) · ui/ (design system) · system/ · <feature>/
+lib/api/        openapi.yaml (copied from the backend) · schema.d.ts (generated) · client.ts
+messages/       en.json (all UI text, A-01)          i18n/   next-intl config
+test/           Vitest setup          (later: e2e/ Playwright)
 ```
 
 **Module rules:** `handler → service → repo`. A module may call another module only through its `service` interface (no cross-module SQL). Side effects that cross modules (notifications, Electrons, payouts) are triggered by **domain events through the outbox**, not direct calls, except inside one DB transaction where a synchronous service call is required (e.g. checkout holding Electrons).
@@ -905,7 +916,7 @@ Adapters are chosen by the `PROVIDER_*` settings (section 4.7). In this build, p
 
 ---
 
-## 14. Frontend design (apps/web)
+## 14. Frontend design (Siliconia-Frontend)
 
 Every page, its sections, the product categories and the UI features are listed in [product-catalogue-and-ui-features.md](product-catalogue-and-ui-features.md). UI diagrams: [front-end architecture](design/ui/frontend-architecture.png), page structures ([public](design/ui/pages-public.png), [buyer](design/ui/pages-buyer.png), [seller](design/ui/pages-seller.png), [creator and promoter](design/ui/pages-creator-promoter.png), [admin](design/ui/pages-admin.png)) and page flows ([shopping](design/ui/flow-shopping.png), [launch deal](design/ui/flow-launch.png), [seller](design/ui/flow-seller.png), [creator and promoter](design/ui/flow-creator-promoter.png), [admin](design/ui/flow-admin.png)).
 

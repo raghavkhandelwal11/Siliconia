@@ -2,9 +2,11 @@
 
 | | |
 |---|---|
-| **Version** | 1.0, 24 Nov 2026 |
+| **Version** | 1.1, 24 Nov 2026 |
 | **Based on** | TRS v1.3, LLD v1.2, [product-catalogue-and-ui-features.md](product-catalogue-and-ui-features.md), [dev-workflow.md](dev-workflow.md) |
 | **Scope** | The free prototype only. Nothing here uses a paid service (see [`paid-later/`](../paid-later/README.md)). |
+
+**Repositories:** docs and issues in [Siliconia](https://github.com/raghavkhandelwal11/Siliconia); code in [Siliconia_Backend](https://github.com/raghavkhandelwal11/Siliconia_Backend) and [Siliconia-Frontend](https://github.com/raghavkhandelwal11/Siliconia-Frontend) (LLD section 3).
 
 **7 milestones (M0–M6).** Each one ends with a working demo on the prototype. One task = one branch = one pull request. Tasks without arrows between them can run in parallel.
 
@@ -26,11 +28,13 @@ GitHub milestones use the names below (`M0 Foundation`, …).
 ---
 
 ## M0 Foundation
+**Status (24 Nov 2026):** built and tested locally; in review as [Siliconia_Backend#1](https://github.com/raghavkhandelwal11/Siliconia_Backend/pull/1) and [Siliconia-Frontend#1](https://github.com/raghavkhandelwal11/Siliconia-Frontend/pull/1). Deferred: object storage to T1.6.
+
 **Done when:** `docker compose up` runs the whole stack locally, every pull request runs CI, and a "hello" page and `/api/v1/healthz` respond.
 
 | ID | Task | Labels |
 |---|---|---|
-| T0.1 | Monorepo layout (`apps/web`, `services/api`, `services/simulators`, `db`, `infra/prototype`), `.gitignore`, `.env.example`, `Makefile` | `chore` `area:infra` `P0` `S` |
+| T0.1 | Repository layouts for backend and frontend (LLD section 3), `.gitignore`, `.env.example`, `Makefile` | `chore` `area:infra` `P0` `S` |
 | T0.2 | Go API skeleton: chi router, config, structured logs, middleware chain, RFC 9457 errors, health probes | `feat` `area:api` `P0` `M` |
 | T0.3 | PostgreSQL migrations tool, sqlc setup, seed command, outbox + idempotency tables | `feat` `area:db` `P0` `M` |
 | T0.4 | Redis client, rate limiter, asynq worker skeleton with job locks | `feat` `area:api` `P0` `M` |

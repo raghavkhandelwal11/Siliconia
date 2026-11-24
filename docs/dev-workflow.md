@@ -10,6 +10,9 @@
 
 ## 1. Branches and pull requests
 
+- **Three repositories:** code changes go to `Siliconia_Backend` or `Siliconia-Frontend`; docs and the issue tracker stay in `Siliconia`. A pull request in an app repo closes its task with `Closes raghavkhandelwal11/Siliconia#N`.
+- **API changes go backend first:** change `api/openapi.yaml` in the backend, then run `npm run api:sync` in the frontend.
+
 - **Trunk-based:** `main` is protected and always deployable. Every merge to `main` deploys to the prototype automatically.
 - **One task → one branch → one pull request.** Branch names: `feat/<short-name>`, `fix/<short-name>`, `chore/<short-name>`, `docs/<short-name>`.
 - **Small pull requests:** aim for under about 400 changed lines (generated code excluded). Split big features behind a feature flag.
@@ -41,7 +44,7 @@ Every push to a pull request runs `ci.yml`. Jobs run **in parallel**; outdated r
 | `e2e` | Full Docker Compose stack; Playwright split into 3 shards (Chromium) | 6–8 min |
 | `security` | govulncheck, `npm audit`, gitleaks (secrets), Trivy | 1–2 min |
 | `build` | All images build | 3–4 min |
-| `ci-success` | Waits for everything above; the only required check | — |
+| `ci-success` | Waits for everything above; the only required check (each app repo has its own `ci.yml`) | — |
 
 Path filters skip jobs whose code did not change (a docs-only PR runs in about a minute).
 
