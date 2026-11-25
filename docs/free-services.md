@@ -44,7 +44,7 @@ All simulators run on our own VM (and locally and in CI) with the same interface
 | Simulator | Test inputs |
 |---|---|
 | `sim-pay` | UPI `success@sim`, `failure@sim`, `pending@sim`, `timeout@sim`; cards `4111 1111 1111 1111` (success), `4000 0000 0000 0002` (decline), `4000 0000 0000 9995` (timeout); net-banking bank list; `mandate-fail@sim` |
-| `sim-ship` | Any seeded Indian PIN code; `999999` → returned to origin; `000001` → failed attempt then delivered |
+| `sim-ship` | Any served Indian PIN code (by India Post circle: metros 2 days, most areas 4 days, hills/islands/north-east 6 days and prepaid only); `999999` → two failed attempts then returned to origin; `999998` → one failed attempt then delivered; `999997` → not served; `999996` → prepaid only. Tracking moves one step every `SIM_SHIP_SPEED` (1 min locally) |
 | `sim-payout` | Account `000000000000` fails; others are paid in about 30 s |
 | `sim-kyc` | Any well-formed PAN passes except `AAAAA0000A` (not found); bank accounts ending `0000` give a name mismatch and `9999` are closed; names must match at 0.8 or more |
 | `sim-notify` | Search by phone number at `/test-inbox` to read OTPs and messages |
