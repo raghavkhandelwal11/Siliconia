@@ -58,6 +58,8 @@ make check
 
 `make check` runs the same lint, unit, contract and integration steps as CI; `make e2e` starts the Compose stack and runs Playwright.
 
+Local data: `make up` starts the stack (Caddy on http://localhost:8080) and seeds settings and the 12 categories. `make demo` adds a one-time demo store with 23 products and generated photos (fictional brands) so listings and search have something to show. `make admin PHONE=… NAME=…` creates an admin (at most 3). Sign-in codes appear in the test inbox at `/test-inbox`.
+
 **Free-minute budget:** a private repository gets about 2,000 Linux minutes a month (TRS Q-10). Keep jobs cached and filtered; heavy suites run nightly on weekdays only. A public repository removes the limit.
 
 ## 4. Tests to add with each change
