@@ -50,7 +50,7 @@
 | `sim-notify` | Go | 9005 | Test inbox for SMS and WhatsApp (and email locally), searchable by phone number (FR-NOT-05) | 1 |
 | PostgreSQL 16 | Container | 5432 | System of record | 1 |
 | Redis 7 | Container | 6379 | Cache, rate limits, launch gates, queues, SSE fan-out | 1 |
-| Object storage | Cloudflare R2 free or MinIO container (S3 API) | — | Images, documents (KYC bucket separate, encrypted), invoices | 1 (MinIO) |
+| Object storage | SeaweedFS container or Cloudflare R2 free (S3 API) | 8333 | Images, documents (KYC bucket separate, encrypted), invoices | 1 (SeaweedFS) |
 
 All services are stateless; the only state is in PostgreSQL, Redis and object storage. Everything runs on one free VM (section 17.1).
 
@@ -166,7 +166,7 @@ test/           Vitest setup          (later: e2e/ Playwright)
 | `PROVIDER_PAYMENT` / `PROVIDER_SHIPPING` / `PROVIDER_PAYOUT` / `PROVIDER_KYC` | `sim` |
 | `PROVIDER_SMS` / `PROVIDER_WHATSAPP` | `sim` (test inbox) |
 | `PROVIDER_EMAIL` | `brevo` (`log` locally) |
-| `STORAGE_ENDPOINT`, `STORAGE_BUCKET_*` | R2 or MinIO (S3 API) |
+| `STORAGE_ENDPOINT`, `STORAGE_ACCESS_KEY`, `STORAGE_SECRET_KEY`, `STORAGE_BUCKET_*` | SeaweedFS or R2 (S3 API) |
 | `ENCRYPTION_MASTER_KEY` | secret on the VM |
 | `FEATURE_TEST_INBOX` | `true` (password `TEST_INBOX_PASSWORD`) |
 | `OTEL_EXPORTER_OTLP_ENDPOINT`, `SENTRY_DSN` | Grafana Cloud free, Sentry free |
@@ -477,7 +477,7 @@ Auth column: **G** guest, **B** buyer, **M** member, **S** seller, **C** creator
 | GET · DELETE | `/me/sessions[/:id]` | any | Active sessions |
 | GET · PUT | `/me/notification-prefs` | any | Channel opt-ins |
 | GET | `/me/notifications` · `/me/notifications/stream` (SSE) | any | In-app bell |
-| POST | `/uploads/presign` | any | `{purpose, contentType, size}` → S3 presigned PUT (max 10 MB, images/PDF only) |
+| POST | `/seller/uploads/images` | S | Multipart image (8 MB, ≥ 400 px). The API decodes, scales to 1600 px and re-encodes as JPEG (drops EXIF/GPS and fake images), then stores it. Served at `/media/products/…` with immutable caching. Chosen over presigned PUTs: server-side validation and no storage CORS |
 
 ### 7.2 Catalogue, product page, reviews
 | Method | Path | Auth | Notes |
@@ -1001,7 +1001,7 @@ Simulator webhooks reach the API over the internal Docker network, never through
 | `sim-pay`, `sim-ship`, `sim-payout`, `sim-kyc`, `sim-notify` | ghcr.io/…/sim-* | 128 MB each | Same simulators as local and CI |
 | `postgres` | postgres:16 | 4 GB | `shared_buffers` 1 GB, data on the block volume, Docker network only |
 | `redis` | redis:7 | 512 MB | `maxmemory` with `noeviction` for queue keys, AOF every second |
-| `minio` | minio | 512 MB | Only if Cloudflare R2 is not used |
+| `seaweedfs` | chrislusf/seaweedfs (pinned) | 512 MB | Only if Cloudflare R2 is not used. MinIO stopped publishing free community images in 2025 |
 | `clamav` | clamav | 1.5 GB | Upload scanning (optional, section 15) |
 | `alloy` | grafana/alloy | 256 MB | Sends logs, metrics and traces to Grafana Cloud free |
 | `backup` | postgres:16 + age | 64 MB | Nightly 02:00 IST `pg_dump -Fc`, encrypted with `age`, uploaded to object storage, 14 kept |

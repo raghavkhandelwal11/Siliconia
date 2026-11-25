@@ -22,7 +22,7 @@
 | 6 | WhatsApp | Order updates, launch alerts | `sim-notify` test inbox | Messages kept 24 h | `PROVIDER_WHATSAPP=sim` |
 | 7 | Email | Receipts, invoices, approvals, alerts | **Brevo free** (`log` adapter locally) | About 300 emails a day | `PROVIDER_EMAIL=brevo` |
 | 8 | Google sign-in | Second sign-in option | **Google OAuth** | Free | `GOOGLE_CLIENT_ID/SECRET` |
-| 9 | Object storage | Images, review photos, KYC files, invoices | **Cloudflare R2 free** or **MinIO** on the VM | R2: 10 GB | `STORAGE_*` |
+| 9 | Object storage | Images, review photos, KYC files, invoices | **SeaweedFS** container on the VM (Apache-2.0) or **Cloudflare R2 free** | R2: 10 GB | `STORAGE_*` |
 | 10 | Hosting | Web, API, worker, simulators, PostgreSQL, Redis | **Oracle Cloud Always Free VM** (4 ARM cores, 24 GB) | Idle VMs can be reclaimed | Docker Compose files |
 | 10b | Hosting fallback (no card) | Same | Vercel Hobby + Render free + Neon free + Upstash free | Render sleeps when idle; Redis command quota | Fallback config (LLD 17.1) |
 | 11 | DNS and HTTPS | Address and certificates | **Free subdomain (e.g. DuckDNS) + Let's Encrypt via Caddy** | — | Caddyfile |
@@ -62,7 +62,7 @@ Every simulator page shows a **TEST MODE – no real money** banner.
 | DuckDNS (or similar) | Free subdomain | No |
 | Brevo | Email | No |
 | Google Cloud | OAuth client for Google sign-in | No (OAuth only) |
-| Cloudflare | R2 storage (optional; MinIO avoids it), later DNS/CDN | R2 may ask for one; MinIO avoids it |
+| Cloudflare | R2 storage (optional; SeaweedFS avoids it), later DNS/CDN | R2 may ask for one; SeaweedFS avoids it |
 | Grafana Cloud | Monitoring | No |
 | Sentry | Error tracking | No |
 | UptimeRobot | Outside uptime check | No |
