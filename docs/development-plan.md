@@ -102,6 +102,8 @@ GitHub milestones use the names below (`M0 Foundation`, …).
 | T4.6 | Promoter onboarding, seller confirmation, Promote button, promoter rewards | `feat` `mod:programmes` `P0` `M` `needs-decision` (Q-03) |
 | T4.7 | Products of the week, recommendations, similar products, feedback to manufacturer | `feat` `mod:catalogue` `P1` `M` |
 
+**Status (26 Nov 2026):** M4 merged in one PR per repo ([Siliconia_Backend#22](https://github.com/raghavkhandelwal11/Siliconia_Backend/pull/22), [Siliconia-Frontend#29](https://github.com/raghavkhandelwal11/Siliconia-Frontend/pull/29)). T4.1 buyer reviews with photos, helpful votes, reports (three hide a review) and moderation. T4.2 creator application with a follower criterion, admin approval, encrypted PAN/bank KYC, creator studio. T4.3 demo requests shipped through sim-ship, creator reviews ranked by publication, buyer agree/disagree. T4.4 monthly reward pools split by verified agrees × rank weight (LLD 9.4), paid in Electrons. T4.5 `sim-payout` and cash-out (minimum 250, weekly batch, failed transfers give Electrons back). T4.6 promoters with seller-confirmed investments, Promote, Electrons per unit on delivered sales. T4.7 products of the week, bought together, picks for you, feedback to the manufacturer. Fixed: Electrons restores now cover cash-out holds. **M4 complete.** Open: Q-02 pool sizes (set by admins for now); Q-03 promoter rewards (interim: Electrons per unit for every promoter of the product); photo attachments for returns and issues.
+
 ## M5 Admin, payouts and health
 **Done when:** admins run the whole platform from the console, sellers are paid weekly (simulated) and the health monitor checks the live prototype every 5 minutes.
 
