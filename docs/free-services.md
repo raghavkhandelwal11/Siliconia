@@ -20,7 +20,7 @@
 | 4 | KYC checks | PAN check, bank penny-drop | `sim-kyc` simulator | None | `PROVIDER_KYC=sim` |
 | 5 | SMS | Sign-in OTPs, order updates | `sim-notify` test inbox at `/test-inbox` (tester password) | Messages kept 24 h | `PROVIDER_SMS=sim` |
 | 6 | WhatsApp | Order updates, launch alerts | `sim-notify` test inbox | Messages kept 24 h | `PROVIDER_WHATSAPP=sim` |
-| 7 | Email | Receipts, invoices, approvals, alerts | **Brevo free** (`log` adapter locally) | About 300 emails a day | `PROVIDER_EMAIL=brevo` |
+| 7 | Email | Receipts, invoices, approvals, alerts | **Brevo free** (test inbox locally with `PROVIDER_EMAIL=sim`; needs `BREVO_API_KEY` and a verified `EMAIL_FROM`) | About 300 emails a day | `PROVIDER_EMAIL=brevo` |
 | 8 | Google sign-in | Second sign-in option | **Google OAuth** | Free | `GOOGLE_CLIENT_ID/SECRET` |
 | 9 | Object storage | Images, review photos, KYC files, invoices | **SeaweedFS** container on the VM (Apache-2.0) or **Cloudflare R2 free** | R2: 10 GB | `STORAGE_*` |
 | 10 | Hosting | Web, API, worker, simulators, PostgreSQL, Redis | **Oracle Cloud Always Free VM** (4 ARM cores, 24 GB) | Idle VMs can be reclaimed | Docker Compose files |
