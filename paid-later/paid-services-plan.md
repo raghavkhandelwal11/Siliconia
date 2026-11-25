@@ -21,7 +21,7 @@
 | 5 | SMS | `sim-notify` test inbox | MSG91, Gupshup, Twilio | Per SMS (DLT registration needed) | `PROVIDER_SMS` |
 | 6 | WhatsApp | `sim-notify` test inbox | Meta WhatsApp Cloud API, Gupshup | Per conversation or message | `PROVIDER_WHATSAPP` |
 | 7 | Email at scale | Brevo free | Amazon SES or a paid Brevo plan | Per email or monthly plan | `PROVIDER_EMAIL` |
-| 8 | Object storage | Cloudflare R2 free / MinIO | Amazon S3 (+ CloudFront for media) | Per GB stored and requests | `STORAGE_*` |
+| 8 | Object storage | Cloudflare R2 free / SeaweedFS | Amazon S3 (+ CloudFront for media) | Per GB stored and requests | `STORAGE_*` |
 | 9 | Hosting | Oracle Always Free VM | AWS Mumbai (see [production-hosting-plan.md](production-hosting-plan.md)) | Per hour of compute and storage | Infrastructure files |
 | 10 | CDN and firewall | Caddy + API rate limits (Cloudflare free once a domain exists) | CloudFront + AWS WAF, or a paid Cloudflare plan | Per request/GB; per rule | DNS / edge config |
 | 11 | Domain name | Free subdomain | Any registrar | Yearly fee | DNS |
