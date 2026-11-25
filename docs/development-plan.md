@@ -87,6 +87,8 @@ GitHub milestones use the names below (`M0 Foundation`, …).
 | T3.6 | Waiting room (queue, admission tokens) | `feat` `mod:launch` `P1` `M` |
 | T3.7 | Concurrency test: 5,000 buyers, zero oversell | `test` `mod:launch` `P0` `S` |
 
+**Status (25 Nov 2026):** M3 merged in one PR per repo ([Siliconia_Backend#21](https://github.com/raghavkhandelwal11/Siliconia_Backend/pull/21), [Siliconia-Frontend#28](https://github.com/raghavkhandelwal11/Siliconia-Frontend/pull/28)). T3.1 Electrons ledger (lots per item, pending until the return window closes, hourly maturing, FIFO spend, exact restore and reversal, daily expiry, append-only ledger enforced by a trigger, balances page). T3.2 Electra Membership (money and/or Electrons, auto-renew mandate, pre-debit notice, renewal retries, lapse). T3.3 Electrons slider and COD rules (members only, within the limit, no launch deals, PIN). T3.4 launch admin with the deal-unit calculator and platform-owned launch lots. T3.5 Redis gate + conditional SQL reserve, 10-minute claims, sweeper, live units over SSE, launch page and checkout. T3.6 waiting room with signed admission passes. T3.7 5,000 members racing for 50 units: exactly 50 held, none oversold (runs in CI). Also fixed: launch stock no longer counts as normal stock; early payment webhooks are retried instead of dropped. **M3 complete.** Open: Q-06 GST basis for launch stock; Q-08 returned launch units (kept off sale); launch start alerts; waiting room is always on when a launch sets a rate.
+
 ## M4 Reviews, creators, promoters and discovery
 **Done when:** buyers review and vote, creators apply, get demos, post reviews and cash out (simulated), promoters promote products, and the home page shows products of the week and recommendations.
 
