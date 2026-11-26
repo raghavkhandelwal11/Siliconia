@@ -1,5 +1,14 @@
 # Going live on Oracle Cloud (T6.1)
 
+Two ways, both Always Free:
+
+| | **Lite** (recommended while Ampere is out of capacity) | **Full** |
+|---|---|---|
+| Shape | AMD **VM.Standard.E2.1.Micro** (1 GB, ⅛ core) | Ampere **VM.Standard.A1.Flex** (1–4 cores, 6–24 GB) |
+| Runs | Backend only; the web app stays on **Netlify** | Backend and web app |
+| Memory used | ~160 MB idle, ~315 MB under load | ~0.5 GB |
+| Images | Downloaded from GHCR (built by GitHub Actions) | Built on the server |
+
 Everything after "Create the server" is automated. Expect about 30 minutes in total, most of it
 waiting for Oracle and the first build.
 
@@ -18,6 +27,11 @@ TCP port **80** and TCP port **443**, source `0.0.0.0/0`.
 
 ## 3. Create the server
 **Compute → Instances → Create instance**
+
+**Lite:** Image **Canonical Ubuntu 24.04** (the x86 version, not aarch64); Shape **Specialty and previous
+generation → VM.Standard.E2.1.Micro** ("Always Free-eligible"). Networking and SSH key as below.
+
+**Full:**
 - Image: **Canonical Ubuntu 24.04** (aarch64). Shape: **Ampere VM.Standard.A1.Flex**, 4 OCPU / 24 GB
   (2 / 12 is enough if 4 is out of capacity).
 - Networking: `siliconics-vcn`, its **public** subnet, **Assign a public IPv4 address** ticked.
@@ -29,6 +43,18 @@ At https://www.duckdns.org sign in, add a subdomain (e.g. `siliconics`) and set 
 public IP. Keep the DuckDNS token private.
 
 ## 5. Set up the server (one command)
+
+**Lite** (after `ssh` as shown below):
+```bash
+curl -fsSL https://raw.githubusercontent.com/raghavkhandelwal11/Siliconia_Backend/main/deploy/vm/bootstrap.sh | sudo SILICONICS_PROFILE=lite FRONTEND_URL=https://siliconia-shopping.netlify.app DUCKDNS_TOKEN=<your-token> bash -s -- <name>.duckdns.org
+bash /opt/siliconics/siliconia_backend/deploy/vm/run.sh demo
+bash /opt/siliconics/siliconia_backend/deploy/vm/run.sh admin create --phone <10 digits> --name "<your name>"
+```
+Then in **Netlify → Environment variables** set `BACKEND_URL=https://<name>.duckdns.org` and
+`INTERNAL_API_KEY` (from `grep INTERNAL_API_KEY /opt/siliconics/siliconia_backend/deploy/compose/.env`),
+and redeploy. The image is public on GHCR, so the server downloads it without a login.
+
+**Full:**
 From the Mac:
 ```bash
 ssh -i ~/.ssh/siliconics_oracle ubuntu@<public-ip>
@@ -44,8 +70,8 @@ and starts everything, and waits until `https://<name>.duckdns.org` is healthy.
 Then, still on the server:
 ```bash
 cd /opt/siliconics/siliconia_backend
-make demo                                         # demo store, all 12 categories, a scheduled launch
-make admin PHONE=<10 digits> NAME="<your name>"   # first admin; set up the authenticator at first sign-in
+bash deploy/vm/run.sh demo                                              # demo store, 12 categories, a launch
+bash deploy/vm/run.sh admin create --phone <10 digits> --name "<name>"  # first admin; authenticator at first sign-in
 grep TEST_INBOX_PASSWORD deploy/compose/.env      # password to share with testers
 ```
 
@@ -61,8 +87,8 @@ within 3 minutes.
 
 ## Day to day
 
-On the server, start and update with `deploy.sh`, **not** `make up` (that is the local setup: no web
-app, ports 8080/8443). `make demo` and `make admin` are fine.
+On the server, start and update with `deploy.sh`, and run one-off commands with `run.sh`, **not** `make`
+(that is the local setup).
 
 | Task | On the server |
 |---|---|
